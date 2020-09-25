@@ -51,10 +51,11 @@ class _BottomNavigationButtonState extends State<BottomNavigationButton> {
                 setState(() {
                   bottomButtonColor = BottomButtonColor.category;
                 });
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Category()));
+//                Navigator.push(
+//                    context, MaterialPageRoute(builder: (context) => Category()));
               },
               child: Column(
+
                 children: <Widget>[
                   Icon(Icons.home,color: bottomButtonColor == BottomButtonColor.category ? Colors.amber[800] : Colors.black),
                   SizedBox(width: 10),

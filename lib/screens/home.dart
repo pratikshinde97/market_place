@@ -8,6 +8,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+
 class _HomeState extends State<Home> {
 
   int _selectedIndex = 0;
@@ -15,7 +16,7 @@ class _HomeState extends State<Home> {
 //  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
    List<Widget> _widgetOptions = <Widget>[
    HomePage(),
-    Category(),
+    Category(null),
     Orders(),
      Cart(),
   ];

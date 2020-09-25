@@ -2,11 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/model/category_products.dart';
-import 'package:market_place/utilities/bottomNavigationButton.dart';
+import 'package:market_place/screens/cart.dart';
+import 'package:toast/toast.dart';
 class Category extends StatefulWidget {
+  final String categoryName;
+  Category(this.categoryName);
   @override
   _CategoryState createState() => _CategoryState();
 }
+
 
 class _CategoryState extends State<Category> {
 
@@ -26,9 +30,9 @@ class _CategoryState extends State<Category> {
     for(int i=0;i<categoryProducts.length;i++){
       newContainer.add(Container(
         color: Colors.white,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 2),
         child: Card(
-          elevation: 5,
+          elevation: 2,
           child: Column(
             children: <Widget>[
               Row (
@@ -64,10 +68,10 @@ class _CategoryState extends State<Category> {
                           child: Row(
                             children: <Widget>[
                               Text('Our Price - ',style: kTextSize14,),
-                              Text(categoryProducts[i].mrp,style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough),),
+                              Text(categoryProducts[i].mrp,style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text('${categoryProducts[i].ourPrice} ₹',style: kTextSize14,),
+                                child: Text('${categoryProducts[i].ourPrice} ₹',style:TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
                               ),
                             ],
                           ),
@@ -88,7 +92,8 @@ class _CategoryState extends State<Category> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     onPressed: (){
-
+                      Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
                     },
                     color: Colors.indigoAccent,
                     child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
@@ -109,37 +114,67 @@ class _CategoryState extends State<Category> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text('Market Place'),
+        title: Text('Category'),
         backgroundColor: Colors.indigo,
       ),
       body: SafeArea(
-        child: Container(
-          //color: Color(0xFFEDF0EE),
-          height: MediaQuery.of(context).size.height,
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  height: 50,
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(child: Text('Category Name',style: kTextSize16,)),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      height: 50,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(child: Text(widget.categoryName,style: kTextSize16,)),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
 //              DropdownButton(
 //                value: ,
 //              ),
-              Column(
-                children: categoryProductsContainer(),
-              )
+                  Column(
+                    children: categoryProductsContainer(),
+                  )
 
-            ],
-          ),
+                ],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    height: 40,
+                    child: FlatButton(
+                      onPressed: (){
+                         Navigator.pop(context);
+                      },
+                      color: Colors.indigoAccent,
+                      child: Text('Back',style: TextStyle(color: Colors.white,fontSize: 14),),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    height: 40,
+                    child: FlatButton(
+                      onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
+                      },
+                      color: Colors.indigo,
+                      child: Text('Go to Cart',style: TextStyle(color: Colors.white,fontSize: 14),),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
