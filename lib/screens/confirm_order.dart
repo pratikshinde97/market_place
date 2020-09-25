@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/model/category_products.dart';
+import 'package:market_place/screens/customer_name_address.dart';
 class ConfirmOrders extends StatefulWidget {
   @override
   _ConfirmOrdersState createState() => _ConfirmOrdersState();
@@ -172,7 +173,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                   height: 40,
                   child: FlatButton(
                     onPressed: (){
-
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerNameAddress()));
                     },
                     color: Colors.indigo,
                     child: Text('Proceed to Pay',style: TextStyle(color: Colors.white,fontSize: 14),),
