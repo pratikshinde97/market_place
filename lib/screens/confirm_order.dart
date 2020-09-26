@@ -9,6 +9,7 @@ class ConfirmOrders extends StatefulWidget {
 
 
 class _ConfirmOrdersState extends State<ConfirmOrders> {
+  double totalAmount= 20000;
 
   List<CategoryProducts> categoryProducts = [
     CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
@@ -145,7 +146,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                     children: <Widget>[
                       SizedBox(width: 130,),
                       Expanded(flex:2,child: Text('Total amount ',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
-                      Expanded(child: Text('0000',textDirection:TextDirection.rtl,style: TextStyle(fontSize: 16,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+                      Expanded(child: Text('$totalAmount',textDirection:TextDirection.rtl,style: TextStyle(fontSize: 16,color: Colors.indigo,fontWeight: FontWeight.bold),)),
                     ],
                   ),
                 ],
@@ -173,7 +174,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                   height: 40,
                   child: FlatButton(
                     onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerNameAddress()));
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerNameAddress(totalAmount: totalAmount,)));
                     },
                     color: Colors.indigo,
                     child: Text('Proceed to Pay',style: TextStyle(color: Colors.white,fontSize: 14),),

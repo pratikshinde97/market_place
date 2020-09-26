@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:toast/toast.dart';
-import 'package:market_place/screens/payment_options.dart';
+import 'package:market_place/screens/place_order.dart';
 class CustomerNameAddress extends StatefulWidget {
+  final double totalAmount;
+  CustomerNameAddress({@required this.totalAmount});
   @override
   _CustomerNameAddressState createState() => _CustomerNameAddressState();
 }
@@ -142,7 +144,11 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                             Toast.show("Please enter area", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                           }
                           else{
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentOptions()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>PlaceOrder(
+                              customerName: customerName,mobileNumber: mobileNumber,
+                              address: '$address1, $address2 $landmark $area',
+                              totalAmount: widget.totalAmount,
+                            )));
                           }
                           },
                       ),

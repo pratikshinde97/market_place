@@ -7,7 +7,8 @@ class CategoryProducts{
   final String mrp;
   final String ourPrice;
   final String unitQuantity;
+  final String productStatus;
 
-  CategoryProducts({this.categoryName,this.mrp,this.ourPrice,this.productDescription,this.productImageName,this.productName,this.unitQuantity});
+  CategoryProducts({this.categoryName,this.mrp,this.ourPrice,this.productDescription,this.productImageName,this.productName,this.unitQuantity,this.productStatus});
 
 }

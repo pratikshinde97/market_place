@@ -15,13 +15,13 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
 
   List<CategoryProducts> categoryProducts = [
-    CategoryProducts(productName: 'Basmati Rice',productDescription: 'best rice in world',mrp: '55', ourPrice: '46',unitQuantity: '1 kg',
+    CategoryProducts(productName: 'Basmati Rice',productStatus:'Available',productDescription: 'best rice in world',mrp: '55', ourPrice: '46',unitQuantity: '1 kg',
     productImageName: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',),
-    CategoryProducts(productName: 'Tur Dal',productDescription: 'Direct come from fresh farm abgjjkff vhjk',mrp: '95', ourPrice: '86',unitQuantity: '1 kg',
+    CategoryProducts(productName: 'Tur Dal',productStatus:'Presently Not Available',productDescription: 'Direct come from fresh farm abgjjkff vhjk',mrp: '95', ourPrice: '86',unitQuantity: '1 kg',
       productImageName: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',),
-    CategoryProducts(productName: 'tomato',productDescription: 'fresh farm product',mrp: '85', ourPrice: '76',unitQuantity: '1 kg',
+    CategoryProducts(productName: 'tomato',productStatus:'Presently Not Available',productDescription: 'fresh farm product',mrp: '85', ourPrice: '76',unitQuantity: '1 kg',
       productImageName: 'http://pngall.com/eggplant-png',),
-    CategoryProducts(productName: 'Kanda Lasun Masala',productDescription: 'best of its class',mrp: '55', ourPrice: '46',unitQuantity: '200 gm',
+    CategoryProducts(productName: 'Kanda Lasun Masala',productStatus:'Available',productDescription: 'best of its class',mrp: '55', ourPrice: '46',unitQuantity: '200 gm',
       productImageName: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',),
   ];
 
@@ -92,8 +92,14 @@ class _CategoryState extends State<Category> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     onPressed: (){
-                      Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
+                      String status = categoryProducts[i].productStatus;
+                      if(status.compareTo('Available')==0){
+                        Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                      }
+                      else{
+                        Toast.show("${categoryProducts[i].productName} is currently not Available", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                      }
+
                     },
                     color: Colors.indigoAccent,
                     child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
@@ -101,6 +107,18 @@ class _CategoryState extends State<Category> {
                   SizedBox(width: 10,),
                 ],
               ),
+              categoryProducts[i].productStatus.compareTo('Available')==0?
+              Container() :
+              Padding(
+                padding: const EdgeInsets.only(bottom:10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.close,color: Colors.red,size: 12,),
+                      Text(categoryProducts[i].productStatus,style:TextStyle(color: Colors.red,fontSize: 12)),
+                    ]
+                ),
+              )
             ],
           ),
         ),
