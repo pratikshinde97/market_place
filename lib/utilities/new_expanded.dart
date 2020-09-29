@@ -5,14 +5,14 @@ class NewExpanded extends StatelessWidget {
   final IconData iconData;
   final String tabName;
   final Color color;
-  NewExpanded({this.iconData,this.onTap,this.tabName,this.color=Colors.white});
+  NewExpanded({this.iconData,this.onTap,this.tabName,this.color=Colors.indigoAccent});
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: <Widget>[
               Icon(iconData,color: color,),

@@ -13,33 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  CategoryList cat = CategoryList();
   String categoryName;
 
-  List<CategoryList> categoryList = [
-    CategoryList(
-      categoryName: 'cat-1',
-      imageCategory:
-          'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    ),
-    CategoryList(
-      categoryName: 'cat-2',
-      imageCategory:
-          'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    ),
-    CategoryList(
-      categoryName: 'cat-3',
-      imageCategory:
-          'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    ),
-    CategoryList(
-      categoryName: 'cat-4',
-      imageCategory:
-          'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    ),
-  ];
 
   List<Widget> categoryContainer() {
     List<Container> newContainer = [];
+    List categoryList = cat.getCategoryList();
     for (int i = 0; i < categoryList.length; i++) {
       newContainer.add(Container(
         decoration: BoxDecoration(
@@ -97,41 +77,44 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  CarouselClass(),
-                  Container(
-                    child: CustomScrollView(
-                      shrinkWrap: true,
-                      primary: false,
-                      slivers: <Widget>[
-                        SliverPadding(
-                          padding: const EdgeInsets.all(40),
-                          sliver: SliverGrid.count(
-                            crossAxisSpacing: 26,
-                            mainAxisSpacing: 26,
-                            crossAxisCount: 2,
-                            children: categoryContainer(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: ListView(
+                  children: <Widget>[
+//                    SizedBox(
+//                      height: 10,
+//                    ),
+                    CarouselClass(),
+                    Container(
+                      child: CustomScrollView(
+                        shrinkWrap: true,
+                        primary: false,
+                        slivers: <Widget>[
+                          SliverPadding(
+                            padding: const EdgeInsets.all(40),
+                            sliver: SliverGrid.count(
+                              crossAxisSpacing: 26,
+                              mainAxisSpacing: 26,
+                              crossAxisCount: 2,
+                              children: categoryContainer(),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
-              height: 50,
-              color: Colors.indigoAccent,
+              height: 54,
+              color: Colors.white,
               child: Row(
                 children: <Widget>[
                   NewExpanded(
                     iconData: Icons.home,
                     tabName: 'Home',
-                    color: Colors.yellow,
+                    color: Colors.indigo,
                   ),
                   NewExpanded(
                     onTap: () {

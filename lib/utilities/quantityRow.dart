@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/screens/cart.dart';
 class QuantityRow extends StatefulWidget {
   @override
   _QuantityRowState createState() => _QuantityRowState();
@@ -7,6 +8,7 @@ class QuantityRow extends StatefulWidget {
 
 class _QuantityRowState extends State<QuantityRow> {
   int count=1;
+  double finalPrice;
   @override
   Widget build(BuildContext context) {
     return   Row(
@@ -25,12 +27,15 @@ class _QuantityRowState extends State<QuantityRow> {
                   ),
                   child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
                 ),
-                onTap: (){
-                  setState(() {
-                    if(count>=1){
-                      count--;
-                    }
-                  });
+                onTap:   (){
+//                  setState(() {
+//                    if(count>=1){
+//                      count--;
+//                      finalPrice = price * count;
+//                      print(finalPrice);
+//                      Cart(price: finalPrice,);
+//                    }
+//                  });
                 },
               ),
               Container(
@@ -53,11 +58,14 @@ class _QuantityRowState extends State<QuantityRow> {
                   child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
                 ),
                 onTap: (){
-                   setState(() {
-                     if(count<100){
-                       count++;
-                     }
-                   });
+//                   setState(() {
+//                     if(count<100){
+//                       count++;
+//                       finalPrice = price * count;
+//                       Cart(price: finalPrice,);
+//                       print(finalPrice);
+//                     }
+//                   });
                 },
               ),
               SizedBox(width: 20,)
