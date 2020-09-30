@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:market_place/screens/home_page.dart';
+import 'package:market_place/screens/home.dart';
 
 class MobileLogin extends StatelessWidget {
 //  final _phoneController = TextEditingController();
@@ -24,7 +24,7 @@ class MobileLogin extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => HomePage(
+                    builder: (context) => Home(
                         //    user: user,
                         )));
           } else {
@@ -71,7 +71,7 @@ class MobileLogin extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage(
+                                  builder: (context) => Home(
                                       //   user: user,
                                       )));
                         } else {
