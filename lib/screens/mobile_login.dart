@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/screens/home.dart';
+import 'package:market_place/screens/home_page.dart';
 
 class MobileLogin extends StatelessWidget {
-//  final _phoneController = TextEditingController();
+  // final _phoneController = TextEditingController();
   String _phoneController;
   final _codeController = TextEditingController();
 
@@ -24,7 +25,7 @@ class MobileLogin extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => Home(
+                    builder: (context) => HomePage(
                         //    user: user,
                         )));
           } else {
@@ -71,7 +72,7 @@ class MobileLogin extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Home(
+                                  builder: (context) => HomePage(
                                       //   user: user,
                                       )));
                         } else {
@@ -130,7 +131,7 @@ class MobileLogin extends StatelessWidget {
                     onChanged: (value) {
                       _phoneController = "+91" + value;
                     },
-                    //  controller: _phoneController,
+                    //controller: _phoneController,
                   ),
                   SizedBox(
                     height: 40,
