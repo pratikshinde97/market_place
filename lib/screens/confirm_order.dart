@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
-import 'package:market_place/model/category_products.dart';
+import 'package:market_place/database_helper/database_helper_cart.dart';
+import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/screens/customer_name_address.dart';
 class ConfirmOrders extends StatefulWidget {
   @override
@@ -10,72 +11,10 @@ class ConfirmOrders extends StatefulWidget {
 
 class _ConfirmOrdersState extends State<ConfirmOrders> {
   double totalAmount= 20000;
-
-  List<CategoryProducts> categoryProducts = [
-    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
-    CategoryProducts(productName: 'Panner', ourPrice: '140',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Potato', ourPrice: '26',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
-    CategoryProducts(productName: 'Panner', ourPrice: '140',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Potato', ourPrice: '26',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
-    CategoryProducts(productName: 'Panner', ourPrice: '140',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Potato', ourPrice: '26',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
-    CategoryProducts(productName: 'Panner', ourPrice: '140',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Potato', ourPrice: '26',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
-    CategoryProducts(productName: 'Panner', ourPrice: '140',unitQuantity: '1 kg',),
-    CategoryProducts(productName: 'Potato', ourPrice: '26',unitQuantity: '1 kg',),
-  ];
-  List<Widget> finalProductList() {
-    List<Container> newContainer =[];
-    for(int i=0;i<categoryProducts.length;i++){
-      newContainer.add(Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-        child: Row (
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            //Icon(categoryList[i].iconCategory,size: 40,),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(categoryProducts[i].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
-              ),
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(categoryProducts[i].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
-              ),
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(categoryProducts[i].ourPrice,style: kTextSize14,),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(categoryProducts[i].ourPrice,style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
-              ),
-            )
-
-          ],
-        ),
-      ));
-    }
-    return newContainer;
+  Future<List<CartList>> fetchProductFromDatabase() async {
+    var dbHelper = DatabaseHelperCart();
+    Future<List<CartList>> cartList = dbHelper.getNoteList();
+    return cartList;
   }
 
 
@@ -103,15 +42,77 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
               ),
             ),
           ),
+//          Expanded(
+//            child: Padding(
+//              padding: const EdgeInsets.all(8.0),
+//              child: Container(
+//                child: ListView(
+//                  shrinkWrap: true,
+//                  children: finalProductList()
+//                ),
+//              ),
+//            ),
+//          ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: finalProductList()
-                ),
-              ),
+            child: FutureBuilder<List<CartList>>(
+              future: fetchProductFromDatabase(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: new ListView.builder(
+
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                            child: Row (
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                //Icon(categoryList[i].iconCategory,size: 40,),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(snapshot.data[index].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text('${snapshot.data[index].ourPrice}',style: kTextSize14,),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text('${snapshot.data[index].ourPrice}',style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
+                                  ),
+                                )
+
+                              ],
+                            ),
+                          );
+                        }),
+                  );
+                } else if (snapshot.hasError) {
+                  return new Text("${snapshot.error}");
+                }
+                return new Container(
+                  alignment: AlignmentDirectional.center,
+                  child: new CircularProgressIndicator(),
+                );
+              },
             ),
           ),
           Container(

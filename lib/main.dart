@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/screens/home.dart';
 import 'package:market_place/screens/home_page.dart';
 import 'package:market_place/screens/mobile_login.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 class CategoryList {
   final String categoryName;
   final String imageCategory;

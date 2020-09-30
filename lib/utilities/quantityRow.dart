@@ -28,14 +28,14 @@ class _QuantityRowState extends State<QuantityRow> {
                   child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
                 ),
                 onTap:   (){
-//                  setState(() {
-//                    if(count>=1){
-//                      count--;
+                  setState(() {
+                    if(count>=1){
+                      count--;
 //                      finalPrice = price * count;
-//                      print(finalPrice);
-//                      Cart(price: finalPrice,);
-//                    }
-//                  });
+                      Cart(quantity: count,);
+
+                    }
+                  });
                 },
               ),
               Container(
@@ -58,14 +58,15 @@ class _QuantityRowState extends State<QuantityRow> {
                   child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
                 ),
                 onTap: (){
-//                   setState(() {
-//                     if(count<100){
-//                       count++;
+                   setState(() {
+                     if(count<100){
+                       count++;
 //                       finalPrice = price * count;
 //                       Cart(price: finalPrice,);
 //                       print(finalPrice);
-//                     }
-//                   });
+                       Cart(quantity: count,);
+                     }
+                   });
                 },
               ),
               SizedBox(width: 20,)

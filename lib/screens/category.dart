@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
+import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
@@ -22,7 +23,8 @@ class _CategoryState extends State<Category> {
     categoryNameFinal = widget.categoryName;
   }
   CategoryProducts cat = CategoryProducts();
-  List<CartList> cartList = CartList().getCartList();
+  //List<CartList> cartList = CartList().getCartList();
+  var databaseHelperCart = DatabaseHelperCart();
 
   List<Widget> categoryProductsContainer() {
     List<Container> newContainer =[];
@@ -72,7 +74,7 @@ class _CategoryState extends State<Category> {
                           child: Row(
                             children: <Widget>[
                               Text('Our Price - ',style: kTextSize14,),
-                              Text(categoryProducts[i].mrp,style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
+                              Text('${categoryProducts[i].mrp}',style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 10),
                                 child: Text('${categoryProducts[i].ourPrice} ₹',style:TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
@@ -96,18 +98,18 @@ class _CategoryState extends State<Category> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    onPressed: () {
+                    onPressed: () async{
                         Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                         String productName = categoryProducts[i].productName;
                         String productQuantity = categoryProducts[i].unitQuantity;
-                        double ourPrice = categoryProducts[i].ourPrice;
-                        double mrp = categoryProducts[i].mrp;
+                        String ourPrice = categoryProducts[i].ourPrice;
+                        String mrp = categoryProducts[i].mrp;
                         String productImage = categoryProducts[i].productImageName;
-                        //cartList.add(CartList(categoryName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
-                        // print(cartList.length);
-                      CartItems().addItem(productName, productImage, mrp, ourPrice, productQuantity);
 
-                    },
+                         var note = CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity );
+                         await databaseHelperCart.insertNote(note);
+                         databaseHelperCart.getNoteMapList();
+                         },
                     color: Colors.indigoAccent,
                     child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
                   )
@@ -203,16 +205,18 @@ class _CategoryState extends State<Category> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        onPressed: () {
+                        onPressed: () async{
                           Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
-                            String productName = categoryProducts[i].productName;
-                            String productQuantity = categoryProducts[i].unitQuantity;
-                            double ourPrice = categoryProducts[i].ourPrice;
-                            double mrp = categoryProducts[i].mrp;
-                            String productImage = categoryProducts[i].productImageName;
-                            cartList.add(CartList(categoryName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
-                            print(cartList.length);
-                            },
+                          String productName = categoryProducts[i].productName;
+                          String productQuantity = categoryProducts[i].unitQuantity;
+                          String ourPrice = categoryProducts[i].ourPrice;
+                          String mrp = categoryProducts[i].mrp;
+                          String productImage = categoryProducts[i].productImageName;
+
+                          var note = CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity );
+                          await databaseHelperCart.insertNote(note);
+                          databaseHelperCart.getNoteMapList();
+                        },
                         color: Colors.indigoAccent,
                         child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
                       )
