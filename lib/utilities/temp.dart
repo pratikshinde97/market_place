@@ -263,3 +263,440 @@
 //    return cartList;
 //  }
 //}
+
+
+//cart//
+//  int itemsLength;
+//  double finalPrice;
+//  CartList cartList;
+//
+//  Future<List<CartList>> fetchProductFromDatabase() async {
+//    var dbHelper = DatabaseHelperCart();
+//    Future<List<CartList>> cartList = dbHelper.getNoteList();
+//    return cartList;
+//  }
+//   Future<int> fetchLengthFromDatabase() async{
+//     var dbHelper = DatabaseHelperCart();
+//     int cart =await dbHelper.getCount();
+//     setState(() {
+//       itemsLength = cart;
+//     });
+//    return itemsLength;
+//  }
+//  Future<int> updateFromDatabase(cartList) async{
+//    var dbHelper = DatabaseHelperCart();
+//    int cart =await dbHelper.updateNote(cartList);
+////    setState(() {
+////      itemsLength = cart;
+////    });
+//    return cart;
+//  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    //fetchLengthFromDatabase();
+//  }
+
+//  Widget quantityValue(){
+//    int count=1;
+//    return  Row(
+//      mainAxisAlignment: MainAxisAlignment.end,
+//      children: <Widget>[
+//        Container(
+//          child: Row(
+//            children: <Widget>[
+//              GestureDetector(
+//                child: Container(
+//                  width: 40,
+//                  height: 30,
+//                  decoration: BoxDecoration(
+//                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
+//                      color: Colors.indigoAccent
+//                  ),
+//                  child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
+//                ),
+//                onTap:   (){
+//                  setState(() {
+//
+//                    if(count>=1){
+//                      count--;
+////                      double price =double.parse(snapshot.data[index].ourPrice);
+////                      price = price * count;
+////                      snapshot.data[index].ourPrice = price.toString();
+////                      updateFromDatabase(snapshot.data[index].ourPrice);
+////                      print(snapshot.data[index].ourPrice);
+////                      //Cart(quantity: count,);
+//
+//                    }
+//                  });
+//                },
+//              ),
+//              Container(
+//                width: 50,
+//                height: 30,
+//                decoration: BoxDecoration(
+//                  border: Border.all(width: 1,color: Colors.indigoAccent),
+//
+//                ),
+//                child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+//              ),
+//              GestureDetector(
+//                child: Container(
+//                  width: 40,
+//                  height: 30,
+//                  decoration: BoxDecoration(
+//                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
+//                      color: Colors.indigoAccent
+//                  ),
+//                  child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
+//                ),
+//                onTap: (){
+//                  setState(() {
+//                    if(count<100){
+//                      count++;
+////                       finalPrice = price * count;
+////                       Cart(price: finalPrice,);
+////                       print(finalPrice);
+//                      //Cart(quantity: count,);
+//                    }
+//                  });
+//                },
+//              ),
+//              SizedBox(width: 20,)
+//            ],
+//          ),
+//        ),
+//      ],
+//    );
+//  }
+
+
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.end,
+//                children: <Widget>[
+//                  Container(
+//                    child: Row(
+//                      children: <Widget>[
+//                        GestureDetector(
+//                          child: Container(
+//                            width: 40,
+//                            height: 30,
+//                            decoration: BoxDecoration(
+//                                borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
+//                                color: Colors.indigoAccent
+//                            ),
+//                            child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
+//                          ),
+//                          onTap:   (){
+//                            setState(() {
+//                              if(count>=1){
+//                                count--;
+//                                finalPrice = cartList[i].ourPrice * count;
+//                                print(finalPrice);
+//                              }
+//                            });
+//                          },
+//                        ),
+//                        Container(
+//                          width: 50,
+//                          height: 30,
+//                          decoration: BoxDecoration(
+//                            border: Border.all(width: 1,color: Colors.indigoAccent),
+//
+//                          ),
+//                          child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+//                        ),
+//                        GestureDetector(
+//                          child: Container(
+//                            width: 40,
+//                            height: 30,
+//                            decoration: BoxDecoration(
+//                                borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
+//                                color: Colors.indigoAccent
+//                            ),
+//                            child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
+//                          ),
+//                          onTap: (){
+//                            setState(() {
+//                              if(count<100){
+//                                count++;
+//                                finalPrice = cartList[i].ourPrice * count;
+//                                print(finalPrice);
+//                              }
+//                            });
+//                          },
+//                        ),
+//                        SizedBox(width: 20,)
+//                      ],
+//                    ),
+//                  ),
+//                ],
+//              ),
+
+//print(widget.quantity);
+//    fetchProductFromDatabase();
+//    fetchLengthFromDatabase();
+
+//          children: <Widget>[
+//
+////            Expanded(
+////              child: FutureBuilder<List<CartList>>(
+////                future: fetchProductFromDatabase(),
+////                builder: (context, snapshot) {
+////                  if (snapshot.hasData) {
+////                     int count=2;
+////                    return Container(
+////                      child: new ListView.builder(
+////
+////                          scrollDirection: Axis.vertical,
+////                          shrinkWrap: true,
+////                          itemCount: snapshot.data.length,
+////
+////                          itemBuilder: (context, index) {
+////                            return Container(
+////                              color: Colors.white,
+////                              padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+////                              child: Card(
+////                                elevation: 2,
+////                                child: Column(
+////                                  children: <Widget>[
+////                                    Row (
+////                                      mainAxisAlignment: MainAxisAlignment.start,
+////                                      children: <Widget>[
+////                                        //Icon(categoryList[i].iconCategory,size: 40,),
+////                                        Padding(
+////                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                          child: Image.network(snapshot.data[index].productImageName, width: 100),
+////                                        ),
+////                                        Expanded(
+////                                          child: Column(
+////                                            crossAxisAlignment: CrossAxisAlignment.start,
+////                                            children: <Widget>[
+////                                              SizedBox(height: 8,),
+////                                              Row(
+////                                                children: <Widget>[
+////                                                  Expanded(
+////                                                    child: Padding(
+////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                                      child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+////                                                    ),
+////                                                  ),
+////                                                  GestureDetector(
+////                                                    onTap: (){
+//////                                                          setState(() {
+//////                                                            snapshot.data[index].removeAt(i);
+//////                                                            print(cartList.length);
+//////                                                          });
+////                                                    },
+////                                                    child: Padding(
+////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                                      child: Icon(Icons.delete_outline,color: Colors.red,),
+////                                                    ),
+////                                                  )
+////                                                ],
+////                                              ),
+////
+////                                              SizedBox(height: 8,),
+////                                              Padding(
+////                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                                child: Text(snapshot.data[index].unitQuantity,style: TextStyle(fontSize: 14,color: Colors.grey),),
+////                                              ),
+////                                              SizedBox(height: 4,),
+////                                              Padding(
+////                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                                child: Row(
+////                                                  children: <Widget>[
+////                                                    Text('Our Price - ',style: kTextSize14,),
+////                                                    Text('${snapshot.data[index].mrp}',style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
+////                                                    Padding(
+////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+////                                                      child: Text('${snapshot.data[index].ourPrice} ₹',style: TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
+////                                                    ),
+////                                                  ],
+////                                                ),
+////                                              ),
+////                                              SizedBox(height: 12,),
+////
+////                                            ],
+////                                          ),
+////                                        )
+////
+////                                      ],
+////                                    ),
+////
+////                                    Row(
+////                                      mainAxisAlignment: MainAxisAlignment.end,
+////                                      children: <Widget>[
+////                                        //QuantityRow(price: double.parse(snapshot.data[index].ourPrice),),
+////                                        //quantityValue(),
+////                                    Row(
+////                                    mainAxisAlignment: MainAxisAlignment.end,
+////                                      children: <Widget>[
+////                                        Container(
+////                                          child: Row(
+////                                            children: <Widget>[
+////                                              GestureDetector(
+////                                                child: Container(
+////                                                  width: 40,
+////                                                  height: 30,
+////                                                  decoration: BoxDecoration(
+////                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
+////                                                      color: Colors.indigoAccent
+////                                                  ),
+////                                                  child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
+////                                                ),
+////                                                onTap:   (){
+////                                                  setState(() {
+////                                                    if(count>=1){
+////                                                      count--;
+//////                      double price =double.parse(snapshot.data[index].ourPrice);
+//////                      price = price * count;
+//////                      snapshot.data[index].ourPrice = price.toString();
+//////                      updateFromDatabase(snapshot.data[index].ourPrice);
+//////                      print(snapshot.data[index].ourPrice);
+//////                      //Cart(quantity: count,);
+////
+////                                                    }
+////                                                  });
+////                                                },
+////                                              ),
+////                                              Container(
+////                                                width: 50,
+////                                                height: 30,
+////                                                decoration: BoxDecoration(
+////                                                  border: Border.all(width: 1,color: Colors.indigoAccent),
+////
+////                                                ),
+////                                                child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+////                                              ),
+////                                              GestureDetector(
+////                                                child: Container(
+////                                                  width: 40,
+////                                                  height: 30,
+////                                                  decoration: BoxDecoration(
+////                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
+////                                                      color: Colors.indigoAccent
+////                                                  ),
+////                                                  child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
+////                                                ),
+////                                                onTap: (){
+////                                                  setState(() {
+////                                                    if(count<100){
+////                                                      count++;
+//////                       finalPrice = price * count;
+//////                       Cart(price: finalPrice,);
+//////                       print(finalPrice);
+////                                                      //Cart(quantity: count,);
+////                                                    }
+////                                                  });
+////                                                },
+////                                              ),
+////                                              SizedBox(width: 20,)
+////                                            ],
+////                                          ),
+////                                        ),
+////                                      ],
+////                                    ),
+////                                      ],
+////                                    ),
+////
+////                                    SizedBox(height: 10,),
+////                                  ],
+////                                ),
+////                              ),
+////                            );
+////                          }),
+////                    );
+////                  } else if (snapshot.hasError) {
+////                    return new Text("${snapshot.error}");
+////                  }
+////                  return new Container(
+////                    alignment: AlignmentDirectional.center,
+////                    child: new CircularProgressIndicator(),
+////                  );
+////                },
+////              ),
+////            ),
+
+//          ],
+
+//confirm_order
+//  Future<List<CartList>> fetchProductFromDatabase() async {
+//    var dbHelper = DatabaseHelperCart();
+//    Future<List<CartList>> cartList = dbHelper.getNoteList();
+//    return cartList;
+//  }
+
+//          Expanded(
+//            child: Padding(
+//              padding: const EdgeInsets.all(8.0),
+//              child: Container(
+//                child: ListView(
+//                  shrinkWrap: true,
+//                  children: finalProductList()
+//                ),
+//              ),
+//            ),
+//          ),
+//          Expanded(
+//            child: FutureBuilder<List<CartList>>(
+//              future: fetchProductFromDatabase(),
+//              builder: (context, snapshot) {
+//                if (snapshot.hasData) {
+//                  return Container(
+//                    child: new ListView.builder(
+//
+//                        scrollDirection: Axis.vertical,
+//                        shrinkWrap: true,
+//                        itemCount: snapshot.data.length,
+//                        itemBuilder: (context, index) {
+//                          return Container(
+//                            color: Colors.white,
+//                            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+//                            child: Row (
+//                              mainAxisAlignment: MainAxisAlignment.start,
+//                              children: <Widget>[
+//                                //Icon(categoryList[i].iconCategory,size: 40,),
+//                                Expanded(
+//                                  flex: 2,
+//                                  child: Padding(
+//                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+//                                    child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+//                                  ),
+//                                ),
+//
+//                                Expanded(
+//                                  child: Padding(
+//                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+//                                    child: Text(snapshot.data[index].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
+//                                  ),
+//                                ),
+//
+//                                Expanded(
+//                                  child: Padding(
+//                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+//                                    child: Text('${snapshot.data[index].ourPrice}',style: kTextSize14,),
+//                                  ),
+//                                ),
+//                                Expanded(
+//                                  child: Padding(
+//                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+//                                    child: Text('${snapshot.data[index].ourPrice}',style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
+//                                  ),
+//                                )
+//
+//                              ],
+//                            ),
+//                          );
+//                        }),
+//                  );
+//                } else if (snapshot.hasError) {
+//                  return new Text("${snapshot.error}");
+//                }
+//                return new Container(
+//                  alignment: AlignmentDirectional.center,
+//                  child: new CircularProgressIndicator(),
+//                );
+//              },
+//            ),
+//          ),

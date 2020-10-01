@@ -1,6 +1,6 @@
 class CartList {
-
    int id;
+   int price;
    String productName;
    String productImageName;
    String mrp;
@@ -8,9 +8,10 @@ class CartList {
    String unitQuantity;
 
 
-  CartList({this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity});
+  CartList({this.price,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity});
 
   CartList.withId({this.id,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity});
+
 
   Map<String, dynamic> toMap() {
 

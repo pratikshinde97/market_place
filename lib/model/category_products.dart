@@ -14,7 +14,7 @@ class CategoryProducts{
 
    List<CategoryProducts> getCategoryProducts()  {
    List<CategoryProducts> categoryProducts = [
-    CategoryProducts( categoryName: 'cat-1',productName: 'Basmati Rice',productStatus:'Available',productDescription: 'best rice in world',mrp: '55', ourPrice: '46',unitQuantity: '1 kg',
+    CategoryProducts( categoryName: 'cat-1',productName: 'Basmati Rice',productStatus:'Available',productDescription: 'best rice in world',mrp: '55', ourPrice: '86',unitQuantity: '1 kg',
        productImageName: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',),
      CategoryProducts( categoryName: 'cat-2',productName: 'Tur Dal',productStatus:'Presently Not Available',productDescription: 'Direct come from fresh farm abgjjkff vhjk',mrp: '95', ourPrice: '86',unitQuantity: '1 kg',
        productImageName: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',),

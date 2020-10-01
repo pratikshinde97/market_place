@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 class Category extends StatefulWidget {
   final String categoryName;
@@ -98,17 +100,15 @@ class _CategoryState extends State<Category> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    onPressed: () async{
-                        Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+                    onPressed: () {
                         String productName = categoryProducts[i].productName;
                         String productQuantity = categoryProducts[i].unitQuantity;
                         String ourPrice = categoryProducts[i].ourPrice;
                         String mrp = categoryProducts[i].mrp;
                         String productImage = categoryProducts[i].productImageName;
 
-                         var note = CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity );
-                         await databaseHelperCart.insertNote(note);
-                         databaseHelperCart.getNoteMapList();
+                        Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                        Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                          },
                     color: Colors.indigoAccent,
                     child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
@@ -205,7 +205,7 @@ class _CategoryState extends State<Category> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        onPressed: () async{
+                        onPressed: () {
                           Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                           String productName = categoryProducts[i].productName;
                           String productQuantity = categoryProducts[i].unitQuantity;
@@ -213,9 +213,7 @@ class _CategoryState extends State<Category> {
                           String mrp = categoryProducts[i].mrp;
                           String productImage = categoryProducts[i].productImageName;
 
-                          var note = CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity );
-                          await databaseHelperCart.insertNote(note);
-                          databaseHelperCart.getNoteMapList();
+                          Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
                         },
                         color: Colors.indigoAccent,
                         child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),

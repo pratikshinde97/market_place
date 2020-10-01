@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/model/cart_list.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/cart.dart';
+import 'package:provider/provider.dart';
 class QuantityRow extends StatefulWidget {
+  final Function onTap;
+  QuantityRow({this.onTap});
   @override
   _QuantityRowState createState() => _QuantityRowState();
 }
 
 
 class _QuantityRowState extends State<QuantityRow> {
+
   int count=1;
   double finalPrice;
   @override
@@ -31,8 +37,13 @@ class _QuantityRowState extends State<QuantityRow> {
                   setState(() {
                     if(count>=1){
                       count--;
-//                      finalPrice = price * count;
-                      Cart(quantity: count,);
+
+                      //Provider.of<CartModel>(context).addCount(count);
+//                      finalPrice = widget.price * count;
+//                      print(finalPrice);
+//                      Cart(price: finalPrice,);
+                      //Navigator.pop(context,finalPrice);
+                      //Cart(quantity: count,);
 
                     }
                   });
@@ -57,14 +68,14 @@ class _QuantityRowState extends State<QuantityRow> {
                   ),
                   child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
                 ),
+                   //onTap: onTap;
+
                 onTap: (){
                    setState(() {
                      if(count<100){
                        count++;
-//                       finalPrice = price * count;
-//                       Cart(price: finalPrice,);
-//                       print(finalPrice);
-                       Cart(quantity: count,);
+                       Provider.of<CartModel>(context).addCount(count);
+
                      }
                    });
                 },
