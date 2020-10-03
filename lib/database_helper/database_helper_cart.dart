@@ -15,6 +15,8 @@ class DatabaseHelperCart {
   String colMrp = 'mrp';
   String colOurPrice = 'ourPrice';
   String colUnitQuantity = 'unitQuantity';
+  String colQuantity ='quantity';
+  String colProductId = 'productId';
 
   DatabaseHelperCart._createInstance(); // Named constructor to create instance of DatabaseHelper
 
@@ -47,7 +49,7 @@ class DatabaseHelperCart {
   void _createDb(Database db, int newVersion) async {
 
     await db.execute('CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colProductName TEXT, '
-        '$colProductImageName TEXT, $colMrp TEXT, $colOurPrice TEXT, $colUnitQuantity TEXT)');
+        '$colProductImageName TEXT, $colMrp TEXT, $colOurPrice TEXT, $colUnitQuantity TEXT, $colQuantity TEXT, $colProductId TEXT)');
   }
 
   // Fetch Operation: Get all note objects from database
@@ -101,6 +103,21 @@ class DatabaseHelperCart {
     }
 
     return noteList;
+  }
+  void updateProduct(String newVal, String productId) async {
+    try{
+      var dbClient = await database;
+      await dbClient.rawUpdate('''
+    UPDATE $noteTable
+    SET  $colQuantity= ?
+    WHERE  $productId= ?
+    ''', [newVal, productId]);
+      print(newVal);
+      print(productId);
+    }
+    catch(e){
+      print(e);
+    }
   }
 
 }

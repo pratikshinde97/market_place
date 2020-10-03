@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/database_helper/database_helper_cart.dart';
+import 'package:market_place/model/cart_count.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:provider/provider.dart';
 class QuantityRow extends StatefulWidget {
-  final Function onTap;
-  QuantityRow({this.onTap});
+  final String productId;
+  QuantityRow({this.productId});
   @override
   _QuantityRowState createState() => _QuantityRowState();
 }
@@ -14,9 +16,16 @@ class QuantityRow extends StatefulWidget {
 class _QuantityRowState extends State<QuantityRow> {
 
   int count=1;
-  double finalPrice;
+
+  void updateProduct(newPrice, productName) {
+    var dbHelper = DatabaseHelperCart();
+    dbHelper.updateProduct(newPrice, productName);
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    String productId = widget.productId;
     return   Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -37,6 +46,10 @@ class _QuantityRowState extends State<QuantityRow> {
                   setState(() {
                     if(count>=1){
                       count--;
+                      String newCount = count.toString();
+                      updateProduct(newCount, productId);
+//                      Provider.of<CartModel>(context).addCartCount(CartCount(count));
+//                      print(Provider.of<CartModel>(context).itemCartCount);
 
                       //Provider.of<CartModel>(context).addCount(count);
 //                      finalPrice = widget.price * count;
@@ -74,7 +87,10 @@ class _QuantityRowState extends State<QuantityRow> {
                    setState(() {
                      if(count<100){
                        count++;
-                       Provider.of<CartModel>(context).addCount(count);
+                       String newCount = count.toString();
+                       updateProduct(newCount, productId);
+//                       Provider.of<CartModel>(context).addCartCount(CartCount(count));
+//                       print(Provider.of<CartModel>(context).itemCartCount);
 
                      }
                    });

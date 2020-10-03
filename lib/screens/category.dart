@@ -26,7 +26,7 @@ class _CategoryState extends State<Category> {
   }
   CategoryProducts cat = CategoryProducts();
   //List<CartList> cartList = CartList().getCartList();
-  var databaseHelperCart = DatabaseHelperCart();
+
 
   List<Widget> categoryProductsContainer() {
     List<Container> newContainer =[];
@@ -106,8 +106,12 @@ class _CategoryState extends State<Category> {
                         String ourPrice = categoryProducts[i].ourPrice;
                         String mrp = categoryProducts[i].mrp;
                         String productImage = categoryProducts[i].productImageName;
+                       // String quantity = '1';
+                        var databaseHelperCart = DatabaseHelperCart();
+                        //CartList cartList = CartList();
+                        databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
 
-                        Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                        //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
                         Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                          },
                     color: Colors.indigoAccent,
@@ -206,14 +210,20 @@ class _CategoryState extends State<Category> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         onPressed: () {
-                          Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
                           String productName = categoryProducts[i].productName;
                           String productQuantity = categoryProducts[i].unitQuantity;
                           String ourPrice = categoryProducts[i].ourPrice;
                           String mrp = categoryProducts[i].mrp;
                           String productImage = categoryProducts[i].productImageName;
+                          //String quantity = '1';
+                          String productId = categoryProducts[i].productId;
 
-                          Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                          var databaseHelperCart = DatabaseHelperCart();
+                          databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId ));
+
+                          //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                          Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
+
                         },
                         color: Colors.indigoAccent,
                         child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
@@ -269,6 +279,7 @@ class _CategoryState extends State<Category> {
                     ),
                   ),
 //              DropdownButton(
+//                items: Provider.of<CartModel>(context).items[i].productName.tol,
 //                value: ,
 //              ),
                   Column(

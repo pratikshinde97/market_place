@@ -1,16 +1,17 @@
 class CartList {
    int id;
-   int price;
    String productName;
    String productImageName;
    String mrp;
    String ourPrice;
    String unitQuantity;
+   String quantity;
+   String productId;
 
 
-  CartList({this.price,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity});
+  CartList({this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity,this.quantity,this.productId});
 
-  CartList.withId({this.id,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity});
+  CartList.withId({this.id,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity,this.quantity,this.productId});
 
 
   Map<String, dynamic> toMap() {
@@ -24,6 +25,8 @@ class CartList {
     map['mrp'] = mrp;
     map['ourPrice'] = ourPrice;
     map['unitQuantity'] = unitQuantity;
+    map['quantity'] = quantity;
+    map['productId'] = productId;
     return map;
   }
 
@@ -35,5 +38,7 @@ class CartList {
     this.mrp = map['mrp'];
     this.ourPrice = map['ourPrice'];
     this.unitQuantity = map['unitQuantity'];
+    this.quantity =map['quantity'];
+    this.productId =map['productId'];
   }
 }

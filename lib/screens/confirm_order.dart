@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
+import 'package:market_place/database_helper/database_helper_cart.dart';
+import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/customer_name_address.dart';
 import 'package:provider/provider.dart';
@@ -12,53 +14,60 @@ class ConfirmOrders extends StatefulWidget {
 class _ConfirmOrdersState extends State<ConfirmOrders> {
   double totalAmount= 20000;
 
-    List<Widget> finalProductList() {
-    List<Container> newContainer =[];
-    for(int i=0;i<Provider.of<CartModel>(context).itemCount;i++){
-      newContainer.add(Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-        child: Row (
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            //Icon(categoryList[i].iconCategory,size: 40,),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(Provider.of<CartModel>(context).items[i].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
-              ),
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text(Provider.of<CartModel>(context).items[i].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
-              ),
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${Provider.of<CartModel>(context).items[i].ourPrice}',style: kTextSize14,),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Text('${double.parse(Provider.of<CartModel>(context).items[i].ourPrice)*double.parse(Provider.of<CartModel>(context).items[i].ourPrice)}',style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
-              ),
-            )
-
-          ],
-        ),
-      ));
-    }
-    return newContainer;
+//    List<Widget> finalProductList() {
+//    List<Container> newContainer =[];
+//    for(int i=0;i<Provider.of<CartModel>(context).itemCount;i++){
+//      newContainer.add(Container(
+//        color: Colors.white,
+//        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+//        child: Row (
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          children: <Widget>[
+//            //Icon(categoryList[i].iconCategory,size: 40,),
+//            Expanded(
+//              flex: 2,
+//              child: Padding(
+//                padding: const EdgeInsets.symmetric(horizontal: 10),
+//                child: Text(Provider.of<CartModel>(context).items[i].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+//              ),
+//            ),
+//
+//            Expanded(
+//              child: Padding(
+//                padding: const EdgeInsets.symmetric(horizontal: 10),
+//                child: Text(Provider.of<CartModel>(context).items[i].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
+//              ),
+//            ),
+//
+//            Expanded(
+//              child: Padding(
+//                padding: const EdgeInsets.symmetric(horizontal: 10),
+//                child: Text('${Provider.of<CartModel>(context).items[i].ourPrice}',style: kTextSize14,),
+//              ),
+//            ),
+//            Expanded(
+//              child: Padding(
+//                padding: const EdgeInsets.symmetric(horizontal: 10),
+//                child: Text('${double.parse(Provider.of<CartModel>(context).items[i].ourPrice)*double.parse(Provider.of<CartModel>(context).items[i].ourPrice)}',style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
+//              ),
+//            )
+//
+//          ],
+//        ),
+//      ));
+//    }
+//    return newContainer;
+//  }
+    Future<List<CartList>> fetchProductFromDatabase() async {
+    var dbHelper = DatabaseHelperCart();
+    Future<List<CartList>> cartList = dbHelper.getNoteList();
+    print(cartList);
+    return cartList;
   }
 
   @override
   Widget build(BuildContext context) {
+    fetchProductFromDatabase();
     return Scaffold(
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
@@ -81,11 +90,74 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
               ),
             ),
           ),
-            Expanded(
-              child: ListView(
-                children: finalProductList(),
-              ),
+//            Expanded(
+//              child: ListView(
+//                children: finalProductList(),
+//              ),
+//            ),
+          Expanded(
+            child: FutureBuilder<List<CartList>>(
+              future: fetchProductFromDatabase(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    child: new ListView.builder(
+
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                            child: Row (
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                //Icon(categoryList[i].iconCategory,size: 40,),
+                                Expanded(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(snapshot.data[index].unitQuantity,style: TextStyle(color: Colors.black,fontSize: 14),),
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text('${snapshot.data[index].ourPrice}',style: kTextSize14,),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text('${snapshot.data[index].quantity}',style: TextStyle(color: Colors.green[900],fontSize: 14,fontWeight: FontWeight.bold),),
+                                  ),
+                                )
+
+                              ],
+                            ),
+                          );
+                        }),
+                  );
+                } else if (snapshot.hasError) {
+                  return new Text("${snapshot.error}");
+                }
+                return new Container(
+                  alignment: AlignmentDirectional.center,
+                  child: new CircularProgressIndicator(),
+                );
+              },
             ),
+          ),
+
 
           Container(
             color: Colors.white,

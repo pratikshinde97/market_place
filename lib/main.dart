@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => CartModel(),
       child: MaterialApp(
-        home: MobileLogin(),
+        home: HomePage(),
       ),
     );
   }
