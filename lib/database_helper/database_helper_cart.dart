@@ -108,9 +108,9 @@ class DatabaseHelperCart {
     try{
       var dbClient = await database;
       await dbClient.rawUpdate('''
-    UPDATE $noteTable
+    UPDATE note_table
     SET  $colQuantity= ?
-    WHERE  $productId= ?
+    WHERE  productId= ?
     ''', [newVal, productId]);
       print(newVal);
       print(productId);

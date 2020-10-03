@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
-import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:provider/provider.dart';
@@ -106,10 +105,10 @@ class _CategoryState extends State<Category> {
                         String ourPrice = categoryProducts[i].ourPrice;
                         String mrp = categoryProducts[i].mrp;
                         String productImage = categoryProducts[i].productImageName;
-                       // String quantity = '1';
+                        String quantity = '1';
                         var databaseHelperCart = DatabaseHelperCart();
                         //CartList cartList = CartList();
-                        databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
+                        databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,quantity: quantity));
 
                         //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
                         Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
@@ -215,11 +214,11 @@ class _CategoryState extends State<Category> {
                           String ourPrice = categoryProducts[i].ourPrice;
                           String mrp = categoryProducts[i].mrp;
                           String productImage = categoryProducts[i].productImageName;
-                          //String quantity = '1';
+                          String quantity = '1';
                           String productId = categoryProducts[i].productId;
 
                           var databaseHelperCart = DatabaseHelperCart();
-                          databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId ));
+                          databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId,quantity: quantity ));
 
                           //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
                           Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
