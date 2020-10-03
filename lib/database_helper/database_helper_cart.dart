@@ -90,6 +90,7 @@ class DatabaseHelperCart {
     return result;
   }
 
+
   // Get the 'Map List' [ List<Map> ] and convert it to 'Note List' [ List<Note> ]
   Future<List<CartList>> getNoteList() async {
 

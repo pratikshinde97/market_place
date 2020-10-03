@@ -12,15 +12,25 @@ class Cart extends StatefulWidget {
   _CartState createState() => _CartState();
 }
 class _CartState extends State<Cart> {
+int itemsLength;
 
-  Future<List<CartList>> fetchProductFromDatabase() async {
+  Future<int> fetchLengthFromDatabase() async{
     var dbHelper = DatabaseHelperCart();
-    Future<List<CartList>> cartList = dbHelper.getNoteList();
-    return cartList;
+    int cart =await dbHelper.getCount();
+     setState(() {
+       itemsLength = cart;
+     });
+    return cart;
+  }
+    @override
+  void initState() {
+    super.initState();
+    fetchLengthFromDatabase();
   }
   @override
   Widget build(BuildContext context) {
-    fetchProductFromDatabase();
+    fetchLengthFromDatabase();
+    //fetchProductFromDatabase();
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
@@ -31,13 +41,12 @@ class _CartState extends State<Cart> {
           children: <Widget>[
             Expanded(
               child: FutureBuilder<List<CartList>>(
-                future: fetchProductFromDatabase(),
+                future: Provider.of<CartModel>(context).fetchProductFromDatabase(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                      int count=2;
                     return Container(
                       child: new ListView.builder(
-
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
@@ -144,7 +153,9 @@ class _CartState extends State<Cart> {
                   child: Container(
                     height: 40,
                     color: Colors.indigoAccent,
-                    child: Center(child: Text('${Provider.of<CartModel>(context).itemCount}  items 0 ₹',style: TextStyle(color: Colors.white,fontSize: 14),)),
+                    child: Center(child: Text('$itemsLength  items 0 ₹',style: TextStyle(color: Colors.white,fontSize: 14),)),
+                    //child: Center(child: Text('${Provider.of<CartModel>(context).itemLength}  items 0 ₹',style: TextStyle(color: Colors.white,fontSize: 14),)),
+
                   ),
                 ),
                 Expanded(

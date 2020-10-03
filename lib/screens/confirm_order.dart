@@ -14,16 +14,16 @@ class ConfirmOrders extends StatefulWidget {
 class _ConfirmOrdersState extends State<ConfirmOrders> {
   double totalAmount= 20000;
 
-    Future<List<CartList>> fetchProductFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    Future<List<CartList>> cartList = dbHelper.getNoteList();
-    print(cartList);
-    return cartList;
-  }
+//    Future<List<CartList>> fetchProductFromDatabase() async {
+//    var dbHelper = DatabaseHelperCart();
+//    Future<List<CartList>> cartList = dbHelper.getNoteList();
+//    print(cartList);
+//    return cartList;
+//  }
 
   @override
   Widget build(BuildContext context) {
-    fetchProductFromDatabase();
+    //fetchProductFromDatabase();
     return Scaffold(
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
@@ -49,7 +49,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
 
           Expanded(
             child: FutureBuilder<List<CartList>>(
-              future: fetchProductFromDatabase(),
+              future: Provider.of<CartModel>(context).fetchProductFromDatabase(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
