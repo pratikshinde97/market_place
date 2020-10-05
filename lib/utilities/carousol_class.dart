@@ -14,6 +14,7 @@ class CarouselClass extends StatelessWidget {
   ];
 
   final List<Widget> imageSliders = imgList.map((item) => Container(
+
     child: Container(
       margin: EdgeInsets.all(5.0),
       child: ClipRRect(

@@ -71,6 +71,16 @@ class _HomePageState extends State<HomePage> {
           'Market Place',
           style: kAppBarTextSize18,
         ),
+        actions: <Widget>[
+          InkWell(
+              child: Icon(Icons.add_shopping_cart),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Cart()));
+            },
+          ),
+          SizedBox(width: 10,)
+        ],
         backgroundColor: Colors.indigo,
       ),
       body: SafeArea(
@@ -84,7 +94,9 @@ class _HomePageState extends State<HomePage> {
 //                    SizedBox(
 //                      height: 10,
 //                    ),
-                    CarouselClass(),
+                    Container(
+                      height: 130,
+                        child: CarouselClass()),
                     SizedBox(height: 10,),
                     Row(
                       children: <Widget>[
@@ -145,14 +157,14 @@ class _HomePageState extends State<HomePage> {
                     iconData: Icons.business,
                     tabName: 'Orders',
                   ),
-                  NewExpanded(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Cart()));
-                    },
-                    iconData: Icons.shopping_cart,
-                    tabName: 'Cart',
-                  ),
+//                  NewExpanded(
+//                    onTap: () {
+//                      Navigator.push(context,
+//                          MaterialPageRoute(builder: (context) => Cart()));
+//                    },
+//                    iconData: Icons.shopping_cart,
+//                    tabName: 'Cart',
+//                  ),
                 ],
               ),
             ),
