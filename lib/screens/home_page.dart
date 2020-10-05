@@ -40,15 +40,15 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               //Icon(categoryList[i].iconCategory,size: 40,),
               Expanded(
-                flex: 5,
+                flex: 3,
                 child: Image.network(categoryList[i].imageCategory,
-                   width: 110 ,),
+                   ),
               ),
-//              SizedBox(
-//                height: 12,
-//              ),
+              SizedBox(
+                height: 12,
+              ),
               Expanded(
-                flex: 1,
+                //flex: 1,
                 child: Text(
                   categoryList[i].categoryName,
                   style: kBottomTextSize,
@@ -65,15 +65,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEDF0EE),
+      //backgroundColor: Color(0xFFEDF0EE),
+      backgroundColor: Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text(
           'Market Place',
-          style: kAppBarTextSize18,
+          //style: kAppBarTextSize18,
+          style: TextStyle(fontSize: 18,color: Colors.white),
         ),
         actions: <Widget>[
           InkWell(
-              child: Icon(Icons.add_shopping_cart),
+              child: Icon(Icons.shopping_cart),
             onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Cart()));
@@ -81,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(width: 10,)
         ],
-        backgroundColor: Colors.indigo,
+        backgroundColor: Color(0xFF344955),
       ),
       body: SafeArea(
         child: Column(
@@ -95,14 +97,14 @@ class _HomePageState extends State<HomePage> {
 //                      height: 10,
 //                    ),
                     Container(
-                      height: 130,
+                      height: 140,
                         child: CarouselClass()),
                     SizedBox(height: 10,),
                     Row(
                       children: <Widget>[
-                        Expanded(child: Divider()),
+                        Expanded(child: Divider(color: Color(0xFF344955),indent: 20,)),
                         Expanded(child: Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)))),
-                        Expanded(child: Divider()),
+                        Expanded(child: Divider(color: Color(0xFF344955),endIndent: 20,)),
                       ],
                     ),
                     //Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black),)),
@@ -113,10 +115,10 @@ class _HomePageState extends State<HomePage> {
                         primary: false,
                         slivers: <Widget>[
                           SliverPadding(
-                            padding: const EdgeInsets.all(30),
+                            padding: const EdgeInsets.all(16),
                             sliver: SliverGrid.count(
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
                               crossAxisCount: 2,
                               children: categoryContainer(),
                             ),
@@ -130,13 +132,13 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               height: 54,
-              color: Colors.white,
+              color: Color(0xFF344955),
               child: Row(
                 children: <Widget>[
                   NewExpanded(
                     iconData: Icons.home,
                     tabName: 'Home',
-                    color: Colors.indigo,
+                    color: Colors.yellow[700],
                   ),
                   NewExpanded(
                     onTap: () {
@@ -146,6 +148,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => Category(categoryName)));
                     },
+                    color: Colors.white,
                     iconData: Icons.category,
                     tabName: 'Category',
                   ),
@@ -155,6 +158,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(builder: (context) => Orders()));
                     },
                     iconData: Icons.business,
+                    color: Colors.white,
                     tabName: 'Orders',
                   ),
 //                  NewExpanded(

@@ -5,7 +5,7 @@ class NewExpanded extends StatelessWidget {
   final IconData iconData;
   final String tabName;
   final Color color;
-  NewExpanded({this.iconData,this.onTap,this.tabName,this.color=Colors.indigoAccent});
+  NewExpanded({this.iconData,this.onTap,this.tabName,this.color});
   @override
   Widget build(BuildContext context) {
     return Expanded(
