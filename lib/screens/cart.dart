@@ -3,6 +3,7 @@ import 'package:market_place/constants.dart';
 import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/model/check_out_list.dart';
 import 'package:market_place/screens/confirm_order.dart';
 import 'package:market_place/utilities/quantityRow.dart';
 import 'package:provider/provider.dart';
@@ -22,15 +23,35 @@ int itemsLength;
      });
     return cart;
   }
+
     @override
   void initState() {
     super.initState();
     fetchLengthFromDatabase();
   }
-  @override
+
+Future<List<CartList>> fetchProductFromDatabase() async {
+  var dbHelper = DatabaseHelperCart();
+  List<CartList> cartList =await dbHelper.getNoteList();
+  for(int i =1;i<cartList.length;i++){
+
+    String pName =  cartList[i].productName;
+    double rate = double.parse(cartList[i].mrp);
+    double quantity = double.parse(cartList[i].quantity);
+    double amount = double.parse(cartList[i].quantity)*double.parse(cartList[i].mrp);
+
+    Provider.of<CartModel>(context).add(CheckOutList(productName: pName,rate: rate,quantity: quantity,amount: amount));
+    print(Provider.of<CartModel>(context).itemCount);
+    print(cartList);
+
+  }
+  return cartList;
+}
+
+@override
   Widget build(BuildContext context) {
-    fetchLengthFromDatabase();
-    //fetchProductFromDatabase();
+    //fetchLengthFromDatabase();
+    fetchProductFromDatabase();
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
@@ -52,6 +73,7 @@ int itemsLength;
                           itemCount: snapshot.data.length,
 
                           itemBuilder: (context, index) {
+
                             return Container(
                               color: Colors.white,
                               padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
@@ -163,6 +185,7 @@ int itemsLength;
                     height: 40,
                     child: FlatButton(
                       onPressed: (){
+
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>ConfirmOrders()));
                       },
                       color: Colors.indigo,

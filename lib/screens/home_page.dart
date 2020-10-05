@@ -40,13 +40,13 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               //Icon(categoryList[i].iconCategory,size: 40,),
               Expanded(
-                flex: 3,
+                flex: 5,
                 child: Image.network(categoryList[i].imageCategory,
-                    height: 70, width: 90),
+                   width: 110 ,),
               ),
-              SizedBox(
-                height: 12,
-              ),
+//              SizedBox(
+//                height: 12,
+//              ),
               Expanded(
                 flex: 1,
                 child: Text(
@@ -85,16 +85,26 @@ class _HomePageState extends State<HomePage> {
 //                      height: 10,
 //                    ),
                     CarouselClass(),
+                    SizedBox(height: 10,),
+                    Row(
+                      children: <Widget>[
+                        Expanded(child: Divider()),
+                        Expanded(child: Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)))),
+                        Expanded(child: Divider()),
+                      ],
+                    ),
+                    //Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black),)),
+
                     Container(
                       child: CustomScrollView(
                         shrinkWrap: true,
                         primary: false,
                         slivers: <Widget>[
                           SliverPadding(
-                            padding: const EdgeInsets.all(40),
+                            padding: const EdgeInsets.all(30),
                             sliver: SliverGrid.count(
-                              crossAxisSpacing: 26,
-                              mainAxisSpacing: 26,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20,
                               crossAxisCount: 2,
                               children: categoryContainer(),
                             ),

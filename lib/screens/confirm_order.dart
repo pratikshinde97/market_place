@@ -14,12 +14,12 @@ class ConfirmOrders extends StatefulWidget {
 class _ConfirmOrdersState extends State<ConfirmOrders> {
   double totalAmount= 20000;
 
-//    Future<List<CartList>> fetchProductFromDatabase() async {
-//    var dbHelper = DatabaseHelperCart();
-//    Future<List<CartList>> cartList = dbHelper.getNoteList();
-//    print(cartList);
-//    return cartList;
-//  }
+    Future<List<CartList>> fetchProductFromDatabase() async {
+    var dbHelper = DatabaseHelperCart();
+    Future<List<CartList>> cartList = dbHelper.getNoteList();
+    print(cartList);
+    return cartList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
               future: Provider.of<CartModel>(context).fetchProductFromDatabase(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+
                   return Container(
                     child: new ListView.builder(
 
@@ -59,6 +60,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
+
                           return Container(
                             color: Colors.white,
                             padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),

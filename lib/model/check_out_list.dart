@@ -7,9 +7,9 @@ class CheckOutList {
 
   CheckOutList({this.rate,this.productName,this.quantity,this.amount});
 
-  List<CheckOutList> getCheckOutList(){
-    List<CheckOutList> checkOutList = [];
-    return checkOutList;
-  }
+//  List<CheckOutList> getCheckOutList(){
+//    List<CheckOutList> checkOutList = [];
+//    return checkOutList;
+//  }
 
 }
