@@ -8,13 +8,13 @@ import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
+
 class Category extends StatefulWidget {
   final String categoryName;
   Category(this.categoryName);
   @override
   _CategoryState createState() => _CategoryState();
 }
-
 
 class _CategoryState extends State<Category> {
   String categoryNameFinal;
@@ -24,114 +24,358 @@ class _CategoryState extends State<Category> {
     super.initState();
     categoryNameFinal = widget.categoryName;
   }
+
   CategoryProducts cat = CategoryProducts();
 
-
   List<Widget> categoryProductsContainer() {
-    List<Container> newContainer =[];
+    List<Container> newContainer = [];
     List categoryProducts = cat.getCategoryProducts();
-    for(int i=0;i<categoryProducts.length;i++){
+    for (int i = 0; i < categoryProducts.length; i++) {
       String catName = categoryProducts[i].categoryName;
-      newContainer.add(
-       categoryNameFinal.compareTo(catName)!=0?
-       Container() :
-       Container(
+      newContainer.add(categoryNameFinal.compareTo(catName) != 0
+          ? Container()
+          : Container(
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              child: Card(
+                elevation: 2,
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        //Icon(categoryList[i].iconCategory,size: 40,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Image.network(
+                              categoryProducts[i].productImageName,
+                              width: 100),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  categoryProducts[i].productName,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xFF344955),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  categoryProducts[i].productDescription,
+                                  style: TextStyle(
+                                      color: Color(0xFF344955), fontSize: 12),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  'For - ${categoryProducts[i].unitQuantity}',
+                                  style: kTextSize14,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Our Price - ',
+                                      style: kTextSize14,
+                                    ),
+                                    Text(
+                                      '${categoryProducts[i].mrp}',
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14,
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Text(
+                                        '${categoryProducts[i].ourPrice} ₹',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.green[900],
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        categoryProducts[i]
+                                    .productStatus
+                                    .compareTo('Available') ==
+                                0
+                            ? RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                onPressed: () {
+                                  String productName =
+                                      categoryProducts[i].productName;
+                                  String productQuantity =
+                                      categoryProducts[i].unitQuantity;
+                                  String ourPrice =
+                                      categoryProducts[i].ourPrice;
+                                  String mrp = categoryProducts[i].mrp;
+                                  String productImage =
+                                      categoryProducts[i].productImageName;
+                                  String quantity = '1';
+                                  String productId =
+                                      categoryProducts[i].productId;
+                                  //  var databaseHelperCart = DatabaseHelperCart();
+                                  //CartList cartList = CartList();
+                                  // databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,quantity: quantity));
+
+                                  Provider.of<CartModel>(context).addInDatabase(
+                                      CartList(
+                                          quantity: quantity,
+                                          productId: productId,
+                                          productName: productName,
+                                          productImageName: productImage,
+                                          ourPrice: ourPrice,
+                                          mrp: mrp,
+                                          unitQuantity: productQuantity));
+
+                                  //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                                  Toast.show(
+                                      "${categoryProducts[i].productName} added to Cart",
+                                      context,
+                                      duration: Toast.LENGTH_SHORT,
+                                      gravity: Toast.CENTER);
+                                },
+                                color: Colors.amber[600],
+                                child: Text(
+                                  'Add to Cart',
+                                  style: TextStyle(
+                                      color: Colors.amber[600], fontSize: 12),
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 10.0, top: 10),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                        size: 12,
+                                      ),
+                                      Text(categoryProducts[i].productStatus,
+                                          style: TextStyle(
+                                              color: Colors.red, fontSize: 12)),
+                                    ]),
+                              ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ));
+    }
+    return newContainer;
+  }
+
+  List<Widget> categoryAllProductsContainer() {
+    List<Container> newContainer = [];
+    List categoryProducts = cat.getCategoryProducts();
+    for (int i = 0; i < categoryProducts.length; i++) {
+      newContainer.add(Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: Card(
           elevation: 2,
           child: Column(
             children: <Widget>[
-              Row (
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //Icon(categoryList[i].iconCategory,size: 40,),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Image.network(categoryProducts[i].productImageName, width: 100),
+                    child: Image.network(categoryProducts[i].productImageName,
+                        width: 100),
                   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: 8,),
+                        SizedBox(
+                          height: 8,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(categoryProducts[i].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+                          child: Text(
+                            categoryProducts[i].productName,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        SizedBox(height: 4,),
+                        SizedBox(
+                          height: 4,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(categoryProducts[i].productDescription,style: TextStyle(color: Colors.grey,fontSize: 12),),
+                          child: Text(
+                            categoryProducts[i].productDescription,
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
                         ),
-                        SizedBox(height: 8,),
+                        SizedBox(
+                          height: 8,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text('For - ${categoryProducts[i].unitQuantity}',style: kTextSize14,),
+                          child: Text(
+                            'For - ${categoryProducts[i].unitQuantity}',
+                            style: kTextSize14,
+                          ),
                         ),
-                        SizedBox(height: 4,),
+                        SizedBox(
+                          height: 4,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             children: <Widget>[
-                              Text('Our Price - ',style: kTextSize14,),
-                              Text('${categoryProducts[i].mrp}',style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
+                              Text(
+                                'Our Price - ',
+                                style: kTextSize14,
+                              ),
+                              Text(
+                                categoryProducts[i].mrp,
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text('${categoryProducts[i].ourPrice} ₹',style:TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  '${categoryProducts[i].ourPrice} ₹',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.green[900],
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 8,),
-
+                        SizedBox(
+                          height: 8,
+                        ),
                       ],
                     ),
                   )
-
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  categoryProducts[i].productStatus.compareTo('Available')==0?
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    onPressed: () {
-                        String productName = categoryProducts[i].productName;
-                        String productQuantity = categoryProducts[i].unitQuantity;
-                        String ourPrice = categoryProducts[i].ourPrice;
-                        String mrp = categoryProducts[i].mrp;
-                        String productImage = categoryProducts[i].productImageName;
-                        String quantity = '1';
-                        String productId = categoryProducts[i].productId;
-                      //  var databaseHelperCart = DatabaseHelperCart();
-                        //CartList cartList = CartList();
-                       // databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,quantity: quantity));
+                  categoryProducts[i].productStatus.compareTo('Available') == 0
+                      ? RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          onPressed: () {
+                            String productName =
+                                categoryProducts[i].productName;
+                            String productQuantity =
+                                categoryProducts[i].unitQuantity;
+                            String ourPrice = categoryProducts[i].ourPrice;
+                            String mrp = categoryProducts[i].mrp;
+                            String productImage =
+                                categoryProducts[i].productImageName;
+                            String quantity = '1';
+                            String productId = categoryProducts[i].productId;
 
-                        Provider.of<CartModel>(context).addInDatabase(CartList(quantity:quantity, productId: productId, productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
+                            //var databaseHelperCart = DatabaseHelperCart();
+                            //databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId,quantity: quantity ));
 
-                        //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
-                        Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
-                         },
-                    color: Colors.indigoAccent,
-                    child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
-                  )
-                  :
-                  Padding(
-                    padding: const EdgeInsets.only(bottom:10.0,top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.close,color: Colors.red,size: 12,),
-                          Text(categoryProducts[i].productStatus,style:TextStyle(color: Colors.red,fontSize: 12)),
-                        ]
-                    ),
+                            Provider.of<CartModel>(context).addInDatabase(
+                                CartList(
+                                    quantity: quantity,
+                                    productId: productId,
+                                    productName: productName,
+                                    productImageName: productImage,
+                                    ourPrice: ourPrice,
+                                    mrp: mrp,
+                                    unitQuantity: productQuantity));
+                            Toast.show(
+                                "${categoryProducts[i].productName} added to Cart",
+                                context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.CENTER);
+                          },
+                          color: Colors.amber[600],
+                          child: Text(
+                            'Add to Cart',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                  size: 12,
+                                ),
+                                Text(categoryProducts[i].productStatus,
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 12)),
+                              ]),
+                        ),
+                  SizedBox(
+                    width: 10,
                   ),
-
-                  SizedBox(width: 10,),
                 ],
               ),
             ],
@@ -142,124 +386,12 @@ class _CategoryState extends State<Category> {
     return newContainer;
   }
 
-  List<Widget> categoryAllProductsContainer() {
-    List<Container> newContainer =[];
-    List categoryProducts = cat.getCategoryProducts();
-    for(int i=0;i<categoryProducts.length;i++){
-      newContainer.add(
-          Container(
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 2),
-            child: Card(
-              elevation: 2,
-              child: Column(
-                children: <Widget>[
-                  Row (
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      //Icon(categoryList[i].iconCategory,size: 40,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Image.network(categoryProducts[i].productImageName, width: 100),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 8,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(categoryProducts[i].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
-                            ),
-                            SizedBox(height: 4,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(categoryProducts[i].productDescription,style: TextStyle(color: Colors.grey,fontSize: 12),),
-                            ),
-                            SizedBox(height: 8,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text('For - ${categoryProducts[i].unitQuantity}',style: kTextSize14,),
-                            ),
-                            SizedBox(height: 4,),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: <Widget>[
-                                  Text('Our Price - ',style: kTextSize14,),
-                                  Text(categoryProducts[i].mrp,style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: Text('${categoryProducts[i].ourPrice} ₹',style:TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 8,),
-
-                          ],
-                        ),
-                      )
-
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      categoryProducts[i].productStatus.compareTo('Available')==0?
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        onPressed: () {
-                          String productName = categoryProducts[i].productName;
-                          String productQuantity = categoryProducts[i].unitQuantity;
-                          String ourPrice = categoryProducts[i].ourPrice;
-                          String mrp = categoryProducts[i].mrp;
-                          String productImage = categoryProducts[i].productImageName;
-                          String quantity = '1';
-                          String productId = categoryProducts[i].productId;
-
-                          //var databaseHelperCart = DatabaseHelperCart();
-                          //databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId,quantity: quantity ));
-
-                          Provider.of<CartModel>(context).addInDatabase(CartList(quantity:quantity, productId: productId, productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
-                          Toast.show("${categoryProducts[i].productName} added to Cart", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.CENTER);
-
-                        },
-                        color: Colors.indigoAccent,
-                        child:Text('Add to Cart',style: TextStyle(color: Colors.white,fontSize: 12),),
-                      )
-                          :
-                      Padding(
-                        padding: const EdgeInsets.only(bottom:10.0,top: 10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.close,color: Colors.red,size: 12,),
-                              Text(categoryProducts[i].productStatus,style:TextStyle(color: Colors.red,fontSize: 12)),
-                            ]
-                        ),
-                      ),
-
-                      SizedBox(width: 10,),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ));
-    }
-    return newContainer;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text('Category'),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Color(0xFF344955),
       ),
       body: SafeArea(
         child: Column(
@@ -275,7 +407,11 @@ class _CategoryState extends State<Category> {
                       child: Card(
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Center(child: Text(categoryNameFinal,style: kTextSize16,)),
+                          child: Center(
+                              child: Text(
+                            categoryNameFinal,
+                            style: kTextSize16,
+                          )),
                         ),
                       ),
                     ),
@@ -285,11 +421,10 @@ class _CategoryState extends State<Category> {
 //                value: ,
 //              ),
                   Column(
-                    children: categoryNameFinal.compareTo('All Categories')==0?
-                    categoryAllProductsContainer() :
-                    categoryProductsContainer(),
+                    children: categoryNameFinal.compareTo('All Categories') == 0
+                        ? categoryAllProductsContainer()
+                        : categoryProductsContainer(),
                   )
-
                 ],
               ),
             ),
@@ -299,11 +434,14 @@ class _CategoryState extends State<Category> {
                   child: Container(
                     height: 40,
                     child: FlatButton(
-                      onPressed: (){
-                         Navigator.pop(context);
+                      onPressed: () {
+                        Navigator.pop(context);
                       },
-                      color: Colors.indigoAccent,
-                      child: Text('Back',style: TextStyle(color: Colors.white,fontSize: 14),),
+                      color: Color(0xFF344955),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -311,11 +449,15 @@ class _CategoryState extends State<Category> {
                   child: Container(
                     height: 40,
                     child: FlatButton(
-                      onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Cart()));
                       },
-                      color: Colors.indigo,
-                      child: Text('Go to Cart',style: TextStyle(color: Colors.white,fontSize: 14),),
+                      color: Colors.amber[600],
+                      child: Text(
+                        'Go to Cart',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                     ),
                   ),
                 ),

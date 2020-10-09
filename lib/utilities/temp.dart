@@ -1,5 +1,5 @@
-//cart
-
+// cart
+//
 //  List<Widget> categoryProductsContainer() {
 //    List<Container> newContainer =[];
 //    for(int i=0;i<cartList.length;i++){
@@ -143,19 +143,19 @@
 //    }
 //    return newContainer;
 //  }
-
-
+//
+//
 //                        print(note);
 //                        print(await databaseHelperCart.getCount());
 //                        print(await databaseHelperCart.getNoteList());
-//cartList.add(CartList(categoryName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
+// cartList.add(CartList(categoryName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp));
 // print(cartList.length);
-//CartItems().addItem(productName, productImage, mrp, ourPrice, productQuantity,pdtid);
-
-
-
-//confirm_order
-
+// CartItems().addItem(productName, productImage, mrp, ourPrice, productQuantity,pdtid);
+//
+//
+//
+// confirm_order
+//
 //  List<CategoryProducts> categoryProducts = [
 //    CategoryProducts(productName: 'Basmati Rice', ourPrice: '76',unitQuantity: '1 kg',),
 //    CategoryProducts(productName: 'Cheese', ourPrice: '90',unitQuantity: '0.5 kg',),
@@ -222,12 +222,12 @@
 //    }
 //    return newContainer;
 //  }
-
-//cart_list
-
-
-
-//class CartList {
+//
+// cart_list
+//
+//
+//
+// class CartList {
 //  final String categoryName;
 //  final String productName;
 //  final String productImageName;
@@ -241,13 +241,13 @@
 //
 //  CartList({this.categoryName,this.mrp,this.ourPrice,this.productDescription,this.productImageName,this.productName,this.unitQuantity,this.productStatus,this.pdtId});
 //
-////  Map<String, dynamic> toMap() {
-////    return {
-////      'id': id,
-////      'name': name,
-////      'age': age,
-////    };
-////  }
+// //  Map<String, dynamic> toMap() {
+// //    return {
+// //      'id': id,
+// //      'name': name,
+// //      'age': age,
+// //    };
+// //  }
 //  List<CartList> getCartList(){
 //    List<CartList> cartList = [
 //      CartList(productName: 'Basmati Rice',productDescription: 'best rice in world',mrp: 55, ourPrice: 46,unitQuantity: '1 kg',
@@ -262,10 +262,10 @@
 //    ];
 //    return cartList;
 //  }
-//}
-
-
-//cart//
+// }
+//
+//
+// cart//
 //  int itemsLength;
 //  double finalPrice;
 //  CartList cartList;
@@ -286,9 +286,9 @@
 //  Future<int> updateFromDatabase(cartList) async{
 //    var dbHelper = DatabaseHelperCart();
 //    int cart =await dbHelper.updateNote(cartList);
-////    setState(() {
-////      itemsLength = cart;
-////    });
+// //    setState(() {
+// //      itemsLength = cart;
+// //    });
 //    return cart;
 //  }
 //  @override
@@ -296,7 +296,7 @@
 //    super.initState();
 //    //fetchLengthFromDatabase();
 //  }
-
+//
 //  Widget quantityValue(){
 //    int count=1;
 //    return  Row(
@@ -320,12 +320,12 @@
 //
 //                    if(count>=1){
 //                      count--;
-////                      double price =double.parse(snapshot.data[index].ourPrice);
-////                      price = price * count;
-////                      snapshot.data[index].ourPrice = price.toString();
-////                      updateFromDatabase(snapshot.data[index].ourPrice);
-////                      print(snapshot.data[index].ourPrice);
-////                      //Cart(quantity: count,);
+// //                      double price =double.parse(snapshot.data[index].ourPrice);
+// //                      price = price * count;
+// //                      snapshot.data[index].ourPrice = price.toString();
+// //                      updateFromDatabase(snapshot.data[index].ourPrice);
+// //                      print(snapshot.data[index].ourPrice);
+// //                      //Cart(quantity: count,);
 //
 //                    }
 //                  });
@@ -354,9 +354,9 @@
 //                  setState(() {
 //                    if(count<100){
 //                      count++;
-////                       finalPrice = price * count;
-////                       Cart(price: finalPrice,);
-////                       print(finalPrice);
+// //                       finalPrice = price * count;
+// //                       Cart(price: finalPrice,);
+// //                       print(finalPrice);
 //                      //Cart(quantity: count,);
 //                    }
 //                  });
@@ -369,8 +369,8 @@
 //      ],
 //    );
 //  }
-
-
+//
+//
 //              Row(
 //                mainAxisAlignment: MainAxisAlignment.end,
 //                children: <Widget>[
@@ -432,201 +432,201 @@
 //                  ),
 //                ],
 //              ),
-
-//print(widget.quantity);
+//
+// print(widget.quantity);
 //    fetchProductFromDatabase();
 //    fetchLengthFromDatabase();
-
+//
 //          children: <Widget>[
 //
-////            Expanded(
-////              child: FutureBuilder<List<CartList>>(
-////                future: fetchProductFromDatabase(),
-////                builder: (context, snapshot) {
-////                  if (snapshot.hasData) {
-////                     int count=2;
-////                    return Container(
-////                      child: new ListView.builder(
-////
-////                          scrollDirection: Axis.vertical,
-////                          shrinkWrap: true,
-////                          itemCount: snapshot.data.length,
-////
-////                          itemBuilder: (context, index) {
-////                            return Container(
-////                              color: Colors.white,
-////                              padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
-////                              child: Card(
-////                                elevation: 2,
-////                                child: Column(
-////                                  children: <Widget>[
-////                                    Row (
-////                                      mainAxisAlignment: MainAxisAlignment.start,
-////                                      children: <Widget>[
-////                                        //Icon(categoryList[i].iconCategory,size: 40,),
-////                                        Padding(
-////                                          padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                          child: Image.network(snapshot.data[index].productImageName, width: 100),
-////                                        ),
-////                                        Expanded(
-////                                          child: Column(
-////                                            crossAxisAlignment: CrossAxisAlignment.start,
-////                                            children: <Widget>[
-////                                              SizedBox(height: 8,),
-////                                              Row(
-////                                                children: <Widget>[
-////                                                  Expanded(
-////                                                    child: Padding(
-////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                                      child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
-////                                                    ),
-////                                                  ),
-////                                                  GestureDetector(
-////                                                    onTap: (){
-//////                                                          setState(() {
-//////                                                            snapshot.data[index].removeAt(i);
-//////                                                            print(cartList.length);
-//////                                                          });
-////                                                    },
-////                                                    child: Padding(
-////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                                      child: Icon(Icons.delete_outline,color: Colors.red,),
-////                                                    ),
-////                                                  )
-////                                                ],
-////                                              ),
-////
-////                                              SizedBox(height: 8,),
-////                                              Padding(
-////                                                padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                                child: Text(snapshot.data[index].unitQuantity,style: TextStyle(fontSize: 14,color: Colors.grey),),
-////                                              ),
-////                                              SizedBox(height: 4,),
-////                                              Padding(
-////                                                padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                                child: Row(
-////                                                  children: <Widget>[
-////                                                    Text('Our Price - ',style: kTextSize14,),
-////                                                    Text('${snapshot.data[index].mrp}',style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
-////                                                    Padding(
-////                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
-////                                                      child: Text('${snapshot.data[index].ourPrice} ₹',style: TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
-////                                                    ),
-////                                                  ],
-////                                                ),
-////                                              ),
-////                                              SizedBox(height: 12,),
-////
-////                                            ],
-////                                          ),
-////                                        )
-////
-////                                      ],
-////                                    ),
-////
-////                                    Row(
-////                                      mainAxisAlignment: MainAxisAlignment.end,
-////                                      children: <Widget>[
-////                                        //QuantityRow(price: double.parse(snapshot.data[index].ourPrice),),
-////                                        //quantityValue(),
-////                                    Row(
-////                                    mainAxisAlignment: MainAxisAlignment.end,
-////                                      children: <Widget>[
-////                                        Container(
-////                                          child: Row(
-////                                            children: <Widget>[
-////                                              GestureDetector(
-////                                                child: Container(
-////                                                  width: 40,
-////                                                  height: 30,
-////                                                  decoration: BoxDecoration(
-////                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
-////                                                      color: Colors.indigoAccent
-////                                                  ),
-////                                                  child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
-////                                                ),
-////                                                onTap:   (){
-////                                                  setState(() {
-////                                                    if(count>=1){
-////                                                      count--;
-//////                      double price =double.parse(snapshot.data[index].ourPrice);
-//////                      price = price * count;
-//////                      snapshot.data[index].ourPrice = price.toString();
-//////                      updateFromDatabase(snapshot.data[index].ourPrice);
-//////                      print(snapshot.data[index].ourPrice);
-//////                      //Cart(quantity: count,);
-////
-////                                                    }
-////                                                  });
-////                                                },
-////                                              ),
-////                                              Container(
-////                                                width: 50,
-////                                                height: 30,
-////                                                decoration: BoxDecoration(
-////                                                  border: Border.all(width: 1,color: Colors.indigoAccent),
-////
-////                                                ),
-////                                                child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
-////                                              ),
-////                                              GestureDetector(
-////                                                child: Container(
-////                                                  width: 40,
-////                                                  height: 30,
-////                                                  decoration: BoxDecoration(
-////                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
-////                                                      color: Colors.indigoAccent
-////                                                  ),
-////                                                  child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
-////                                                ),
-////                                                onTap: (){
-////                                                  setState(() {
-////                                                    if(count<100){
-////                                                      count++;
-//////                       finalPrice = price * count;
-//////                       Cart(price: finalPrice,);
-//////                       print(finalPrice);
-////                                                      //Cart(quantity: count,);
-////                                                    }
-////                                                  });
-////                                                },
-////                                              ),
-////                                              SizedBox(width: 20,)
-////                                            ],
-////                                          ),
-////                                        ),
-////                                      ],
-////                                    ),
-////                                      ],
-////                                    ),
-////
-////                                    SizedBox(height: 10,),
-////                                  ],
-////                                ),
-////                              ),
-////                            );
-////                          }),
-////                    );
-////                  } else if (snapshot.hasError) {
-////                    return new Text("${snapshot.error}");
-////                  }
-////                  return new Container(
-////                    alignment: AlignmentDirectional.center,
-////                    child: new CircularProgressIndicator(),
-////                  );
-////                },
-////              ),
-////            ),
-
+// //            Expanded(
+// //              child: FutureBuilder<List<CartList>>(
+// //                future: fetchProductFromDatabase(),
+// //                builder: (context, snapshot) {
+// //                  if (snapshot.hasData) {
+// //                     int count=2;
+// //                    return Container(
+// //                      child: new ListView.builder(
+// //
+// //                          scrollDirection: Axis.vertical,
+// //                          shrinkWrap: true,
+// //                          itemCount: snapshot.data.length,
+// //
+// //                          itemBuilder: (context, index) {
+// //                            return Container(
+// //                              color: Colors.white,
+// //                              padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+// //                              child: Card(
+// //                                elevation: 2,
+// //                                child: Column(
+// //                                  children: <Widget>[
+// //                                    Row (
+// //                                      mainAxisAlignment: MainAxisAlignment.start,
+// //                                      children: <Widget>[
+// //                                        //Icon(categoryList[i].iconCategory,size: 40,),
+// //                                        Padding(
+// //                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                          child: Image.network(snapshot.data[index].productImageName, width: 100),
+// //                                        ),
+// //                                        Expanded(
+// //                                          child: Column(
+// //                                            crossAxisAlignment: CrossAxisAlignment.start,
+// //                                            children: <Widget>[
+// //                                              SizedBox(height: 8,),
+// //                                              Row(
+// //                                                children: <Widget>[
+// //                                                  Expanded(
+// //                                                    child: Padding(
+// //                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                                      child: Text(snapshot.data[index].productName,style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),),
+// //                                                    ),
+// //                                                  ),
+// //                                                  GestureDetector(
+// //                                                    onTap: (){
+// ////                                                          setState(() {
+// ////                                                            snapshot.data[index].removeAt(i);
+// ////                                                            print(cartList.length);
+// ////                                                          });
+// //                                                    },
+// //                                                    child: Padding(
+// //                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                                      child: Icon(Icons.delete_outline,color: Colors.red,),
+// //                                                    ),
+// //                                                  )
+// //                                                ],
+// //                                              ),
+// //
+// //                                              SizedBox(height: 8,),
+// //                                              Padding(
+// //                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                                child: Text(snapshot.data[index].unitQuantity,style: TextStyle(fontSize: 14,color: Colors.grey),),
+// //                                              ),
+// //                                              SizedBox(height: 4,),
+// //                                              Padding(
+// //                                                padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                                child: Row(
+// //                                                  children: <Widget>[
+// //                                                    Text('Our Price - ',style: kTextSize14,),
+// //                                                    Text('${snapshot.data[index].mrp}',style: TextStyle(color: Colors.red,fontSize: 14,decoration: TextDecoration.lineThrough,fontWeight: FontWeight.bold),),
+// //                                                    Padding(
+// //                                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+// //                                                      child: Text('${snapshot.data[index].ourPrice} ₹',style: TextStyle(fontSize: 14,color:Colors.green[900],fontWeight: FontWeight.bold),),
+// //                                                    ),
+// //                                                  ],
+// //                                                ),
+// //                                              ),
+// //                                              SizedBox(height: 12,),
+// //
+// //                                            ],
+// //                                          ),
+// //                                        )
+// //
+// //                                      ],
+// //                                    ),
+// //
+// //                                    Row(
+// //                                      mainAxisAlignment: MainAxisAlignment.end,
+// //                                      children: <Widget>[
+// //                                        //QuantityRow(price: double.parse(snapshot.data[index].ourPrice),),
+// //                                        //quantityValue(),
+// //                                    Row(
+// //                                    mainAxisAlignment: MainAxisAlignment.end,
+// //                                      children: <Widget>[
+// //                                        Container(
+// //                                          child: Row(
+// //                                            children: <Widget>[
+// //                                              GestureDetector(
+// //                                                child: Container(
+// //                                                  width: 40,
+// //                                                  height: 30,
+// //                                                  decoration: BoxDecoration(
+// //                                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
+// //                                                      color: Colors.indigoAccent
+// //                                                  ),
+// //                                                  child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
+// //                                                ),
+// //                                                onTap:   (){
+// //                                                  setState(() {
+// //                                                    if(count>=1){
+// //                                                      count--;
+// ////                      double price =double.parse(snapshot.data[index].ourPrice);
+// ////                      price = price * count;
+// ////                      snapshot.data[index].ourPrice = price.toString();
+// ////                      updateFromDatabase(snapshot.data[index].ourPrice);
+// ////                      print(snapshot.data[index].ourPrice);
+// ////                      //Cart(quantity: count,);
+// //
+// //                                                    }
+// //                                                  });
+// //                                                },
+// //                                              ),
+// //                                              Container(
+// //                                                width: 50,
+// //                                                height: 30,
+// //                                                decoration: BoxDecoration(
+// //                                                  border: Border.all(width: 1,color: Colors.indigoAccent),
+// //
+// //                                                ),
+// //                                                child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+// //                                              ),
+// //                                              GestureDetector(
+// //                                                child: Container(
+// //                                                  width: 40,
+// //                                                  height: 30,
+// //                                                  decoration: BoxDecoration(
+// //                                                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
+// //                                                      color: Colors.indigoAccent
+// //                                                  ),
+// //                                                  child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
+// //                                                ),
+// //                                                onTap: (){
+// //                                                  setState(() {
+// //                                                    if(count<100){
+// //                                                      count++;
+// ////                       finalPrice = price * count;
+// ////                       Cart(price: finalPrice,);
+// ////                       print(finalPrice);
+// //                                                      //Cart(quantity: count,);
+// //                                                    }
+// //                                                  });
+// //                                                },
+// //                                              ),
+// //                                              SizedBox(width: 20,)
+// //                                            ],
+// //                                          ),
+// //                                        ),
+// //                                      ],
+// //                                    ),
+// //                                      ],
+// //                                    ),
+// //
+// //                                    SizedBox(height: 10,),
+// //                                  ],
+// //                                ),
+// //                              ),
+// //                            );
+// //                          }),
+// //                    );
+// //                  } else if (snapshot.hasError) {
+// //                    return new Text("${snapshot.error}");
+// //                  }
+// //                  return new Container(
+// //                    alignment: AlignmentDirectional.center,
+// //                    child: new CircularProgressIndicator(),
+// //                  );
+// //                },
+// //              ),
+// //            ),
+//
 //          ],
-
-//confirm_order
+//
+// confirm_order
 //  Future<List<CartList>> fetchProductFromDatabase() async {
 //    var dbHelper = DatabaseHelperCart();
 //    Future<List<CartList>> cartList = dbHelper.getNoteList();
 //    return cartList;
 //  }
-
+//
 //          Expanded(
 //            child: Padding(
 //              padding: const EdgeInsets.all(8.0),
@@ -700,8 +700,8 @@
 //              },
 //            ),
 //          ),
-
-
+//
+//
 //    List<Widget> categoryProductsContainer() {
 //    List<Container> newContainer =[];
 //    for(int i=0;i<Provider.of<CartModel>(context).itemCount;i++){
@@ -795,16 +795,16 @@
 //
 //                              if(count>=1){
 //                                count--;
-////                                Provider.of<CartModel>(context).addCount(count);
-////                                print(Provider.of<CartModel>(context).countItem);
+// //                                Provider.of<CartModel>(context).addCount(count);
+// //                                print(Provider.of<CartModel>(context).countItem);
 //                                Provider.of<CartModel>(context).items[i].countItems.add(count);
-////                                Provider.of<CartModel>(context).addCartCount(CartCount(count));
-////                                print(Provider.of<CartModel>(context).itemCartCount);
+// //                                Provider.of<CartModel>(context).addCartCount(CartCount(count));
+// //                                print(Provider.of<CartModel>(context).itemCartCount);
 //
 //                                //Provider.of<CartModel>(context).addCount(count);
-////                      finalPrice = widget.price * count;
-////                      print(finalPrice);
-////                      Cart(price: finalPrice,);
+// //                      finalPrice = widget.price * count;
+// //                      print(finalPrice);
+// //                      Cart(price: finalPrice,);
 //                                //Navigator.pop(context,finalPrice);
 //                                //Cart(quantity: count,);
 //
@@ -838,10 +838,10 @@
 //                              int count =1;
 //                              if(count<100){
 //                                count++;
-////                                Provider.of<CartModel>(context).addCartCount(CartCount(count));
-////                                print(Provider.of<CartModel>(context).itemCartCount);
-////                                Provider.of<CartModel>(context).addCount(count);
-////                                print(Provider.of<CartModel>(context).countItem);
+// //                                Provider.of<CartModel>(context).addCartCount(CartCount(count));
+// //                                print(Provider.of<CartModel>(context).itemCartCount);
+// //                                Provider.of<CartModel>(context).addCount(count);
+// //                                print(Provider.of<CartModel>(context).countItem);
 //                                Provider.of<CartModel>(context).items[i].countItems.add(count);
 //                                print(Provider.of<CartModel>(context).items[i].countItems);
 //
@@ -864,15 +864,15 @@
 //    }
 //    return newContainer;
 //  }
-
+//
 //            Expanded(
-////              child: ListView(
-////                children: categoryProductsContainer(),
-////              ),
+// //              child: ListView(
+// //                children: categoryProductsContainer(),
+// //              ),
 //            ),
-
-
-//List<Widget> finalProductList() {
+//
+//
+// List<Widget> finalProductList() {
 //    List<Container> newContainer =[];
 //    for(int i=0;i<Provider.of<CartModel>(context).itemCount;i++){
 //      newContainer.add(Container(

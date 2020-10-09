@@ -3,6 +3,7 @@ import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:provider/provider.dart';
+
 class QuantityRow extends StatefulWidget {
   final String productId;
   QuantityRow({this.productId});
@@ -10,10 +11,8 @@ class QuantityRow extends StatefulWidget {
   _QuantityRowState createState() => _QuantityRowState();
 }
 
-
 class _QuantityRowState extends State<QuantityRow> {
-
-  int count=1;
+  int count = 1;
 
 //  void updateProduct(newPrice, productId) {
 //    var dbHelper = DatabaseHelperCart();
@@ -22,10 +21,9 @@ class _QuantityRowState extends State<QuantityRow> {
 
   @override
   Widget build(BuildContext context) {
-
     String productId = widget.productId;
     print('/////////////////////$productId');
-    return   Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
@@ -36,18 +34,23 @@ class _QuantityRowState extends State<QuantityRow> {
                   width: 40,
                   height: 30,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30),bottomLeft: Radius.circular(30)),
-                      color: Colors.indigoAccent
-                  ),
-                  child: Center(child: Text('-',style: TextStyle(fontSize: 14,color: Colors.white),)),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30)),
+                      color: Color(0xFF344955)),
+                  child: Center(
+                      child: Text(
+                    '-',
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  )),
                 ),
-                onTap:   (){
+                onTap: () {
                   setState(() {
-                    if(count>=1){
+                    if (count >= 1) {
                       count--;
                       String newCount = count.toString();
-                      Provider.of<CartModel>(context).updateProduct(newCount, productId);
-
+                      Provider.of<CartModel>(context)
+                          .updateProduct(newCount, productId);
                     }
                   });
                 },
@@ -56,34 +59,48 @@ class _QuantityRowState extends State<QuantityRow> {
                 width: 50,
                 height: 30,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1,color: Colors.indigoAccent),
-
+                  border: Border.all(width: 1, color: Color(0xFF344955)),
                 ),
-                child: Center(child: Text('$count',style: TextStyle(fontSize: 14,color: Colors.indigo,fontWeight: FontWeight.bold),)),
+                child: Center(
+                    child: Text(
+                  '$count',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF344955),
+                      fontWeight: FontWeight.bold),
+                )),
               ),
               GestureDetector(
                 child: Container(
                   width: 40,
                   height: 30,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30)),
-                      color: Colors.indigoAccent
-                  ),
-                  child: Center(child: Text('+',style: TextStyle(fontSize: 14,color: Colors.white),)),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          bottomRight: Radius.circular(30)),
+                      color: Color(0xFF344955)),
+                  child: Center(
+                      child: Text(
+                    '+',
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  )),
                 ),
-                   //onTap: onTap;
+                //onTap: onTap;
 
-                onTap: (){
-                   setState(() {
-                     if(count<100){
-                       count++;
-                       String newCount = count.toString();
-                       Provider.of<CartModel>(context).updateProduct(newCount, productId);
-                     }
-                   });
+                onTap: () {
+                  setState(() {
+                    if (count < 100) {
+                      count++;
+                      String newCount = count.toString();
+                      Provider.of<CartModel>(context)
+                          .updateProduct(newCount, productId);
+                    }
+                  });
                 },
               ),
-              SizedBox(width: 20,)
+              SizedBox(
+                width: 20,
+              )
             ],
           ),
         ),

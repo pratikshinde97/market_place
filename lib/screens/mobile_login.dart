@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:market_place/screens/home_page.dart';
 
 class MobileLogin extends StatelessWidget {
-//  final _phoneController = TextEditingController();
+  // final _phoneController = TextEditingController();
   String _phoneController;
   final _codeController = TextEditingController();
 
@@ -19,6 +20,7 @@ class MobileLogin extends StatelessWidget {
           AuthResult result = await _auth.signInWithCredential(credential);
 
           FirebaseUser user = result.user;
+          print(user);
 
           if (user != null) {
             Navigator.push(
@@ -117,7 +119,14 @@ class MobileLogin extends StatelessWidget {
                     height: 50,
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.numberWithOptions(
+                        signed: false, decimal: false),
+                    maxLength: 10,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                     decoration: InputDecoration(
+                        counterText: '',
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
                             borderSide: BorderSide(color: Colors.grey[200])),
@@ -130,7 +139,7 @@ class MobileLogin extends StatelessWidget {
                     onChanged: (value) {
                       _phoneController = "+91" + value;
                     },
-                    //  controller: _phoneController,
+                    //controller: _phoneController,
                   ),
                   SizedBox(
                     height: 40,
