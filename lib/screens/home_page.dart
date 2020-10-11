@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   CategoryList cat = CategoryList();
   String categoryName;
 
-
   List<Widget> categoryContainer() {
     List<Container> newContainer = [];
     List categoryList = cat.getCategoryList();
@@ -41,8 +40,9 @@ class _HomePageState extends State<HomePage> {
               //Icon(categoryList[i].iconCategory,size: 40,),
               Expanded(
                 flex: 3,
-                child: Image.network(categoryList[i].imageCategory,
-                   ),
+                child: Image.network(
+                  categoryList[i].imageCategory,
+                ),
               ),
               SizedBox(
                 height: 12,
@@ -71,17 +71,19 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           'Market Place',
           //style: kAppBarTextSize18,
-          style: TextStyle(fontSize: 18,color: Colors.white),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         actions: <Widget>[
           InkWell(
-              child: Icon(Icons.shopping_cart),
+            child: Icon(Icons.shopping_cart),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Cart()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Cart()));
             },
           ),
-          SizedBox(width: 10,)
+          SizedBox(
+            width: 10,
+          )
         ],
         backgroundColor: Color(0xFF344955),
       ),
@@ -96,15 +98,29 @@ class _HomePageState extends State<HomePage> {
 //                    SizedBox(
 //                      height: 10,
 //                    ),
-                    Container(
-                      height: 140,
-                        child: CarouselClass()),
-                    SizedBox(height: 10,),
+                    Container(height: 140, child: CarouselClass()),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: <Widget>[
-                        Expanded(child: Divider(color: Color(0xFF344955),indent: 20,)),
-                        Expanded(child: Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black87,fontWeight: FontWeight.bold)))),
-                        Expanded(child: Divider(color: Color(0xFF344955),endIndent: 20,)),
+                        Expanded(
+                            child: Divider(
+                          color: Color(0xFF344955),
+                          indent: 20,
+                        )),
+                        Expanded(
+                            child: Center(
+                                child: Text('Categories',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.bold)))),
+                        Expanded(
+                            child: Divider(
+                          color: Color(0xFF344955),
+                          endIndent: 20,
+                        )),
                       ],
                     ),
                     //Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black),)),

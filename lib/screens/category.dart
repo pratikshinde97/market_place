@@ -184,7 +184,7 @@ class _CategoryState extends State<Category> {
                                 child: Text(
                                   'Add to Cart',
                                   style: TextStyle(
-                                      color: Colors.amber[600], fontSize: 12),
+                                      color: Colors.white, fontSize: 12),
                                 ),
                               )
                             : Padding(

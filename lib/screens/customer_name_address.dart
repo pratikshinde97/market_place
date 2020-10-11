@@ -149,24 +149,32 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                         ),
                         onPressed: () {
                           if (customerName?.isEmpty ?? true) {
-                            Toast.show("Please enter Customer Name", context,
+                            Toast.show("Please Enter Customer Name", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.CENTER);
                           } else if (mobileNumber?.isEmpty ?? true) {
-                            Toast.show("Please enter Mobile number ", context,
+                            Toast.show("Please Enter Mobile Number ", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.CENTER);
                           } else if (mobileNumber.length < 10) {
                             Toast.show(
-                                "Please enter Valid Mobile Number", context,
+                                "Please Enter Valid Mobile Number", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.CENTER);
+                          } else if (address1?.isEmpty ?? true) {
+                            Toast.show("Please Enter Address Line1 ", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.CENTER);
+                          } else if (address2?.isEmpty ?? true) {
+                            Toast.show("Please Enter Address Line2", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.CENTER);
                           } else if (address1?.isEmpty ?? true) {
                             Toast.show("Please enter address", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.CENTER);
-                          } else if (area?.isEmpty ?? true) {
-                            Toast.show("Please enter area", context,
+                          } else if (landmark?.isEmpty ?? true) {
+                            Toast.show("Please Enter Landmark", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.CENTER);
                           } else {

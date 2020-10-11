@@ -254,7 +254,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                           child: Text(
                             'Total amount ',
                             style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 16,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           )),
