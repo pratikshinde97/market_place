@@ -7,6 +7,7 @@ class MobileLogin extends StatelessWidget {
   // final _phoneController = TextEditingController();
   String _phoneController;
   final _codeController = TextEditingController();
+  List<Color> colors = [ Colors.purple,  Colors.blue];
 
   Future<bool> loginUser(String phone, BuildContext context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
@@ -93,10 +94,12 @@ class MobileLogin extends StatelessWidget {
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Colors.purple, Colors.blue])),
+        color: Colors.blueAccent
+          // gradient: LinearGradient(
+          //     begin: Alignment.centerLeft,
+          //     end: Alignment.centerRight,
+          //     List:  colors)
+      ),
       child: Center(
         child: SingleChildScrollView(
           child: Container(

@@ -13,6 +13,7 @@ class CarouselClass extends StatelessWidget {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
 
+  List<Color> colors = [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)];
   final List<Widget> imageSliders = imgList.map((item) => Container(
 
     child: Container(
@@ -28,14 +29,12 @@ class CarouselClass extends StatelessWidget {
                 right: 0.0,
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(200, 0, 0, 0),
-                        Color.fromARGB(0, 0, 0, 0)
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
+                    color: Colors.blueAccent,
+                    // gradient: LinearGradient(
+                    //     List:  colors,
+                    //   begin: Alignment.bottomCenter,
+                    //   end: Alignment.topCenter,
+                    // ),
                   ),
                   padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   child: Text(

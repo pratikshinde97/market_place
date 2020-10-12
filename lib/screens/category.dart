@@ -6,6 +6,7 @@ import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
+import 'package:market_place/screens/product_description.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -125,6 +126,19 @@ class _CategoryState extends State<Category> {
                                       ),
                                     ),
                                   ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => ProductDescription(productName: categoryProducts[i].productName,)));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text('Product Details',style: TextStyle(fontSize: 14,color: Colors.indigoAccent)),
                                 ),
                               ),
                               SizedBox(
@@ -304,6 +318,19 @@ class _CategoryState extends State<Category> {
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => ProductDescription(productName: categoryProducts[i].productName,)));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text('Product Details',style: TextStyle(fontSize: 14,color: Colors.indigoAccent)),
                           ),
                         ),
                         SizedBox(
