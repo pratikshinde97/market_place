@@ -55,7 +55,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
     return Container(
       constraints: new BoxConstraints.expand(),
       decoration: BoxDecoration(
-          gradient: LinearGradient(List:  [const Color(0xff3C8CE7), const Color(0xff00EAFF)]
+          gradient: LinearGradient(color:  [const Color(0xff3C8CE7), const Color(0xff00EAFF)]
 
               // colors: [const Color(0xff3C8CE7), const Color(0xff00EAFF)]
           )
