@@ -22,3 +22,10 @@ class CheckInternet {
     }
   }
 }
+// CheckInternet.checkInternet();
+// if (CheckInternet.isInternet == false) {
+// SnackBar snackBar = SnackBar(
+// content: Text('No Internet'), duration: Duration(seconds: 4));
+// _scaffoldKey.currentState.removeCurrentSnackBar();
+// _scaffoldKey.currentState.showSnackBar(snackBar);
+// }
