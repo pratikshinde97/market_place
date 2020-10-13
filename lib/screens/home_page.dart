@@ -1,12 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_list.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:market_place/screens/category.dart';
 import 'package:market_place/screens/orders.dart';
 import 'package:market_place/utilities/carousol_class.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/new_expanded.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   CategoryList cat = CategoryList();
   String categoryName;
   Future<bool> _onWillPop() {
@@ -84,12 +89,19 @@ class _HomePageState extends State<HomePage> {
     return newContainer;
   }
 
+  bool connected;
   @override
   Widget build(BuildContext context) {
+
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        //backgroundColor: Color(0xFFEDF0EE),
         backgroundColor: Color(0xFFE8EAF6),
         appBar: AppBar(
           title: Text(
@@ -111,7 +123,8 @@ class _HomePageState extends State<HomePage> {
           ],
           backgroundColor: Color(0xFF344955),
         ),
-        body: SafeArea(
+         // body: connected ? OnlineWork() : OfflineWork();
+        body: connected ? SafeArea(
           child: Column(
             children: <Widget>[
               Expanded(
@@ -119,9 +132,6 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ListView(
                     children: <Widget>[
-//                    SizedBox(
-//                      height: 10,
-//                    ),
                       Container(height: 140, child: CarouselClass()),
                       SizedBox(
                         height: 10,
@@ -147,7 +157,6 @@ class _HomePageState extends State<HomePage> {
                           )),
                         ],
                       ),
-                      //Center(child: Text('Categories',style: TextStyle(fontSize: 16,color: Colors.black),)),
 
                       Container(
                         child: CustomScrollView(
@@ -214,8 +223,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
+        )
+            : ConnectivityContainer(),
         ),
-      ),
     );
   }
 }

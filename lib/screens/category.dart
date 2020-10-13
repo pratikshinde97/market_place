@@ -7,6 +7,7 @@ import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:market_place/screens/product_description.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
@@ -412,16 +413,21 @@ class _CategoryState extends State<Category> {
     }
     return newContainer;
   }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       backgroundColor:  Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text('Category'),
         backgroundColor: Color(0xFF344955),
       ),
-      body: SafeArea(
+      body: connected ? SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
@@ -493,7 +499,8 @@ class _CategoryState extends State<Category> {
             ),
           ],
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

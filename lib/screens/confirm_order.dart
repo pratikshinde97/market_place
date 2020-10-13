@@ -4,6 +4,7 @@ import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/customer_name_address.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrders extends StatefulWidget {
@@ -20,17 +21,21 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
     print(cartList);
     return cartList;
   }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
-    //fetchProductFromDatabase();
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
         title: Text('Final Order'),
         backgroundColor: Color(0xFF344955),
       ),
-      body: Column(
+      body: connected ? Column(
         children: <Widget>[
           Container(
             color: Colors.white,
@@ -315,7 +320,8 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
             ],
           ),
         ],
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

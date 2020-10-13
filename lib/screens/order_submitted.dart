@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/home_page.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:provider/provider.dart';
 
 class OrderSubmitted extends StatefulWidget {
   @override
@@ -11,9 +14,14 @@ class _OrderSubmittedState extends State<OrderSubmitted> {
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/HomePage', (Route<dynamic> route) => false);
   }
-
+  bool connected;
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return WillPopScope(
       onWillPop: () {
        return Navigator.of(context).pushAndRemoveUntil(
@@ -24,7 +32,7 @@ class _OrderSubmittedState extends State<OrderSubmitted> {
           title: Text('Market Place'),
           backgroundColor: Color(0xFF344955),
         ),
-        body: Padding(
+        body: connected ? Padding(
           padding: const EdgeInsets.all(20.0),
           child: Container(
             alignment: Alignment.center,
@@ -85,7 +93,8 @@ class _OrderSubmittedState extends State<OrderSubmitted> {
               ),
             ),
           ),
-        ),
+        )
+            : ConnectivityContainer(),
       ),
     );
   }

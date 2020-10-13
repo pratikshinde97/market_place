@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -61,12 +64,18 @@ class LoginPageState extends State<LoginPage> {
       },
     );
   }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
+
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       key: _scaffoldKey,
-      body: Container(
+      body: connected ? Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
@@ -300,7 +309,8 @@ class LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

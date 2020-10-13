@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/screens/home_page.dart';
-import 'package:market_place/screens/mobile_login.dart';
-import 'package:market_place/screens/splash.dart';
 import 'package:market_place/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'model/cart_model.dart';
 
 void main() {

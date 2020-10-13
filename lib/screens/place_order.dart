@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/order_submitted.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/order_summary_row.dart';
+import 'package:provider/provider.dart';
 
 class PlaceOrder extends StatefulWidget {
   final String customerName;
@@ -33,16 +36,21 @@ class _PlaceOrderState extends State<PlaceOrder> {
       },
     );
   }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
         title: Text('Order Summary'),
         backgroundColor: Color(0xFF344955),
       ),
-      body: Padding(
+      body: connected ? Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
           alignment: Alignment.center,
@@ -103,7 +111,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
             ),
           ),
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

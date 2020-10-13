@@ -5,6 +5,7 @@ import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/check_out_list.dart';
 import 'package:market_place/screens/confirm_order.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/quantityRow.dart';
 import 'package:provider/provider.dart';
 
@@ -48,18 +49,21 @@ class _CartState extends State<Cart> {
   //   }
   //   return cartList;
   // }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
-    //fetchLengthFromDatabase();
-    //fetchProductFromDatabase();
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       backgroundColor: Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text('Cart'),
         backgroundColor: Color(0xFF344955),
       ),
-      body: SafeArea(
+      body: connected ? SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
@@ -271,7 +275,8 @@ class _CartState extends State<Cart> {
             ),
           ],
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

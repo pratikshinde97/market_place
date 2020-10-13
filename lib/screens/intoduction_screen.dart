@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/model/check_internet.dart';
 import 'dart:io';
 
 import 'package:market_place/model/slider_model.dart';
 import 'package:market_place/screens/home_page.dart';
+import 'package:provider/provider.dart';
 
 class IntroductionScreen extends StatefulWidget {
   @override
@@ -52,6 +55,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       constraints: new BoxConstraints.expand(),
       decoration: BoxDecoration(

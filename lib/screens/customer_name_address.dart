@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:market_place/constants.dart';
+import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 import 'package:market_place/screens/place_order.dart';
 
@@ -18,16 +21,21 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
   String address2;
   String landmark;
   String area;
-
+  bool connected;
   @override
   Widget build(BuildContext context) {
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     return Scaffold(
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
         backgroundColor: Color(0xFF344955),
         title: Text('Customer Details'),
       ),
-      body: Container(
+      body: connected ? Container(
         alignment: Alignment.center,
         child: SingleChildScrollView(
           child: Padding(
@@ -198,7 +206,8 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
             ),
           ),
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }

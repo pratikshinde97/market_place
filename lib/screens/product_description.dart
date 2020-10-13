@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
+import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_list.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/product_image_slider.dart';
+import 'package:provider/provider.dart';
 
 class ProductDescription extends StatefulWidget {
   final String productName;
@@ -42,17 +45,21 @@ class _ProductDescriptionState extends State<ProductDescription> {
     }
     return imageContainer;
   }
-
+   bool connected;
   @override
   Widget build(BuildContext context) {
-
+    Provider.of<CartModel>(context).checkConnectivity().then((internet) {
+      setState(() {
+        connected = internet;
+      });
+    });
     String productName = widget.productName;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF344955),
         title: Text('Product Description',style: kAppBarTextSize18,),
       ),
-      body: SafeArea(
+      body: connected ? SafeArea(
         child: ListView(
           children: [
             Padding(
@@ -104,7 +111,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
             )
           ],
         ),
-      ),
+      )
+          : ConnectivityContainer(),
     );
   }
 }
