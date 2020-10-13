@@ -16,8 +16,8 @@ class _OrderSubmittedState extends State<OrderSubmitted> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (c) => HomePage()), (route) => false);
+       return Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
       },
       child: Scaffold(
         appBar: AppBar(

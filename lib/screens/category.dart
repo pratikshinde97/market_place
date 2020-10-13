@@ -36,7 +36,7 @@ class _CategoryState extends State<Category> {
       newContainer.add(categoryNameFinal.compareTo(catName) != 0
           ? Container()
           : Container(
-              color: Colors.white,
+              color:  Color(0xFFE8EAF6),
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               child: Card(
                 elevation: 2,
@@ -235,7 +235,7 @@ class _CategoryState extends State<Category> {
     List categoryProducts = cat.getCategoryProducts();
     for (int i = 0; i < categoryProducts.length; i++) {
       newContainer.add(Container(
-        color: Colors.white,
+        color:  Color(0xFFE8EAF6),
         padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         child: Card(
           elevation: 2,
@@ -416,6 +416,7 @@ class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:  Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text('Category'),
         backgroundColor: Color(0xFF344955),

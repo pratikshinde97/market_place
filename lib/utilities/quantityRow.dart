@@ -22,7 +22,7 @@ class _QuantityRowState extends State<QuantityRow> {
   @override
   Widget build(BuildContext context) {
     String productId = widget.productId;
-    print('/////////////////////$productId');
+   // print('/////////////////////$productId');
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[

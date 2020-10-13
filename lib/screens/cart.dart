@@ -31,29 +31,30 @@ class _CartState extends State<Cart> {
     fetchLengthFromDatabase();
   }
 
-  Future<List<CartList>> fetchProductFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    List<CartList> cartList = await dbHelper.getNoteList();
-    for (int i = 1; i < cartList.length; i++) {
-      String pName = cartList[i].productName;
-      double rate = double.parse(cartList[i].mrp);
-      double quantity = double.parse(cartList[i].quantity);
-      double amount =
-          double.parse(cartList[i].quantity) * double.parse(cartList[i].mrp);
-
-      Provider.of<CartModel>(context).add(CheckOutList(
-          productName: pName, rate: rate, quantity: quantity, amount: amount));
-      print(Provider.of<CartModel>(context).itemCount);
-      print(cartList);
-    }
-    return cartList;
-  }
+  // Future<List<CartList>> fetchProductFromDatabase() async {
+  //   var dbHelper = DatabaseHelperCart();
+  //   List<CartList> cartList = await dbHelper.getNoteList();
+  //   for (int i = 1; i < cartList.length; i++) {
+  //     String pName = cartList[i].productName;
+  //     double rate = double.parse(cartList[i].mrp);
+  //     double quantity = double.parse(cartList[i].quantity);
+  //     double amount =
+  //         double.parse(cartList[i].quantity) * double.parse(cartList[i].mrp);
+  //
+  //     Provider.of<CartModel>(context).add(CheckOutList(
+  //         productName: pName, rate: rate, quantity: quantity, amount: amount));
+  //     print(Provider.of<CartModel>(context).itemCount);
+  //     print(cartList);
+  //   }
+  //   return cartList;
+  // }
 
   @override
   Widget build(BuildContext context) {
     //fetchLengthFromDatabase();
-    fetchProductFromDatabase();
+    //fetchProductFromDatabase();
     return Scaffold(
+      backgroundColor: Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text('Cart'),
         backgroundColor: Color(0xFF344955),
@@ -75,7 +76,7 @@ class _CartState extends State<Cart> {
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              color: Colors.white,
+                              color:  Color(0xFFE8EAF6),
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 2),
                               child: Card(

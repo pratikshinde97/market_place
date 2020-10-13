@@ -22,7 +22,7 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
       height: isCurrentPage ? 10.0 : 6.0,
       width: isCurrentPage ? 10.0 : 6.0,
       decoration: BoxDecoration(
-        color: isCurrentPage ? Color(0xFF344955) : Colors.grey[300],
+        color: isCurrentPage ? Color(0xFF344955) : Colors.grey[500],
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -39,30 +39,33 @@ class _ProductImageSliderState extends State<ProductImageSlider> {
   Widget build(BuildContext context) {
     return Column(
         children: [
-          Container(
-            height: 150,
-            width: 300,
-            child: PageView(
-              //controller: controller,
-              onPageChanged: (index) {
-                setState(() {
-                  slideIndex = index;
-                });
-              },
-              children: <Widget>[
-                SlideTile(
-                  imagePath: mySLides[0].getImageAssetPath(),
-                ),
-                SlideTile(
-                  imagePath: mySLides[1].getImageAssetPath(),
-                ),
-                SlideTile(
-                  imagePath: mySLides[2].getImageAssetPath(),
-                ),
-                SlideTile(
-                  imagePath: mySLides[3].getImageAssetPath(),
-                )
-              ],
+          Padding(
+            padding: const EdgeInsets.only(top:20.0),
+            child: Container(
+              height: 150,
+              width: 250,
+              child: PageView(
+                //controller: controller,
+                onPageChanged: (index) {
+                  setState(() {
+                    slideIndex = index;
+                  });
+                },
+                children: <Widget>[
+                  SlideTile(
+                    imagePath: mySLides[0].getImageAssetPath(),
+                  ),
+                  SlideTile(
+                    imagePath: mySLides[1].getImageAssetPath(),
+                  ),
+                  SlideTile(
+                    imagePath: mySLides[2].getImageAssetPath(),
+                  ),
+                  SlideTile(
+                    imagePath: mySLides[3].getImageAssetPath(),
+                  )
+                ],
+              ),
             ),
           ),
           Row(
