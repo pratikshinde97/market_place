@@ -14,7 +14,7 @@ class _OrderSubmittedState extends State<OrderSubmitted> {
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/HomePage', (Route<dynamic> route) => false);
   }
-  bool connected;
+  bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {

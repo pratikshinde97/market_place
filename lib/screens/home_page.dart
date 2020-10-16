@@ -9,6 +9,7 @@ import 'package:market_place/screens/category.dart';
 import 'package:market_place/screens/orders.dart';
 import 'package:market_place/utilities/carousol_class.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:market_place/utilities/drawer_main.dart';
 import 'package:market_place/utilities/new_expanded.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage> {
     return newContainer;
   }
 
-  bool connected;
+  bool connected = true;
   @override
   Widget build(BuildContext context) {
 
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         connected = internet;
       });
     });
-
+    Provider.of<CartModel>(context).fetchLengthFromDatabase();
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -106,24 +107,38 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text(
             'Market Place',
-            //style: kAppBarTextSize18,
             style: TextStyle(fontSize: 18, color: Colors.white),
           ),
           actions: <Widget>[
-            InkWell(
-              child: Icon(Icons.shopping_cart),
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Cart()));
-              },
+            Stack(
+              children: [
+                InkWell(
+                  child: Center(child: Icon(Icons.add_shopping_cart_outlined,size: 34,color: Colors.white,)),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => Cart()));
+                  },
+                ),
+                Positioned(
+                  top: 9.0,
+                  left: 10,
+
+                  child: CircleAvatar(
+                    backgroundColor: Colors.amber[800],
+                    radius: 8,
+                    child: Text('${Provider.of<CartModel>(context).cartCount}',style: TextStyle(fontSize: 8, color: Colors.white,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ],
             ),
+
             SizedBox(
               width: 10,
             )
           ],
           backgroundColor: Color(0xFF344955),
         ),
-         // body: connected ? OnlineWork() : OfflineWork();
+        drawer: DrawerMain(),
         body: connected ? SafeArea(
           child: Column(
             children: <Widget>[
@@ -187,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                     NewExpanded(
                       iconData: Icons.home,
                       tabName: 'Home',
-                      color: Colors.yellow[700],
+                      color: Colors.amber[700],
                     ),
                     NewExpanded(
                       onTap: () {

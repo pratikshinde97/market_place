@@ -21,7 +21,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
     print(cartList);
     return cartList;
   }
-   bool connected;
+   bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {

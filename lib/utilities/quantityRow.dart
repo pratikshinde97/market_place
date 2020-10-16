@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/database_helper/database_helper_cart.dart';
-import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +44,7 @@ class _QuantityRowState extends State<QuantityRow> {
                 ),
                 onTap: () {
                   setState(() {
-                    if (count >= 1) {
+                    if (count > 1) {
                       count--;
                       String newCount = count.toString();
                       Provider.of<CartModel>(context)

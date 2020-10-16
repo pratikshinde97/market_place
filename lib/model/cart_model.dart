@@ -9,7 +9,7 @@ import 'package:market_place/model/cart_list.dart';
 import 'check_out_list.dart';
 
 class CartModel extends ChangeNotifier {
-  int itemLength;
+  int _itemLength = 0;
   int countItem=1;
   final List<CheckOutList> _items = [];
   UnmodifiableListView<CheckOutList> get items => UnmodifiableListView(_items);
@@ -25,7 +25,14 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
+  Future<int> fetchLengthFromDatabase() async {
+    var dbHelper = DatabaseHelperCart();
+    int cart = await dbHelper.getCount();
+    _itemLength = cart;
+    notifyListeners();
+    return _itemLength;
+  }
+  int get cartCount => _itemLength;
 
 //  Future<int> fetchLengthFromDatabase() async{
 //    var dbHelper = DatabaseHelperCart();

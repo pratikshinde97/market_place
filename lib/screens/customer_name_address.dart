@@ -4,7 +4,6 @@ import 'package:market_place/constants.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
 import 'package:market_place/screens/place_order.dart';
 
 class CustomerNameAddress extends StatefulWidget {
@@ -15,13 +14,14 @@ class CustomerNameAddress extends StatefulWidget {
 }
 
 class _CustomerNameAddressState extends State<CustomerNameAddress> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String customerName;
   String mobileNumber;
   String address1;
   String address2;
   String landmark;
   String area;
-  bool connected;
+  bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
@@ -30,6 +30,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
       });
     });
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color(0xFFEDF0EE),
       appBar: AppBar(
         backgroundColor: Color(0xFF344955),
@@ -157,34 +158,33 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                         ),
                         onPressed: () {
                           if (customerName?.isEmpty ?? true) {
-                            Toast.show("Please Enter Customer Name", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Customer Name'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (mobileNumber?.isEmpty ?? true) {
-                            Toast.show("Please Enter Mobile Number ", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Mobile Number'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (mobileNumber.length < 10) {
-                            Toast.show(
-                                "Please Enter Valid Mobile Number", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Valid Mobile Number'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (address1?.isEmpty ?? true) {
-                            Toast.show("Please Enter Address Line1 ", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Address Line1'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (address2?.isEmpty ?? true) {
-                            Toast.show("Please Enter Address Line2", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Address Line2'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (address1?.isEmpty ?? true) {
-                            Toast.show("Please enter address", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please enter address'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else if (landmark?.isEmpty ?? true) {
-                            Toast.show("Please Enter Landmark", context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+                            final snackBar = SnackBar(content: Text('Please Enter Landmark'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
+
                           } else {
                             Navigator.push(
                                 context,

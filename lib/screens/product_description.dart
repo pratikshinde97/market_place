@@ -45,7 +45,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
     }
     return imageContainer;
   }
-   bool connected;
+   bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {

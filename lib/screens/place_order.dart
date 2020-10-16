@@ -36,7 +36,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
       },
     );
   }
-   bool connected;
+   bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
-import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
@@ -9,7 +8,6 @@ import 'package:market_place/screens/cart.dart';
 import 'package:market_place/screens/product_description.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
 
 class Category extends StatefulWidget {
   final String categoryName;
@@ -26,7 +24,7 @@ class _CategoryState extends State<Category> {
     super.initState();
     categoryNameFinal = widget.categoryName;
   }
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   CategoryProducts cat = CategoryProducts();
 
   List<Widget> categoryProductsContainer() {
@@ -189,11 +187,10 @@ class _CategoryState extends State<Category> {
                                           unitQuantity: productQuantity));
 
                                   //Provider.of<CartModel>(context).add(CartList(productName: productName,productImageName: productImage,ourPrice: ourPrice,mrp: mrp,unitQuantity:productQuantity));
-                                  Toast.show(
-                                      "${categoryProducts[i].productName} added to Cart",
-                                      context,
-                                      duration: Toast.LENGTH_SHORT,
-                                      gravity: Toast.CENTER);
+
+                                  final snackBar = SnackBar(content: Text('added to Cart'),duration: Duration(seconds: 2),);
+                                  _scaffoldKey.currentState.showSnackBar(snackBar);
+
                                 },
                                 color: Colors.amber[600],
                                 child: Text(
@@ -374,11 +371,9 @@ class _CategoryState extends State<Category> {
                                     ourPrice: ourPrice,
                                     mrp: mrp,
                                     unitQuantity: productQuantity));
-                            Toast.show(
-                                "${categoryProducts[i].productName} added to Cart",
-                                context,
-                                duration: Toast.LENGTH_SHORT,
-                                gravity: Toast.CENTER);
+
+                            final snackBar = SnackBar(content: Text('added to Cart'),duration: Duration(seconds: 2),);
+                            _scaffoldKey.currentState.showSnackBar(snackBar);
                           },
                           color: Colors.amber[600],
                           child: Text(
@@ -413,7 +408,7 @@ class _CategoryState extends State<Category> {
     }
     return newContainer;
   }
-   bool connected;
+   bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
@@ -422,10 +417,38 @@ class _CategoryState extends State<Category> {
       });
     });
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor:  Color(0xFFE8EAF6),
       appBar: AppBar(
         title: Text('Category'),
         backgroundColor: Color(0xFF344955),
+        actions: <Widget>[
+          Stack(
+            children: [
+              InkWell(
+                child: Center(child: Icon(Icons.add_shopping_cart_outlined,size: 34,color: Colors.white,)),
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Cart()));
+                },
+              ),
+              Positioned(
+                top: 9.0,
+                left: 10,
+
+                child: CircleAvatar(
+                  backgroundColor: Colors.amber[800],
+                  radius: 8,
+                  child: Text('${Provider.of<CartModel>(context).cartCount}',style: TextStyle(fontSize: 8, color: Colors.white,fontWeight: FontWeight.bold),),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
       body: connected ? SafeArea(
         child: Column(

@@ -15,41 +15,8 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  int itemsLength;
 
-  Future<int> fetchLengthFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    int cart = await dbHelper.getCount();
-    setState(() {
-      itemsLength = cart;
-    });
-    return cart;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchLengthFromDatabase();
-  }
-
-  // Future<List<CartList>> fetchProductFromDatabase() async {
-  //   var dbHelper = DatabaseHelperCart();
-  //   List<CartList> cartList = await dbHelper.getNoteList();
-  //   for (int i = 1; i < cartList.length; i++) {
-  //     String pName = cartList[i].productName;
-  //     double rate = double.parse(cartList[i].mrp);
-  //     double quantity = double.parse(cartList[i].quantity);
-  //     double amount =
-  //         double.parse(cartList[i].quantity) * double.parse(cartList[i].mrp);
-  //
-  //     Provider.of<CartModel>(context).add(CheckOutList(
-  //         productName: pName, rate: rate, quantity: quantity, amount: amount));
-  //     print(Provider.of<CartModel>(context).itemCount);
-  //     print(cartList);
-  //   }
-  //   return cartList;
-  // }
-   bool connected;
+   bool connected = true;
   @override
   Widget build(BuildContext context) {
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
@@ -57,6 +24,7 @@ class _CartState extends State<Cart> {
         connected = internet;
       });
     });
+    Provider.of<CartModel>(context).fetchLengthFromDatabase();
     return Scaffold(
       backgroundColor: Color(0xFFE8EAF6),
       appBar: AppBar(
@@ -247,10 +215,10 @@ class _CartState extends State<Cart> {
                     color: Color(0xFF344955),
                     child: Center(
                         child: Text(
-                      '$itemsLength  items 0 ₹',
+                      //'$itemsLength  items 0 ₹',
+                          '${Provider.of<CartModel>(context).cartCount} items 0 ₹',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     )),
-                    //child: Center(child: Text('${Provider.of<CartModel>(context).itemLength}  items 0 ₹',style: TextStyle(color: Colors.white,fontSize: 14),)),
                   ),
                 ),
                 Expanded(
