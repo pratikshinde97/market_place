@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Schyler',
         ),
-        home: HomePage(),
+        home: LoginPage(),
       ),
     );
   }

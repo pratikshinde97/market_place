@@ -6,7 +6,9 @@ import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_products.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:market_place/screens/product_description.dart';
+import 'package:market_place/screens/search_by_category.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:market_place/utilities/search_products.dart';
 import 'package:provider/provider.dart';
 
 class Category extends StatefulWidget {
@@ -420,7 +422,7 @@ class _CategoryState extends State<Category> {
       key: _scaffoldKey,
       backgroundColor:  Color(0xFFE8EAF6),
       appBar: AppBar(
-        title: Text('Category'),
+        title: Text(categoryNameFinal,style: kAppBarTextSize18),
         backgroundColor: Color(0xFF344955),
         actions: <Widget>[
           Stack(
@@ -457,26 +459,89 @@ class _CategoryState extends State<Category> {
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Container(
-                      height: 50,
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Center(
-                              child: Text(
-                            categoryNameFinal,
-                            style: kTextSize16,
-                          )),
-                        ),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(12, 10, 12, 2),
+                  //   child: Container(
+                  //     height: 50,
+                  //     child: Card(
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(12.0),
+                  //         child: Center(
+                  //             child: Text(
+                  //           categoryNameFinal,
+                  //           style: kTextSize16,
+                  //         )),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
+                  Container(
+                    color: Color(0xFF344955),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10,bottom: 6),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                    context, MaterialPageRoute(builder: (context) => SearchByCategory()));
+                              },
+                              child: Container(
+                                height: 40,
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Search Category',
+                                            style: TextStyle(color: Colors.grey,fontSize: 12),
+                                          ),
+                                        ),
+                                        Icon(Icons.search,color:Colors.grey),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: (){
+                                showSearch(
+                                  context: context,
+                                  delegate: CustomSearchHintDelegateProducts(),
+                                );
+                              },
+                              child: Container(
+                                height: 40,
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Search Product',
+                                            style: TextStyle(color: Colors.grey,fontSize: 12),
+                                          ),
+                                        ),
+                                        Icon(Icons.search,color:Colors.grey),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-//              DropdownButton(
-//                items: Provider.of<CartModel>(context).items[i].productName.tol,
-//                value: ,
-//              ),
                   Column(
                     children: categoryNameFinal.compareTo('All Categories') == 0
                         ? categoryAllProductsContainer()

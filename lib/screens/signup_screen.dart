@@ -1,11 +1,11 @@
 import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/login_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:market_place/utilities/networking.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,107 +17,6 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  // bool showSpinner = false;
-  // String email = '';
-  // String password = '';
-  // final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  // @override
-  // Widget build(BuildContext context) {
-  //   return SafeArea(
-  //     child: Scaffold(
-  //       backgroundColor: Colors.white,
-  //       body: Padding(
-  //         padding: EdgeInsets.symmetric(horizontal: 24.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: <Widget>[
-  //             SizedBox(
-  //               height: 48.0,
-  //             ),
-  //             Container(
-  //               height: 20.0,
-  //               child: Image.asset('images/hspmlogo.png'),
-  //               padding: EdgeInsets.symmetric(vertical: 30.0),
-  //             ),
-  //             SizedBox(
-  //               height: 48.0,
-  //             ),
-  //             TextField(
-  //               keyboardType: TextInputType.emailAddress,
-  //               textAlign: TextAlign.center,
-  //               // ignore: missing_return
-  //               onChanged: (value) {
-  //                 email = value;
-  //               },
-  //               decoration: InputDecoration(
-  //                 hintText: 'Enter Your email',
-  //                 border: OutlineInputBorder(
-  //                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  //                   borderSide:
-  //                       BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-  //                 ),
-  //               ),
-  //             ),
-  //             SizedBox(
-  //               height: 48.0,
-  //             ),
-  //             TextField(
-  //               textAlign: TextAlign.center,
-  //               onChanged: (value) {
-  //                 password = value;
-  //               },
-  //               obscureText: true,
-  //               decoration: InputDecoration(
-  //                 hintText: 'Enter Your Password',
-  //                 border: OutlineInputBorder(
-  //                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  //                   borderSide:
-  //                       BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-  //                 ),
-  //               ),
-  //             ),
-  //             SizedBox(
-  //               height: 48.0,
-  //             ),
-  //             Padding(
-  //                 padding: EdgeInsets.symmetric(vertical: 16.0),
-  //                 child: Material(
-  //                     color: Colors.blue,
-  //                     borderRadius: BorderRadius.circular(30.0),
-  //                     child: MaterialButton(
-  //                       minWidth: 10.0,
-  //                       height: 40.0,
-  //                       onPressed: () async {
-  //                         setState(() {
-  //                           showSpinner = true;
-  //                         });
-  //                         try {
-  //                           final newUser =
-  //                               await _auth.createUserWithEmailAndPassword(
-  //                                   email: email, password: password);
-  //                           if (newUser != null) {
-  //                             // Navigator.pushNamed(
-  //                             //     context, MainDisplayScreen.id);
-  //                           }
-  //                           setState(() {
-  //                             showSpinner = false;
-  //                           });
-  //                         } catch (e) {
-  //                           print(e);
-  //                         }
-  //                       },
-  //                       child: Text(
-  //                         'REGISTER',
-  //                         style: TextStyle(fontSize: 17),
-  //                       ),
-  //                     )))
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController controllerEmail = TextEditingController();
@@ -126,7 +25,6 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool _passwordVisible;
   bool showSpinner = false;
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
   bool showProgress = false;
   String email = '';
   String password = '';
@@ -137,14 +35,16 @@ class _SignUpState extends State<SignUp> {
     _passwordVisible = false;
   }
 
-  Future<Album> createAlbum(String title) async {
+  Future<Sign> createUser(String email,String password) async {
+    print('////////////?????????????????????');
     final http.Response response = await http.post(
-      'https://jsonplaceholder.typicode.com/albums',
+      'http://192.168.43.23:8081/api/user/create',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'title': title,
+        'email': email,
+        'password': password,
       }),
 
     );
@@ -153,7 +53,7 @@ class _SignUpState extends State<SignUp> {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       print('////////////////////////?????????');
-      return Album.fromJson(jsonDecode(response.body));
+      return Sign.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
@@ -213,6 +113,7 @@ class _SignUpState extends State<SignUp> {
                                 onChanged: (value) {
                                   email = value;
                                 },
+                                controller: controllerEmail,
                                 decoration: kDecoration
                             ),
                           ),
@@ -316,11 +217,8 @@ class _SignUpState extends State<SignUp> {
                                         showSpinner = false;
                                         showProgress = false;
                                       });
-                                      // createAlbum(password);
-                                      createAlbum(controllerPassword.text);
-                                      //_futureAlbum = createAlbum(password);
-                                      print(controllerPassword.text);
-                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                                       createUser(controllerEmail.text,controllerPassword.text);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                     }
                                   } catch (e) {
                                     print(e);
@@ -355,16 +253,17 @@ class _SignUpState extends State<SignUp> {
     );
   }
 }
-class Album {
-  final int id;
-  final String title;
 
-  Album({this.id, this.title});
+class Sign {
+  final String email;
+  final String password;
 
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'],
-      title: json['title'],
+  Sign({this.email, this.password});
+
+  factory Sign.fromJson(Map<String, dynamic> json) {
+    return Sign(
+      email: json['email'],
+      password: json['password'],
     );
   }
 }

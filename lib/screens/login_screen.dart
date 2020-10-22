@@ -5,6 +5,7 @@ import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/home_page.dart';
 import 'package:market_place/screens/signup_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:market_place/utilities/networking.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 
@@ -28,6 +29,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     _passwordVisible = false;
+    NetworkData().getNetworkData();
   }
    bool connected = true;
   @override
@@ -141,10 +143,14 @@ class LoginPageState extends State<LoginPage> {
                                       final snackBar = SnackBar(content: Text('Please enter Password to login.'));
                                       _scaffoldKey.currentState.showSnackBar(snackBar);
                                     }
+                                     else{
+
+                                     }
                                     setState(() {
                                       showProgress = true;
                                     });
-                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+
+                                     //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                                      // final snackBar = SnackBar(content: Text('Wrong Email Id or Password'));
                                      // _scaffoldKey.currentState.showSnackBar(snackBar);
 

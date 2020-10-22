@@ -7,10 +7,13 @@ import 'package:market_place/model/category_list.dart';
 import 'package:market_place/screens/cart.dart';
 import 'package:market_place/screens/category.dart';
 import 'package:market_place/screens/orders.dart';
+import 'package:market_place/screens/search_by_category.dart';
 import 'package:market_place/utilities/carousol_class.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/drawer_main.dart';
+import 'package:market_place/utilities/networking.dart';
 import 'package:market_place/utilities/new_expanded.dart';
+import 'package:market_place/utilities/search_products.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -93,7 +96,6 @@ class _HomePageState extends State<HomePage> {
   bool connected = true;
   @override
   Widget build(BuildContext context) {
-
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
       setState(() {
         connected = internet;
@@ -142,6 +144,74 @@ class _HomePageState extends State<HomePage> {
         body: connected ? SafeArea(
           child: Column(
             children: <Widget>[
+              Container(
+                color: Color(0xFF344955),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => SearchByCategory()));
+                          },
+                          child: Container(
+                            height: 40,
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Search Category',
+                                        style: TextStyle(color: Colors.grey,fontSize: 12),
+                                      ),
+                                    ),
+                                    Icon(Icons.search,color:Colors.grey),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: (){
+                            print('hi');
+                            showSearch(
+                              context: context,
+                              delegate: CustomSearchHintDelegateProducts(),
+                            );
+
+                          },
+                          child: Container(
+                            height: 40,
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Search Product',
+                                        style: TextStyle(color: Colors.grey,fontSize: 12),
+                                      ),
+                                    ),
+                                    Icon(Icons.search,color:Colors.grey),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -214,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       color: Colors.white,
                       iconData: Icons.category,
-                      tabName: 'Category',
+                      tabName: 'All Categories',
                     ),
                     NewExpanded(
                       onTap: () {
@@ -225,14 +295,15 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                       tabName: 'Orders',
                     ),
-//                  NewExpanded(
-//                    onTap: () {
-//                      Navigator.push(context,
-//                          MaterialPageRoute(builder: (context) => Cart()));
-//                    },
-//                    iconData: Icons.shopping_cart,
-//                    tabName: 'Cart',
-//                  ),
+                 NewExpanded(
+                   onTap: () {
+                     Navigator.push(context,
+                         MaterialPageRoute(builder: (context) => Cart()));
+                   },
+                   iconData: Icons.shopping_cart,
+                   color: Colors.white,
+                   tabName: 'Cart',
+                 ),
                   ],
                 ),
               ),
@@ -244,3 +315,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
