@@ -7,7 +7,9 @@ import 'dart:io';
 
 import 'package:market_place/model/slider_model.dart';
 import 'package:market_place/screens/home_page.dart';
+import 'package:market_place/screens/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroductionScreen extends StatefulWidget {
   @override
@@ -15,6 +17,15 @@ class IntroductionScreen extends StatefulWidget {
 }
 
 class _IntroductionScreenState extends State<IntroductionScreen> {
+  Future<void> checkLogin() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    print(email);
+    //runApp(MaterialApp(home: email == null ? Login() : Home()));
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) =>  email == null ? LoginPage() : HomePage()));
+  }
   List<SliderModel> mySLides = new List<SliderModel>();
   int slideIndex = 0;
   PageController controller;
@@ -109,11 +120,12 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                   children: <Widget>[
                     FlatButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    HomePage())); // controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             HomePage())); // controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
+                        checkLogin();
                       },
                       splashColor: Colors.blue[50],
                       child: Text(
@@ -154,15 +166,13 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             : InkWell(
                 onTap: () {
                   print("Get Started Now");
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              HomePage())); // controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
-                  /*Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => (InternetCheck())));*/
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) =>
+                  //             HomePage())); // controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
+
+                  checkLogin();
                 },
                 child: Container(
                   height: Platform.isIOS ? 70 : 60,

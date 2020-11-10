@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/screens/login_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
-import 'package:market_place/utilities/networking.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 

@@ -4,6 +4,10 @@ import 'package:market_place/drawer_screens/contact_us.dart';
 import 'package:market_place/drawer_screens/privacy_policy.dart';
 import 'package:market_place/drawer_screens/terms_conditions.dart';
 import 'package:market_place/screens/home_page.dart';
+import 'package:market_place/screens/login_screen.dart';
+import 'package:market_place/screens/login_screen.dart';
+import 'package:market_place/screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 class DrawerMain extends StatelessWidget {
 
@@ -84,9 +88,13 @@ class DrawerMain extends StatelessWidget {
             new ListTile(
               leading: Icon(Icons.input, color: Colors.amber,),
               title: new Text("LogOut",style: TextStyle(color: Colors.black)),
-//            onTap: () {
-//              Navigator.popAndPushNamed(context, FirstScreen.id);
-//            },
+           onTap: () async{
+             SharedPreferences prefs = await SharedPreferences.getInstance();
+             prefs?.clear();
+             Navigator.of(context).pushAndRemoveUntil(
+                 MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+
+           },
             ),
             Divider(color: Colors.white),
           ],

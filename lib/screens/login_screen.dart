@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -7,6 +9,7 @@ import 'package:market_place/screens/signup_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/networking.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,8 +32,12 @@ class LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     _passwordVisible = false;
-    NetworkData().getNetworkData();
+
   }
+  // back() {
+  //   Navigator.of(context)
+  //       .pushNamedAndRemoveUntil('/HomePage', (Route<dynamic> route) => false);
+  // }
    bool connected = true;
   @override
   Widget build(BuildContext context) {
@@ -144,20 +151,37 @@ class LoginPageState extends State<LoginPage> {
                                       _scaffoldKey.currentState.showSnackBar(snackBar);
                                     }
                                      else{
+                                       print(email);
+                                       print(password);
+                                        String url = 'http://192.168.43.23:8081/api/user/$email/$password';
+                                       http.Response response= await http.get(url);
+                                       var message= response.body;
+                                       // //var message = jsonDecode(data);
+                                      // var message = await NetworkData().getNetworkData(url);
+                                       print('///////////////$message?????????????????????????????');
+                                       setState(() {
+                                         showProgress = true;
+                                       });
+                                       setState(() {
+                                         showSpinner = false;
+                                         showProgress = false;
+                                       });
+                                       print('///////////////$message???????');
+                                       String msg = "Login Successful!!!";
+
+                                        if(message.compareTo(msg)!=0){
+                                         final snackBar = SnackBar(content: Text('Wrong Email Id or Password'));
+                                         _scaffoldKey.currentState.showSnackBar(snackBar);
+                                       }
+                                       else{
+                                         print(email);
+                                         SharedPreferences prefs = await SharedPreferences.getInstance();
+                                         prefs.setString('email', email);
+                                         Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                                       }
 
                                      }
-                                    setState(() {
-                                      showProgress = true;
-                                    });
 
-                                     //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-                                     // final snackBar = SnackBar(content: Text('Wrong Email Id or Password'));
-                                     // _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                                    setState(() {
-                                      showSpinner = false;
-                                      showProgress = false;
-                                    });
                                   } catch (e) {
                                     print(e);
                                     setState(() {

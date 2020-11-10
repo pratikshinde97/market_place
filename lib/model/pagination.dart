@@ -99,11 +99,11 @@ class _UsersListState extends State<UsersList> {
                         String name = _searchUsers[i].first_name +
                             " " +
                             _searchUsers[i].last_name;
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProfileScreen(avatar, email, name)));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             ProfileScreen(avatar, email, name)));
                       },
                     ),
                   );
@@ -128,6 +128,7 @@ class _UsersListState extends State<UsersList> {
     if (res.statusCode == 200) {
       var data = json.decode(res.body);
       data1 = data['data'];
+      print(data1);
       var rest = data['data'] as List;
       usersdata =
           rest.map<UserModel>((json) => UserModel.fromJson(json)).toList();
