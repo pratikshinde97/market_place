@@ -1,17 +1,23 @@
+import 'dart:convert';
+import 'dart:typed_data';
 
 class CategoryList {
   String categoryName;
+  Uint8List img;
   // String avatar;
 
   CategoryList.fromJson(obj) {
     this.categoryName = obj['categoryName'];
+    this.img = base64Decode(obj['data']);
     //this.avatar = obj['avatar'];
   }
+
   static List<CategoryList> fromJsonList(jsonList) {
-    return jsonList.map<CategoryList>((obj) => CategoryList.fromJson(obj)).toList();
+    return jsonList
+        .map<CategoryList>((obj) => CategoryList.fromJson(obj))
+        .toList();
   }
 }
-
 
 //
 // class CategoryList {
