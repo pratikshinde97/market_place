@@ -89,51 +89,51 @@ class _HomePageState extends State<HomePage> {
         false;
   }
 
-  // List<Widget> categoryContainer() {
-  //   List<Container> newContainer = [];
-  //   List categoryList = cat.getCategoryList();
-  //   for (int i = 0; i < categoryList.length; i++) {
-  //     newContainer.add(Container(
-  //       decoration: BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //       padding: const EdgeInsets.all(8),
-  //       child: GestureDetector(
-  //         onTap: () {
-  //           categoryName = categoryList[i].categoryName;
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) => Category(categoryName)));
-  //         },
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: <Widget>[
-  //             //Icon(categoryList[i].iconCategory,size: 40,),
-  //             Expanded(
-  //               flex: 3,
-  //               child: Image.network(
-  //                 categoryList[i].imageCategory,
-  //               ),
-  //             ),
-  //             SizedBox(
-  //               height: 12,
-  //             ),
-  //             Expanded(
-  //               //flex: 1,
-  //               child: Text(
-  //                 categoryList[i].categoryName,
-  //                 style: kBottomTextSize,
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ));
-  //   }
-  //   return newContainer;
-  // }
+  List<Widget> categoryContainer() {
+    List<Container> newContainer = [];
+    //  List categoryList = cat.getCategoryList();
+    for (int i = 0; i < _searchUsers.length; i++) {
+      newContainer.add(Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: GestureDetector(
+          // onTap: () {
+          //   categoryName = categoryList[i].categoryName;
+          //   Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => Category(categoryName)));
+          // },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              //Icon(categoryList[i].iconCategory,size: 40,),
+              Expanded(
+                flex: 3,
+                child: Image.memory(
+                  _searchUsers[i].img,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Expanded(
+                //flex: 1,
+                child: Text(
+                  _searchUsers[i].categoryName,
+                  style: kBottomTextSize,
+                ),
+              )
+            ],
+          ),
+        ),
+      ));
+    }
+    return newContainer;
+  }
 
   bool connected = true;
 
@@ -194,251 +194,264 @@ class _HomePageState extends State<HomePage> {
         ),
         drawer: DrawerMain(),
         body: connected
-            ? Column(
-                children: <Widget>[
-                  Expanded(
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (ScrollNotification scrollInfo) {
-                        if (!isLoading &&
-                            scrollInfo.metrics.pixels ==
-                                scrollInfo.metrics.maxScrollExtent) {
-                          _loadData(count++);
-
-                          setState(() {
-                            isLoading = true;
-                          });
-                        }
-                      },
-                      child: ListView.builder(
-                        itemCount: _searchUsers.length,
-                        itemBuilder: (context, i) {
-                          return Container(
-                            height: 60,
-                            child: GestureDetector(
-                              child: Card(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Image.memory(_searchUsers[i].img),
-                                    ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: Text(_searchUsers[i].categoryName,
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: Color(0xff212121))),
-                                    ),
-                                    // Expanded(
-                                    //   flex: 2,
-                                    //   child: Text(
-                                    //       _searchUsers[i].first_name +
-                                    //           " " +
-                                    //           _searchUsers[i].last_name,
-                                    //       style: TextStyle(
-                                    //           fontSize: 13, color: Color(0xff212121))),
-                                    // ),
-                                  ],
-                                ),
-                              ),
-                              onTap: () {
-                                // String avatar = _searchUsers[i].avatar;
-                                // String email = _searchUsers[i].email;
-                                // String name = _searchUsers[i].first_name +
-                                //     " " +
-                                //     _searchUsers[i].last_name;
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             ProfileScreen(avatar, email, name)));
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: isLoading ? 50.0 : 0,
-                    color: Colors.transparent,
-                    child: Center(
-                      child: new CircularProgressIndicator(),
-                    ),
-                  ),
-                ],
-              )
-            // SafeArea(
-            //   child: Column(
+            ?
+            // Column(
             //     children: <Widget>[
-            //       Container(
-            //         color: Color(0xFF344955),
-            //         child: Padding(
-            //           padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
-            //           child: Row(
-            //             children: [
-            //               Expanded(
-            //                 child: GestureDetector(
-            //                   onTap: (){
-            //                     Navigator.push(
-            //                         context, MaterialPageRoute(builder: (context) => SearchByCategory()));
-            //                   },
-            //                   child: Container(
-            //                     height: 40,
-            //                     child: Card(
-            //                       child: Padding(
-            //                         padding: const EdgeInsets.all(8.0),
-            //                         child: Row(
-            //                           children: [
-            //                             Expanded(
-            //                               child: Text(
-            //                                 'Search Category',
-            //                                 style: TextStyle(color: Colors.grey,fontSize: 12),
-            //                               ),
-            //                             ),
-            //                             Icon(Icons.search,color:Colors.grey),
-            //                           ],
-            //                         ),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //               Expanded(
-            //                 child: GestureDetector(
-            //                   onTap: (){
-            //                     print('hi');
-            //                     showSearch(
-            //                       context: context,
-            //                       delegate: CustomSearchHintDelegateProducts(),
-            //                     );
-            //,
-            //                   },
-            //                   child: Container(
-            //                     height: 40,
-            //                     child: Card(
-            //                       child: Padding(
-            //                         padding: const EdgeInsets.all(8.0),
-            //                         child: Row(
-            //                           children: [
-            //                             Expanded(
-            //                               child: Text(
-            //                                 'Search Product',
-            //                                 style: TextStyle(color: Colors.grey,fontSize: 12),
-            //                               ),
-            //                             ),
-            //                             Icon(Icons.search,color:Colors.grey),
-            //                           ],
-            //                         ),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
             //       Expanded(
-            //         child: Padding(
-            //           padding: const EdgeInsets.symmetric(vertical: 10),
-            //           child: ListView(
-            //             children: <Widget>[
-            //               Container(height: 140, child: CarouselClass()),
-            //               SizedBox(
-            //                 height: 10,
-            //               ),
-            //               Row(
-            //                 children: <Widget>[
-            //                   Expanded(
-            //                       child: Divider(
-            //                     color: Color(0xFF344955),
-            //                     indent: 20,
-            //                   )),
-            //                   Expanded(
-            //                       child: Center(
-            //                           child: Text('Categories',
-            //                               style: TextStyle(
-            //                                   fontSize: 16,
-            //                                   color: Colors.black87,
-            //                                   fontWeight: FontWeight.bold)))),
-            //                   Expanded(
-            //                       child: Divider(
-            //                     color: Color(0xFF344955),
-            //                     endIndent: 20,
-            //                   )),
-            //                 ],
-            //               ),
+            //         child: NotificationListener<ScrollNotification>(
+            //           onNotification: (ScrollNotification scrollInfo) {
+            //             if (!isLoading &&
+            //                 scrollInfo.metrics.pixels ==
+            //                     scrollInfo.metrics.maxScrollExtent) {
+            //               _loadData(count++);
             //
-            //               Container(
-            //                 child: CustomScrollView(
-            //                   shrinkWrap: true,
-            //                   primary: false,
-            //                   slivers: <Widget>[
-            //                     SliverPadding(
-            //                       padding: const EdgeInsets.all(16),
-            //                       sliver: SliverGrid.count(
-            //                         crossAxisSpacing: 16,
-            //                         mainAxisSpacing: 16,
-            //                         crossAxisCount: 2,
-            //                         children: categoryContainer(),
-            //                       ),
+            //               setState(() {
+            //                 isLoading = true;
+            //               });
+            //             }
+            //           },
+            //           child: ListView.builder(
+            //             itemCount: _searchUsers.length,
+            //             itemBuilder: (context, i) {
+            //               return Container(
+            //                 height: 60,
+            //                 child: GestureDetector(
+            //                   child: Card(
+            //                     child: Row(
+            //                       children: [
+            //                         Container(
+            //                           child: Image.memory(_searchUsers[i].img),
+            //                         ),
+            //                         SizedBox(
+            //                           width: 15,
+            //                         ),
+            //                         Expanded(
+            //                           flex: 3,
+            //                           child: Text(_searchUsers[i].categoryName,
+            //                               style: TextStyle(
+            //                                   fontSize: 13,
+            //                                   color: Color(0xff212121))),
+            //                         ),
+            //                         // Expanded(
+            //                         //   flex: 2,
+            //                         //   child: Text(
+            //                         //       _searchUsers[i].first_name +
+            //                         //           " " +
+            //                         //           _searchUsers[i].last_name,
+            //                         //       style: TextStyle(
+            //                         //           fontSize: 13, color: Color(0xff212121))),
+            //                         // ),
+            //                       ],
             //                     ),
-            //                   ],
+            //                   ),
+            //                   onTap: () {
+            //                     // String avatar = _searchUsers[i].avatar;
+            //                     // String email = _searchUsers[i].email;
+            //                     // String name = _searchUsers[i].first_name +
+            //                     //     " " +
+            //                     //     _searchUsers[i].last_name;
+            //                     // Navigator.push(
+            //                     //     context,
+            //                     //     MaterialPageRoute(
+            //                     //         builder: (context) =>
+            //                     //             ProfileScreen(avatar, email, name)));
+            //                   },
             //                 ),
-            //               )
-            //             ],
+            //               );
+            //             },
             //           ),
             //         ),
             //       ),
             //       Container(
-            //         height: 54,
-            //         color: Color(0xFF344955),
-            //         child: Row(
-            //           children: <Widget>[
-            //             NewExpanded(
-            //               iconData: Icons.home,
-            //               tabName: 'Home',
-            //               color: Colors.amber[700],
-            //             ),
-            //             NewExpanded(
-            //               onTap: () {
-            //                 categoryName = 'All Categories';
-            //                 Navigator.push(
-            //                     context,
-            //                     MaterialPageRoute(
-            //                         builder: (context) => Category(categoryName)));
-            //               },
-            //               color: Colors.white,
-            //               iconData: Icons.category,
-            //               tabName: 'All Categories',
-            //             ),
-            //             NewExpanded(
-            //               onTap: () {
-            //                 Navigator.push(context,
-            //                     MaterialPageRoute(builder: (context) => Orders()));
-            //               },
-            //               iconData: Icons.business,
-            //               color: Colors.white,
-            //               tabName: 'Orders',
-            //             ),
-            //          NewExpanded(
-            //            onTap: () {
-            //              Navigator.push(context,
-            //                  MaterialPageRoute(builder: (context) => Cart()));
-            //            },
-            //            iconData: Icons.shopping_cart,
-            //            color: Colors.white,
-            //            tabName: 'Cart',
-            //          ),
-            //           ],
+            //         height: isLoading ? 50.0 : 0,
+            //         color: Colors.transparent,
+            //         child: Center(
+            //           child: new CircularProgressIndicator(),
             //         ),
             //       ),
             //     ],
-            //   ),
-            // )
+            //   )
+            //
+            SafeArea(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      color: Color(0xFF344955),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                // onTap: (){
+                                //   Navigator.push(
+                                //       context, MaterialPageRoute(builder: (context) => SearchByCategory()));
+                                // },
+                                child: Container(
+                                  height: 40,
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Search Category',
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                          Icon(Icons.search,
+                                              color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  print('hi');
+                                  showSearch(
+                                    context: context,
+                                    delegate:
+                                        CustomSearchHintDelegateProducts(),
+                                  );
+                                },
+                                child: Container(
+                                  height: 40,
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Search Product',
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12),
+                                            ),
+                                          ),
+                                          Icon(Icons.search,
+                                              color: Colors.grey),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListView(
+                          children: <Widget>[
+                            Container(height: 140, child: CarouselClass()),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: Divider(
+                                  color: Color(0xFF344955),
+                                  indent: 20,
+                                )),
+                                Expanded(
+                                    child: Center(
+                                        child: Text('Categories',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.bold)))),
+                                Expanded(
+                                    child: Divider(
+                                  color: Color(0xFF344955),
+                                  endIndent: 20,
+                                )),
+                              ],
+                            ),
+                            Container(
+                              child: CustomScrollView(
+                                shrinkWrap: true,
+                                primary: false,
+                                slivers: <Widget>[
+                                  SliverPadding(
+                                    padding: const EdgeInsets.all(16),
+                                    sliver: SliverGrid.count(
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 16,
+                                      crossAxisCount: 2,
+                                      children: categoryContainer(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 54,
+                      color: Color(0xFF344955),
+                      child: Row(
+                        children: <Widget>[
+                          NewExpanded(
+                            iconData: Icons.home,
+                            tabName: 'Home',
+                            color: Colors.amber[700],
+                          ),
+                          NewExpanded(
+                            onTap: () {
+                              categoryName = 'All Categories';
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Category(categoryName)));
+                            },
+                            color: Colors.white,
+                            iconData: Icons.category,
+                            tabName: 'All Categories',
+                          ),
+                          NewExpanded(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Orders()));
+                            },
+                            iconData: Icons.business,
+                            color: Colors.white,
+                            tabName: 'Orders',
+                          ),
+                          NewExpanded(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Cart()));
+                            },
+                            iconData: Icons.shopping_cart,
+                            color: Colors.white,
+                            tabName: 'Cart',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
             : ConnectivityContainer(),
       ),
     );
