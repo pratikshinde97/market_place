@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:io';
+ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/category_list.dart';
-import 'package:market_place/screens/cart.dart';
-import 'package:market_place/screens/category.dart';
+import 'package:market_place/screens/cart.dart'; import 'package:market_place/screens/category.dart';
 import 'package:market_place/screens/orders.dart';
 import 'package:market_place/screens/search_by_category.dart';
 import 'package:market_place/utilities/carousol_class.dart';
@@ -37,12 +36,6 @@ class _HomePageState extends State<HomePage> {
   int count;
   bool isLoading = false;
 
-  // @override
-  // void initState() {
-  //   count = 1;
-  //   _loadData(count++);
-  //   super.initState();
-  // }
   @override
   void initState() {
     count = 1;
@@ -50,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  List catData = [];
+  //List catData = [];
 
   Future _loadData(int i) async {
     await new Future.delayed(new Duration(seconds: 2));
@@ -58,7 +51,6 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         usersdata.addAll(value);
         _searchUsers = usersdata;
-        this._searchUsers;
         isLoading = false;
       });
     });
@@ -413,12 +405,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           NewExpanded(
                             onTap: () {
-                              categoryName = 'All Categories';
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          Category(categoryName)));
+                              // categoryName = 'All Categories';
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             Category(categoryName)));
                             },
                             color: Colors.white,
                             iconData: Icons.category,
@@ -456,48 +448,11 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  //
-  // Future<List<CategoryList>> getCategories(index) async {
-  //   print('/////////////////////////////?????????');
-  //   final res =
-  //       await http.get("http://192.168.43.143:8081/api/categories/$index/20");
-  //   print("<<<<<<<<<<<<<<<<<<<<<<<<<");
-  //   if (res.statusCode == 200) {
-  //     print('>>>>>>>>>>>>>>>>$res');
-  //     var data = json.decode(res.body);
-  //     var d = res.body;
-  //     int r = d.length;
-  //     print('$r????????<<<<<');
-  //     List catData = [];
-  //     for (int i = 0; i <= r; i++) {
-  //       var rest = data[i]['categoryName'];
-  //       catData.add(rest);
-  //
-  //       // rest = data['categoryName'] as List;
-  //       print('$rest//////////');
-  //     }
-  //     print('/??///???$catData');
-  //     //data1 = data['categoryName'];
-  //     //var data2 = data['data'];
-  //     //Uint8List imageFile = data2;
-  //     //print('$data2//////////');
-  //     // print('$imageFile//////////');
-  //     // var rest = data['categoryName'] as List;
-  //     usersdata = catData
-  //         .map<CategoryList>((json) => CategoryList.fromJson(json))
-  //         .toList();
-  //     print('$usersdata>>>><<<<<<>>>>><<<<<');
-  //     return usersdata;
-  //   } else {
-  //     print('?????????????????????????????????');
-  //     throw Exception('Failed to fetch data');
-  //   }
-  // }
 
   Future<List<CategoryList>> getCategories(i) async {
     print('/////////////////////////////?????????');
     final res =
-        await http.get("http://192.168.43.143:8081/api/categories/$i/10");
+        await http.get("http://192.168.43.23:8081/api/categories/$i/10");
     print("<<<<<<<<<<<<<<<<<<<<<<<<<");
     if (res.statusCode == 200) {
       print('>>>>>>>>>>>>>>>>$res');
