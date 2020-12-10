@@ -156,7 +156,7 @@ class LoginPageState extends State<LoginPage> {
                                         String url = 'http://192.168.43.23:8081/api/user/$email/$password';
                                        http.Response response= await http.get(url);
                                        var message= response.body;
-                                       // //var message = jsonDecode(data);
+
                                       // var message = await NetworkData().getNetworkData(url);
                                        print('///////////////$message?????????????????????????????');
                                        setState(() {

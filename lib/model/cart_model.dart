@@ -25,13 +25,13 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> fetchLengthFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    int cart = await dbHelper.getCount();
-    _itemLength = cart;
-    notifyListeners();
-    return _itemLength;
-  }
+  // Future<int> fetchLengthFromDatabase() async {
+  //   var dbHelper = DatabaseHelperCart();
+  //   int cart = await dbHelper.getCount();
+  //   _itemLength = cart;
+  //   notifyListeners();
+  //   return _itemLength;
+  // }
   int get cartCount => _itemLength;
 
 //  Future<int> fetchLengthFromDatabase() async{
@@ -52,22 +52,22 @@ class CartModel extends ChangeNotifier {
 
 
 
-  Future<List<CartList>> fetchProductFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    Future<List<CartList>> cartList = dbHelper.getNoteList();
-    return cartList;
-  }
+  // Future<List<CartList>> fetchProductFromDatabase() async {
+  //   var dbHelper = DatabaseHelperCart();
+  //   Future<List<CartList>> cartList = dbHelper.getNoteList();
+  //   return cartList;
+  // }
 
-  void addInDatabase(CartList cart){
-    var databaseHelperCart = DatabaseHelperCart();
-    databaseHelperCart.insertNote(cart);
+  // void addInDatabase(CartList cart){
+  //   var databaseHelperCart = DatabaseHelperCart();
+  //   databaseHelperCart.insertNote(cart);
+  //
+  // }
 
-  }
-
-  void updateProduct(newPrice, productId) {
-    var dbHelper = DatabaseHelperCart();
-    dbHelper.updateProduct(newPrice, productId);
-  }
+  // void updateProduct(newPrice, productId) {
+  //   var dbHelper = DatabaseHelperCart();
+  //   dbHelper.updateProduct(newPrice, productId);
+  // }
 
   Future<bool> checkConnectivity() async {
     bool connect;

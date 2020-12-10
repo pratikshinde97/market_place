@@ -12,35 +12,35 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future<void> checkLogin() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var email = prefs.getString('email');
-    print(email);
-    //runApp(MaterialApp(home: email == null ? Login() : Home()));
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) =>  email == null ? LoginPage() : HomePage()));
-  }
-  Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
-
-    if (_seen) {
-      // Navigator.of(context).pushReplacement(
-      //     new MaterialPageRoute(builder: (context) => new HomePage()));
-      checkLogin();
-    } else {
-      prefs.setBool('seen', true);
-      Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          builder: (context) => new IntroductionScreen()));
-    }
-  }
+  // Future<void> checkLogin() async {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   var email = prefs.getString('email');
+  //   print(email);
+  //   //runApp(MaterialApp(home: email == null ? Login() : Home()));
+  //   Navigator.of(context).push(
+  //       MaterialPageRoute(builder: (context) =>  email == null ? LoginPage() : HomePage()));
+  // }
+  // Future checkFirstSeen() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool _seen = (prefs.getBool('seen') ?? false);
+  //
+  //   if (_seen) {
+  //     // Navigator.of(context).pushReplacement(
+  //     //     new MaterialPageRoute(builder: (context) => new HomePage()));
+  //     checkLogin();
+  //   } else {
+  //     prefs.setBool('seen', true);
+  //     Navigator.of(context).pushReplacement(new MaterialPageRoute(
+  //         builder: (context) => new IntroductionScreen()));
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
     new Timer(new Duration(milliseconds: 200), () {
-      checkFirstSeen();
+      //checkFirstSeen();
     });
   }
 

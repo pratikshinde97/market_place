@@ -27,19 +27,31 @@ class _CartState extends State<Cart> {
   void initState() {
     super.initState();
     count = 1;
+    getAllCarts(count++);
+    getAllProducts(count++);
     _loadData(count++);
   }
 
   Future _loadData(int i) async {
     await new Future.delayed(new Duration(seconds: 2));
-    getAllProducts(i).then((value) {
-        setState(() {
-          usersProduct.addAll(value);
-          _searchProducts = usersProduct;
-          isLoading = false;
-          _loading = false;
-        });
-      });
+    print('////////............${cartsToCompare.length}');
+    print('////////............${products.length}');
+    for(int i=0;i<cartsToCompare.length;i++){
+      for(int j=0;j<products.length;j++){
+        if(cartsToCompare[i].productId.compareTo(products[j].id)==0){
+          getProductsById(products[j].id).then((value) {
+            setState(() {
+              usersProduct.add(value);
+              _searchProducts = usersProduct;
+              isLoading = false;
+              _loading = false;
+            });
+          });
+        }
+      }
+    }
+
+
     print("load more");
   }
 
@@ -48,8 +60,11 @@ class _CartState extends State<Cart> {
   int index;
   int qun = 10;
   List<ProductDatabase> products = List<ProductDatabase>();
+  ProductDatabase productsById;
+  //List<ProductDatabase> productsById = List<ProductDatabase>();
   List<ProductDatabase> _searchProducts = List<ProductDatabase>();
   List<ProductDatabase> usersProduct = [];
+  List<CartList> cartsToCompare =List<CartList>();
    bool connected = true;
   @override
   Widget build(BuildContext context) {
@@ -58,7 +73,7 @@ class _CartState extends State<Cart> {
         connected = internet;
       });
     });
-    Provider.of<CartModel>(context).fetchLengthFromDatabase();
+   // Provider.of<CartModel>(context).fetchLengthFromDatabase();
     return Scaffold(
       backgroundColor: Color(0xFFE8EAF6),
       appBar: AppBar(
@@ -68,6 +83,20 @@ class _CartState extends State<Cart> {
       body: connected ? SafeArea(
         child: Column(
           children: <Widget>[
+            _loading
+                ? Expanded(
+                  child: Padding(
+              padding: const EdgeInsets.only(top: 250.0),
+              child: Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: Color(0xFF344955),
+                    valueColor:
+                    new AlwaysStoppedAnimation<Color>(Colors.amber),
+                  ),
+              ),
+            ),
+                ) :
             Expanded(
               // child: FutureBuilder<List<ProductDatabase>>(
               //   future: getAllProducts(i),
@@ -76,6 +105,7 @@ class _CartState extends State<Cart> {
               //     if (snapshot.hasData) {
               //       int count = 2;
               //       return Container(
+
                       child: new ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
@@ -256,7 +286,7 @@ class _CartState extends State<Cart> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ConfirmOrders()));
+                                builder: (context) => ConfirmOrders(allProducts: _searchProducts,)));
                       },
                       color: Colors.amber[600],
                       child: Text(
@@ -276,8 +306,8 @@ class _CartState extends State<Cart> {
   }
 
    Future<List<ProductDatabase>> getAllProducts(i) async {
-     print('/////////////////////////////?????????');
-     final res = await http.get("http://$ipAddress:8081/api/product/1/10");
+     print('/////////////////////////////????????? Get all products in');
+     final res = await http.get("http://$ipAddress:8081/api/product/$i/10");
      print("<<<<<<<<<<<<<<<<<<<<<<<<<");
      if (res.statusCode == 200) {
        print('>>>>>>>>>>>>>>>>$res');
@@ -288,7 +318,7 @@ class _CartState extends State<Cart> {
              .map<ProductDatabase>((json) => ProductDatabase.fromJson(json))
              .toList();
        });
-       print('users len in function${products.length}');
+       print('products len in function${products.length}');
 
        return products;
      } else {
@@ -296,4 +326,48 @@ class _CartState extends State<Cart> {
        throw Exception('Failed to fetch data');
      }
    }
+     Future<List<CartList>> getAllCarts(i) async {
+       print('/////////////////////////////?????????');
+       final res = await http.get("http://$ipAddress:8081/api/cart/$i/100");
+       print("<<<<<<<<<<<<<<<<<<<<<<<<<");
+       if (res.statusCode == 200) {
+         print('>>>>>>>>>>>>>>>>$res');
+         var data = json.decode(res.body);
+         print(data);
+         setState(() {
+           cartsToCompare = data
+               .map<CartList>((json) => CartList.fromJson(json))
+               .toList();
+         });
+         print('users len in function${cartsToCompare.length}');
+
+         return cartsToCompare;
+       } else {
+         print('?????????????????????????????????');
+         throw Exception('Failed to fetch data');
+       }
+     }
+
+  Future<ProductDatabase> getProductsById(String productId) async {
+    print("get product productId $productId");
+    //imageList = new List();
+
+    final res = await http.get("http://$ipAddress:8081/api/product/$productId");
+    if (res.statusCode == 200) {
+      var data = json.decode(res.body);
+      print(data);
+      setState(() {
+        productsById = ProductDatabase.fromJson(data);
+      });
+      // imageList.add(mySLides.file1);
+      // imageList.add(mySLides.file2);
+      // imageList.add(mySLides.file3);
+      // imageList.add(mySLides.file4);
+      // print('<<<<<<<<<<<<<<<<<<<$imageList');
+      // print('<<<<<<<<<<<<<<<<<<<$mySLides');
+      return productsById;
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+  }
 }

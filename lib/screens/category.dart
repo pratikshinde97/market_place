@@ -14,6 +14,9 @@ import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:market_place/utilities/my_dialog.dart';
 import 'package:market_place/utilities/search_products.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'login_screen.dart';
 
 class Category extends StatefulWidget {
 
@@ -216,7 +219,7 @@ class _CategoryState extends State<Category> {
                                 onPressed: () {
 
                                   String productId = products[i].id;
-                                  createCart(productId);
+                                  checkLogin(productId);
                                   // String productName =
                                   //     categoryProducts[i].productName;
                                   // String productQuantity =
@@ -579,5 +582,47 @@ class _CategoryState extends State<Category> {
           'There is some error in adding this Product in Cart . Please try again.');
       throw Exception('Failed to load album');
     }
+  }
+  Future<void> checkLogin(String productId) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    print(email);
+    //runApp(MaterialApp(home: email == null ? Login() : Home()));
+    email == null ? _showMyDialog() :
+    createCart(productId);
+  }
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('You Need to first sign in to add products in Cart. '),
+          // content: SingleChildScrollView(
+          //   child: ListBody(
+          //     children: <Widget>[
+          //       //Text('This is a demo alert dialog.'),
+          //       Text(msg),
+          //     ],
+          //   ),
+          // ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Sign In'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+              },
+            ),
+            FlatButton(
+              child: Text('cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

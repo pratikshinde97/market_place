@@ -16,7 +16,10 @@ import 'package:market_place/utilities/new_expanded.dart';
 import 'package:market_place/utilities/search_products.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
+import 'login_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     count = 1;
     _loadData(count++);
+    checkLogin();
     super.initState();
   }
   Future _loadData(int i) async {
@@ -140,7 +144,7 @@ class _HomePageState extends State<HomePage> {
         connected = internet;
       });
     });
-    Provider.of<CartModel>(context).fetchLengthFromDatabase();
+    //Provider.of<CartModel>(context).fetchLengthFromDatabase();
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
@@ -160,7 +164,12 @@ class _HomePageState extends State<HomePage> {
                     size: 34,
                     color: Colors.white,
                   )),
-                  onTap: () {
+                  onTap: () async{
+                    WidgetsFlutterBinding.ensureInitialized();
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    var email = prefs.getString('email');
+                    print(email);
+                    email == null ? _showMyDialog('You Need to first sign in to add products in Cart. ','cancel') :
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Cart()));
                   },
@@ -375,7 +384,12 @@ class _HomePageState extends State<HomePage> {
                             tabName: 'Orders',
                           ),
                           NewExpanded(
-                            onTap: () {
+                            onTap: () async{
+                              WidgetsFlutterBinding.ensureInitialized();
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              var email = prefs.getString('email');
+                              print(email);
+                              email == null ? _showMyDialog('You Need to first sign in to add products in Cart. ','cancel') :
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -421,5 +435,48 @@ class _HomePageState extends State<HomePage> {
       print('?????????????????????????????????');
       throw Exception('Failed to fetch data');
     }
+  }
+  Future<void> _showMyDialog(String title,String msg) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          // content: SingleChildScrollView(
+          //   child: ListBody(
+          //     children: <Widget>[
+          //       //Text('This is a demo alert dialog.'),
+          //       Text(msg),
+          //     ],
+          //   ),
+          // ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Sign In'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+              },
+            ),
+            FlatButton(
+              child: Text(msg),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> checkLogin() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    print(email);
+    email == null ? _showMyDialog('New to Market Place app ? Sign in','Continue as guest') :
+    Container();
+    // Navigator.of(context).push(
+    //     MaterialPageRoute(builder: (context) => HomePage()));
   }
 }

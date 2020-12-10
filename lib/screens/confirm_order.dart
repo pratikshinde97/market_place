@@ -3,11 +3,14 @@ import 'package:market_place/constants.dart';
 import 'package:market_place/database_helper/database_helper_cart.dart';
 import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/model/product_database.dart';
 import 'package:market_place/screens/customer_name_address.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrders extends StatefulWidget {
+  final List<ProductDatabase> allProducts;
+  ConfirmOrders({this.allProducts});
   @override
   _ConfirmOrdersState createState() => _ConfirmOrdersState();
 }
@@ -15,15 +18,16 @@ class ConfirmOrders extends StatefulWidget {
 class _ConfirmOrdersState extends State<ConfirmOrders> {
   double totalAmount = 20000;
 
-  Future<List<CartList>> fetchProductFromDatabase() async {
-    var dbHelper = DatabaseHelperCart();
-    Future<List<CartList>> cartList = dbHelper.getNoteList();
-    print(cartList);
-    return cartList;
-  }
+  // Future<List<CartList>> fetchProductFromDatabase() async {
+  //   var dbHelper = DatabaseHelperCart();
+  //   Future<List<CartList>> cartList = dbHelper.getNoteList();
+  //   print(cartList);
+  //   return cartList;
+  // }
    bool connected = true;
   @override
   Widget build(BuildContext context) {
+    List<ProductDatabase> allProducts = widget.allProducts;
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
       setState(() {
         connected = internet;
@@ -81,16 +85,16 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<CartList>>(
-              future:
-                  Provider.of<CartModel>(context).fetchProductFromDatabase(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
+            // child: FutureBuilder<List<CartList>>(
+            //   future:
+            //       Provider.of<CartModel>(context).fetchProductFromDatabase(),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return Container(
                     child: new ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: snapshot.data.length,
+                        itemCount: allProducts.length,
                         itemBuilder: (context, index) {
                           return Container(
                             color: Colors.white,
@@ -106,7 +110,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      snapshot.data[index].productName,
+                                      allProducts[index].productName,
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
@@ -119,11 +123,11 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
-                                    child: Text(
-                                      snapshot.data[index].unitQuantity,
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 14),
-                                    ),
+                                    // child: Text(
+                                    //   snapshot.data[index].unitQuantity,
+                                    //   style: TextStyle(
+                                    //       color: Colors.black, fontSize: 14),
+                                    // ),
                                   ),
                                 ),
 
@@ -132,7 +136,7 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      '${snapshot.data[index].ourPrice}',
+                                      '${allProducts[index].salePrice}',
                                       style: kTextSize14,
                                     ),
                                   ),
@@ -142,7 +146,8 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     child: Text(
-                                      '${double.parse(snapshot.data[index].ourPrice) * double.parse(snapshot.data[index].quantity)}',
+                                      '${allProducts[index].salePrice }',
+                                      //* double.parse(snapshot.data[index].quantity)
                                       style: TextStyle(
                                           color: Colors.green[900],
                                           fontSize: 14,
@@ -154,16 +159,16 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                             ),
                           );
                         }),
-                  );
-                } else if (snapshot.hasError) {
-                  return new Text("${snapshot.error}");
-                }
-                return new Container(
-                  alignment: AlignmentDirectional.center,
-                  child: new CircularProgressIndicator(),
-                );
-              },
-            ),
+            //       );
+            //     } else if (snapshot.hasError) {
+            //       return new Text("${snapshot.error}");
+            //     }
+            //     return new Container(
+            //       alignment: AlignmentDirectional.center,
+            //       child: new CircularProgressIndicator(),
+            //     );
+            //   },
+            // ),
           ),
           Container(
             color: Colors.white,

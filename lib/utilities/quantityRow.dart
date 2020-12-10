@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:provider/provider.dart';
+
+import '../constants.dart';
 
 class QuantityRow extends StatefulWidget {
   final String productId;
@@ -46,9 +51,8 @@ class _QuantityRowState extends State<QuantityRow> {
                   setState(() {
                     if (count > 1) {
                       count--;
-                      String newCount = count.toString();
-                      Provider.of<CartModel>(context)
-                          .updateProduct(newCount, productId);
+                      int newCount = count;
+                      updateCart(productId, newCount);
                     }
                   });
                 },
@@ -89,9 +93,8 @@ class _QuantityRowState extends State<QuantityRow> {
                   setState(() {
                     if (count < 100) {
                       count++;
-                      String newCount = count.toString();
-                      Provider.of<CartModel>(context)
-                          .updateProduct(newCount, productId);
+                      int newCount = count;
+                      updateCart(productId, newCount);
                     }
                   });
                 },
@@ -104,5 +107,36 @@ class _QuantityRowState extends State<QuantityRow> {
         ),
       ],
     );
+  }
+  Future<CartList> updateCart(String id,int quantity) async {
+    print('////////////////////$quantity');
+    print('////////////////////$id');
+
+    final http.Response response = await http.put(
+      'http://$ipAddress:8081/api/cart/$id',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, int>{
+        'quantity': quantity,
+      }),
+    );
+    if (response.statusCode == 200) {
+       print('---------------Updated');
+      // setState(() {
+      //   _loading = !_loading;
+      // });
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+      return CartList.fromJson(jsonDecode(response.body));
+    } else {
+      print('---------------Not Updated');
+      // setState(() async{
+      //   _loading = !_loading;
+      // });
+
+      throw Exception('Failed to load album');
+    }
   }
 }
