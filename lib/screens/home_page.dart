@@ -32,6 +32,8 @@ class _HomePageState extends State<HomePage> {
   List<CategoryList> _searchUsers = List<CategoryList>();
   List<CategoryList> usersdata = [];
   List<CategoryList> dataList = new List();
+  bool _loading = true;
+
 
   int count;
   bool isLoading = false;
@@ -42,9 +44,6 @@ class _HomePageState extends State<HomePage> {
     _loadData(count++);
     super.initState();
   }
-
-  //List catData = [];
-
   Future _loadData(int i) async {
     await new Future.delayed(new Duration(seconds: 2));
     getCategories(i).then((value) {
@@ -52,13 +51,14 @@ class _HomePageState extends State<HomePage> {
         usersdata.addAll(value);
         _searchUsers = usersdata;
         isLoading = false;
+         _loading = false;
       });
     });
     print("load more");
   }
 
-  //CategoryList cat = CategoryList();
   String categoryName;
+  String categoryId;
 
   Future<bool> _onWillPop() {
     return showDialog(
@@ -92,13 +92,17 @@ class _HomePageState extends State<HomePage> {
         ),
         padding: const EdgeInsets.all(8),
         child: GestureDetector(
-          // onTap: () {
-          //   categoryName = categoryList[i].categoryName;
-          //   Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => Category(categoryName)));
-          // },
+          onTap: () {
+            categoryName = _searchUsers[i].categoryName;
+            categoryId = _searchUsers[i].categoryId;
+            print('///////$categoryName');
+            print('///////$categoryId');
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Category(categoryName : categoryName,categoryId : categoryId)));
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -187,83 +191,7 @@ class _HomePageState extends State<HomePage> {
         drawer: DrawerMain(),
         body: connected
             ?
-            // Column(
-            //     children: <Widget>[
-            //       Expanded(
-            //         child: NotificationListener<ScrollNotification>(
-            //           onNotification: (ScrollNotification scrollInfo) {
-            //             if (!isLoading &&
-            //                 scrollInfo.metrics.pixels ==
-            //                     scrollInfo.metrics.maxScrollExtent) {
-            //               _loadData(count++);
-            //
-            //               setState(() {
-            //                 isLoading = true;
-            //               });
-            //             }
-            //           },
-            //           child: ListView.builder(
-            //             itemCount: _searchUsers.length,
-            //             itemBuilder: (context, i) {
-            //               return Container(
-            //                 height: 60,
-            //                 child: GestureDetector(
-            //                   child: Card(
-            //                     child: Row(
-            //                       children: [
-            //                         Container(
-            //                           child: Image.memory(_searchUsers[i].img),
-            //                         ),
-            //                         SizedBox(
-            //                           width: 15,
-            //                         ),
-            //                         Expanded(
-            //                           flex: 3,
-            //                           child: Text(_searchUsers[i].categoryName,
-            //                               style: TextStyle(
-            //                                   fontSize: 13,
-            //                                   color: Color(0xff212121))),
-            //                         ),
-            //                         // Expanded(
-            //                         //   flex: 2,
-            //                         //   child: Text(
-            //                         //       _searchUsers[i].first_name +
-            //                         //           " " +
-            //                         //           _searchUsers[i].last_name,
-            //                         //       style: TextStyle(
-            //                         //           fontSize: 13, color: Color(0xff212121))),
-            //                         // ),
-            //                       ],
-            //                     ),
-            //                   ),
-            //                   onTap: () {
-            //                     // String avatar = _searchUsers[i].avatar;
-            //                     // String email = _searchUsers[i].email;
-            //                     // String name = _searchUsers[i].first_name +
-            //                     //     " " +
-            //                     //     _searchUsers[i].last_name;
-            //                     // Navigator.push(
-            //                     //     context,
-            //                     //     MaterialPageRoute(
-            //                     //         builder: (context) =>
-            //                     //             ProfileScreen(avatar, email, name)));
-            //                   },
-            //                 ),
-            //               );
-            //             },
-            //           ),
-            //         ),
-            //       ),
-            //       Container(
-            //         height: isLoading ? 50.0 : 0,
-            //         color: Colors.transparent,
-            //         child: Center(
-            //           child: new CircularProgressIndicator(),
-            //         ),
-            //       ),
-            //     ],
-            //   )
-            //
+
             SafeArea(
                 child: Column(
                   children: <Widget>[
@@ -372,6 +300,18 @@ class _HomePageState extends State<HomePage> {
                                 )),
                               ],
                             ),
+                            _loading
+                                ? Padding(
+                              padding: const EdgeInsets.only(top: 150.0),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 5,
+                                  backgroundColor: Color(0xFF344955),
+                                  valueColor:
+                                  new AlwaysStoppedAnimation<Color>(Colors.amber),
+                                ),
+                              ),
+                            ) :
                             Container(
                               child: CustomScrollView(
                                 shrinkWrap: true,
@@ -394,6 +334,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
+                      height: isLoading ? 50.0 : 0,
+                      color: Colors.transparent,
+                      child: Center(
+                        child: new CircularProgressIndicator(),
+                      ),
+                    ),
+                    Container(
                       height: 54,
                       color: Color(0xFF344955),
                       child: Row(
@@ -405,12 +352,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                           NewExpanded(
                             onTap: () {
-                              // categoryName = 'All Categories';
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             Category(categoryName)));
+                              categoryName = 'All Categories';
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Category(categoryName: categoryName)));
                             },
                             color: Colors.white,
                             iconData: Icons.category,
@@ -462,11 +409,6 @@ class _HomePageState extends State<HomePage> {
 
       List v1 = [];
       v1 = data.toList();
-
-      // for (int i = 0; i < v1.length; i++) {
-      //   _users.add(data[i]);
-      // }
-
       _users = data
           .map<CategoryList>((json) => CategoryList.fromJson(json))
           .toList();

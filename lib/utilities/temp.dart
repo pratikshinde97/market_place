@@ -1058,6 +1058,268 @@
 
 
 
+//homepage
+// Column(
+//     children: <Widget>[
+//       Expanded(
+//         child: NotificationListener<ScrollNotification>(
+//           onNotification: (ScrollNotification scrollInfo) {
+//             if (!isLoading &&
+//                 scrollInfo.metrics.pixels ==
+//                     scrollInfo.metrics.maxScrollExtent) {
+//               _loadData(count++);
+//
+//               setState(() {
+//                 isLoading = true;
+//               });
+//             }
+//           },
+//           child: ListView.builder(
+//             itemCount: _searchUsers.length,
+//             itemBuilder: (context, i) {
+//               return Container(
+//                 height: 60,
+//                 child: GestureDetector(
+//                   child: Card(
+//                     child: Row(
+//                       children: [
+//                         Container(
+//                           child: Image.memory(_searchUsers[i].img),
+//                         ),
+//                         SizedBox(
+//                           width: 15,
+//                         ),
+//                         Expanded(
+//                           flex: 3,
+//                           child: Text(_searchUsers[i].categoryName,
+//                               style: TextStyle(
+//                                   fontSize: 13,
+//                                   color: Color(0xff212121))),
+//                         ),
+//                         // Expanded(
+//                         //   flex: 2,
+//                         //   child: Text(
+//                         //       _searchUsers[i].first_name +
+//                         //           " " +
+//                         //           _searchUsers[i].last_name,
+//                         //       style: TextStyle(
+//                         //           fontSize: 13, color: Color(0xff212121))),
+//                         // ),
+//                       ],
+//                     ),
+//                   ),
+//                   onTap: () {
+//                     // String avatar = _searchUsers[i].avatar;
+//                     // String email = _searchUsers[i].email;
+//                     // String name = _searchUsers[i].first_name +
+//                     //     " " +
+//                     //     _searchUsers[i].last_name;
+//                     // Navigator.push(
+//                     //     context,
+//                     //     MaterialPageRoute(
+//                     //         builder: (context) =>
+//                     //             ProfileScreen(avatar, email, name)));
+//                   },
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//       ),
+//       Container(
+//         height: isLoading ? 50.0 : 0,
+//         color: Colors.transparent,
+//         child: Center(
+//           child: new CircularProgressIndicator(),
+//         ),
+//       ),
+//     ],
+//   )
+//
+
+//category Page
+// List<Widget> categoryAllProductsContainer() {
+//   List<Container> newContainer = [];
+//   List categoryProducts = cat.getCategoryProducts();
+//   for (int i = 0; i < categoryProducts.length; i++) {
+//     newContainer.add(Container(
+//       color:  Color(0xFFE8EAF6),
+//       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+//       child: Card(
+//         elevation: 2,
+//         child: Column(
+//           children: <Widget>[
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               children: <Widget>[
+//                 //Icon(categoryList[i].iconCategory,size: 40,),
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: 10),
+//                   child: Image.network(categoryProducts[i].productImageName,
+//                       width: 100),
+//                 ),
+//                 Expanded(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: <Widget>[
+//                       SizedBox(
+//                         height: 8,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 10),
+//                         child: Text(
+//                           categoryProducts[i].productName,
+//                           style: TextStyle(
+//                               fontSize: 14,
+//                               color: Colors.black,
+//                               fontWeight: FontWeight.bold),
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 4,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 10),
+//                         child: Text(
+//                           categoryProducts[i].productDescription,
+//                           style: TextStyle(color: Colors.grey, fontSize: 12),
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 8,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 10),
+//                         child: Text(
+//                           'For - ${categoryProducts[i].unitQuantity}',
+//                           style: kTextSize14,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 4,
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 10),
+//                         child: Row(
+//                           children: <Widget>[
+//                             Text(
+//                               'Our Price - ',
+//                               style: kTextSize14,
+//                             ),
+//                             Text(
+//                               categoryProducts[i].mrp,
+//                               style: TextStyle(
+//                                   color: Colors.red,
+//                                   fontSize: 14,
+//                                   decoration: TextDecoration.lineThrough,
+//                                   fontWeight: FontWeight.bold),
+//                             ),
+//                             Padding(
+//                               padding:
+//                                   const EdgeInsets.symmetric(horizontal: 10),
+//                               child: Text(
+//                                 '${categoryProducts[i].ourPrice} ₹',
+//                                 style: TextStyle(
+//                                     fontSize: 14,
+//                                     color: Colors.green[900],
+//                                     fontWeight: FontWeight.bold),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 8,
+//                       ),
+//                       GestureDetector(
+//                         onTap: (){
+//                           Navigator.push(context,
+//                               MaterialPageRoute(builder: (context) => ProductDescription(productName: categoryProducts[i].productName,)));
+//                         },
+//                         child: Padding(
+//                           padding: const EdgeInsets.symmetric(horizontal: 10),
+//                           child: Text('Product Details',style: TextStyle(fontSize: 14,color: Colors.indigoAccent)),
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: 8,
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//               ],
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: <Widget>[
+//                 categoryProducts[i].productStatus.compareTo('Available') == 0
+//                     ? RaisedButton(
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(30),
+//                         ),
+//                         onPressed: () {
+//                           String productName =
+//                               categoryProducts[i].productName;
+//                           String productQuantity =
+//                               categoryProducts[i].unitQuantity;
+//                           String ourPrice = categoryProducts[i].ourPrice;
+//                           String mrp = categoryProducts[i].mrp;
+//                           String productImage =
+//                               categoryProducts[i].productImageName;
+//                           String quantity = '1';
+//                           String productId = categoryProducts[i].productId;
+//
+//                           //var databaseHelperCart = DatabaseHelperCart();
+//                           //databaseHelperCart.insertNote(CartList(productName:productName,productImageName: productImage,unitQuantity:productQuantity,ourPrice: ourPrice,mrp: mrp,productId:productId,quantity: quantity ));
+//
+//                           Provider.of<CartModel>(context).addInDatabase(
+//                               CartList(
+//                                   quantity: quantity,
+//                                   productId: productId,
+//                                   productName: productName,
+//                                   productImageName: productImage,
+//                                   ourPrice: ourPrice,
+//                                   mrp: mrp,
+//                                   unitQuantity: productQuantity));
+//
+//                           final snackBar = SnackBar(content: Text('added to Cart'),duration: Duration(seconds: 2),);
+//                           _scaffoldKey.currentState.showSnackBar(snackBar);
+//                         },
+//                         color: Colors.amber[600],
+//                         child: Text(
+//                           'Add to Cart',
+//                           style: TextStyle(color: Colors.white, fontSize: 12),
+//                         ),
+//                       )
+//                     : Padding(
+//                         padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+//                         child: Row(
+//                             mainAxisAlignment: MainAxisAlignment.center,
+//                             children: <Widget>[
+//                               Icon(
+//                                 Icons.close,
+//                                 color: Colors.red,
+//                                 size: 12,
+//                               ),
+//                               Text(categoryProducts[i].productStatus,
+//                                   style: TextStyle(
+//                                       color: Colors.red, fontSize: 12)),
+//                             ]),
+//                       ),
+//                 SizedBox(
+//                   width: 10,
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     ));
+//   }
+//   return newContainer;
+// }
+
+
 // Toast.show(
 // "${categoryProducts[i].productName} added to Cart",
 // context,

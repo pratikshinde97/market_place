@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+var ipAddress = "192.168.43.23";
 const kBottomTextSize = TextStyle(fontSize: 14, color: Colors.black);
 const kTextSize16 = TextStyle(fontSize: 16, color: Colors.black);
 const kTextSize14 = TextStyle(fontSize: 14, color: Colors.black);

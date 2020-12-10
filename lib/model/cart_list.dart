@@ -1,21 +1,22 @@
 class CartList {
-   int id;
-   String productName;
-   String productImageName;
-   String mrp;
-   String ourPrice;
-   String unitQuantity;
-   String quantity;
-   String productId;
+  int id;
+  String productName;
+  String productImageName;
+  String mrp;
+  String ourPrice;
+  String unitQuantity;
+  String quantity;
+  String productId;
 
 
-  CartList({this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity,this.quantity,this.productId});
+  CartList(
+      {this.mrp, this.ourPrice, this.productImageName, this.productName, this.unitQuantity, this.quantity, this.productId});
 
-  CartList.withId({this.id,this.mrp,this.ourPrice,this.productImageName,this.productName,this.unitQuantity,this.quantity,this.productId});
+  CartList.withId(
+      {this.id, this.mrp, this.ourPrice, this.productImageName, this.productName, this.unitQuantity, this.quantity, this.productId});
 
 
   Map<String, dynamic> toMap() {
-
     var map = Map<String, dynamic>();
     if (id != null) {
       map['id'] = id;
@@ -31,14 +32,25 @@ class CartList {
   }
 
   // Extract a Note object from a Map object
-   CartList.fromMapObject(Map<String, dynamic> map) {
+  CartList.fromMapObject(Map<String, dynamic> map) {
     this.id = map['id'];
     this.productName = map['productName'];
     this.productImageName = map['productImageName'];
     this.mrp = map['mrp'];
     this.ourPrice = map['ourPrice'];
     this.unitQuantity = map['unitQuantity'];
-    this.quantity =map['quantity'];
-    this.productId =map['productId'];
+    this.quantity = map['quantity'];
+    this.productId = map['productId'];
   }
+//required//
+  CartList.fromJson(obj) {
+    this.productId = obj['productId'];
+
+  }
+  static List<CartList> fromJsonList(jsonList) {
+    return jsonList
+        .map<CartList>((obj) => CartList.fromJson(obj))
+        .toList();
+  }
+//required//
 }

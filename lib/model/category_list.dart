@@ -4,10 +4,12 @@ import 'dart:typed_data';
 class CategoryList {
   String categoryName;
   Uint8List img;
+  String categoryId;
   // String avatar;
 
   CategoryList.fromJson(obj) {
     this.categoryName = obj['categoryName'];
+    this.categoryId = obj['id'];
     this.img = base64Decode(obj['data']);
     //this.avatar = obj['avatar'];
   }
