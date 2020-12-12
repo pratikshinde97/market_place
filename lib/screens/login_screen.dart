@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/model/user_info.dart';
 import 'package:market_place/screens/home_page.dart';
 import 'package:market_place/screens/signup_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
@@ -28,6 +29,7 @@ class LoginPageState extends State<LoginPage> {
   bool showProgress = false;
   String email = '';
   String password = '';
+  String customerId;
 
   @override
   void initState() {
@@ -150,15 +152,18 @@ class LoginPageState extends State<LoginPage> {
                                       final snackBar = SnackBar(content: Text('Please enter Password to login.'));
                                       _scaffoldKey.currentState.showSnackBar(snackBar);
                                     }
-                                     else{
+                                     else {
                                        print(email);
                                        print(password);
                                         String url = 'http://192.168.43.23:8081/api/user/$email/$password';
                                        http.Response response= await http.get(url);
                                        var message= response.body;
+                                       var m =await json.decode(message);
+                                       customerId = m['id'];
 
-                                      // var message = await NetworkData().getNetworkData(url);
                                        print('///////////////$message?????????????????????????????');
+                                       print('///////////////$customerId?????????????????????????????');
+
                                        setState(() {
                                          showProgress = true;
                                        });
@@ -167,16 +172,16 @@ class LoginPageState extends State<LoginPage> {
                                          showProgress = false;
                                        });
                                        print('///////////////$message???????');
-                                       String msg = "Login Successful!!!";
-
-                                        if(message.compareTo(msg)!=0){
+                                      // String msg = "Login Successful!!!";
+                                       if(customerId==null){
+                                         // if(message.compareTo(msg)!=0){
                                          final snackBar = SnackBar(content: Text('Wrong Email Id or Password'));
                                          _scaffoldKey.currentState.showSnackBar(snackBar);
                                        }
                                        else{
-                                         print(email);
+                                         print(customerId);
                                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                                         prefs.setString('email', email);
+                                         prefs.setString('email', customerId);
                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                                        }
 

@@ -548,7 +548,7 @@ class _CategoryState extends State<Category> {
       throw Exception('Failed to fetch data');
     }
   }
-  Future<CartList> createCart(String productId) async {
+  Future<CartList> createCart(String productId,String customerId) async {
     print('////////////?????????????????????');
     response = await http.post(
       'http://$ipAddress:8081/api/cart/create',
@@ -558,6 +558,7 @@ class _CategoryState extends State<Category> {
       },
       body: jsonEncode(<String, dynamic>{
         'productId': productId,
+        'customerId': customerId,
 
       }),
     );
@@ -586,11 +587,11 @@ class _CategoryState extends State<Category> {
   Future<void> checkLogin(String productId) async {
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var email = prefs.getString('email');
-    print(email);
+    var customerId = prefs.getString('email');
+    print(customerId);
     //runApp(MaterialApp(home: email == null ? Login() : Home()));
-    email == null ? _showMyDialog() :
-    createCart(productId);
+    customerId == null ? _showMyDialog() :
+    createCart(productId, customerId);
   }
   Future<void> _showMyDialog() async {
     return showDialog<void>(

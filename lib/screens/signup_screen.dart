@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/model/cart_model.dart';
+import 'package:market_place/model/user_info.dart';
 import 'package:market_place/screens/login_screen.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
@@ -253,16 +254,3 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-class Sign {
-  final String email;
-  final String password;
-
-  Sign({this.email, this.password});
-
-  factory Sign.fromJson(Map<String, dynamic> json) {
-    return Sign(
-      email: json['email'],
-      password: json['password'],
-    );
-  }
-}

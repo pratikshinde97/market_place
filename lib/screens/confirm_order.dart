@@ -8,6 +8,7 @@ import 'package:market_place/screens/customer_name_address.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
 
+
 class ConfirmOrders extends StatefulWidget {
   final List<ProductDatabase> allProducts;
   ConfirmOrders({this.allProducts});
