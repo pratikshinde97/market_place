@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:market_place/constants.dart';
 import 'package:market_place/database_helper/database_helper_cart.dart';
@@ -5,8 +7,10 @@ import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/product_database.dart';
 import 'package:market_place/screens/customer_name_address.dart';
+import 'package:market_place/screens/update_customer_name_address.dart';
 import 'package:market_place/utilities/connectivity_container.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ConfirmOrders extends StatefulWidget {
@@ -311,9 +315,14 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CustomerNameAddress(
+                              builder: (context) => getUserById() == null ?
+                                  CustomerNameAddress(
                                     totalAmount: totalAmount,
-                                  )));
+                                  ) :
+                              UpdateCustomerNameAddress(
+                                totalAmount: totalAmount,
+                              )
+                          ));
                     },
                     color: Colors.amber[600],
                     child: Text(
@@ -329,5 +338,22 @@ class _ConfirmOrdersState extends State<ConfirmOrders> {
       )
           : ConnectivityContainer(),
     );
+  }
+  Future getUserById() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String customerId = prefs.getString('email');
+    print('////////////////////$customerId');
+
+    final res = await http.get("http://$ipAddress:8081/api/user/$customerId");
+    if (res.statusCode == 200) {
+      var data = json.decode(res.body);
+      String name = data['firstName'];
+      print(name);
+
+      return name;
+    } else {
+      throw Exception('Failed to fetch data');
+    }
   }
 }

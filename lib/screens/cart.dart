@@ -27,9 +27,12 @@ class _CartState extends State<Cart> {
   void initState() {
     super.initState();
     count = 1;
-    getAllCarts(count++);
-    getAllProducts(count++);
-    _loadData(count++);
+     //Provider.of<CartModel>(context).getCarts(count,isLoading,_loading);
+  getAllCarts(count++).then((value) {
+     getAllProducts(count++).then((value) {
+        _loadData(count++);
+      });
+    });
   }
 
   Future _loadData(int i) async {
@@ -45,12 +48,14 @@ class _CartState extends State<Cart> {
               _searchProducts = usersProduct;
               isLoading = false;
               _loading = false;
+              int cartCount = _searchProducts.length;
+              print('cartcount= $cartCount');
+              Provider.of<CartModel>(context).getCartCount(cartCount);
             });
           });
         }
       }
     }
-
 
     print("load more");
   }
@@ -73,6 +78,7 @@ class _CartState extends State<Cart> {
         connected = internet;
       });
     });
+    //Provider.of<CartModel>(context).getCarts(count,isLoading,_loading);
    // Provider.of<CartModel>(context).fetchLengthFromDatabase();
     return Scaffold(
       backgroundColor: Color(0xFFE8EAF6),
@@ -242,7 +248,7 @@ class _CartState extends State<Cart> {
                                       children: <Widget>[
                                         QuantityRow(
                                             productId:
-                                            _searchProducts[index].id),
+                                           _searchProducts[index].id),
                                       ],
                                     ),
                                     SizedBox(
@@ -273,7 +279,7 @@ class _CartState extends State<Cart> {
                     child: Center(
                         child: Text(
                       //'$itemsLength  items 0 ₹',
-                          '${Provider.of<CartModel>(context).cartCount} items 0 ₹',
+                          '${Provider.of<CartModel>(context).cartCountFinal} items 0 ₹',
                       style: TextStyle(color: Colors.white, fontSize: 14),
                     )),
                   ),
@@ -350,7 +356,6 @@ class _CartState extends State<Cart> {
 
   Future<ProductDatabase> getProductsById(String productId) async {
     print("get product productId $productId");
-    //imageList = new List();
 
     final res = await http.get("http://$ipAddress:8081/api/product/$productId");
     if (res.statusCode == 200) {
@@ -359,12 +364,6 @@ class _CartState extends State<Cart> {
       setState(() {
         productsById = ProductDatabase.fromJson(data);
       });
-      // imageList.add(mySLides.file1);
-      // imageList.add(mySLides.file2);
-      // imageList.add(mySLides.file3);
-      // imageList.add(mySLides.file4);
-      // print('<<<<<<<<<<<<<<<<<<<$imageList');
-      // print('<<<<<<<<<<<<<<<<<<<$mySLides');
       return productsById;
     } else {
       throw Exception('Failed to fetch data');

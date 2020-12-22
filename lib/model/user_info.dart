@@ -12,8 +12,9 @@ class Sign {
   final  String mobileNumber;
   final  String landmark;
   final  String pincode;
+  final String state;
 
-  Sign({this.email, this.password,this.customerId,this.mobileNumber,this.area,this.landmark,this.firstName,this.lastName,this.city,this.addressLine1,this.addressLine2,this.pincode});
+  Sign({this.email, this.password,this.customerId,this.mobileNumber,this.area,this.landmark,this.firstName,this.lastName,this.city,this.addressLine1,this.addressLine2,this.pincode,this.state});
 
   factory Sign.fromJson(Map<String, dynamic> json) {
     return Sign(
@@ -29,6 +30,7 @@ class Sign {
       mobileNumber: json['mobileNumber'],
       landmark: json['landmark'],
       pincode: json['pincode'],
+      state: json['state'],
     );
   }
 }

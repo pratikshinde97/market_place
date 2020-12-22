@@ -75,8 +75,8 @@ class _BottomNavigationButtonState extends State<BottomNavigationButton> {
                 setState(() {
                   bottomButtonColor = BottomButtonColor.orders;
                 });
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Orders()));
+                // Navigator.push(
+                //     context, MaterialPageRoute(builder: (context) => Orders()));
               },
               child: Column(
                 children: <Widget>[

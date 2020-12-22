@@ -1,26 +1,29 @@
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:market_place/constants.dart';
-import 'package:market_place/model/cart_list.dart';
 import 'package:market_place/model/cart_model.dart';
 import 'package:market_place/model/user_info.dart';
-import 'package:market_place/utilities/connectivity_container.dart';
-import 'package:market_place/utilities/my_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:market_place/screens/place_order.dart';
+import 'package:market_place/utilities/connectivity_container.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomerNameAddress extends StatefulWidget {
+import '../constants.dart';
+class UpdateCustomerNameAddress extends StatefulWidget {
   final double totalAmount;
-  CustomerNameAddress({@required this.totalAmount});
+  UpdateCustomerNameAddress({@required this.totalAmount});
   @override
-  _CustomerNameAddressState createState() => _CustomerNameAddressState();
+  _UpdateCustomerNameAddressState createState() => _UpdateCustomerNameAddressState();
 }
 
-class _CustomerNameAddressState extends State<CustomerNameAddress> {
+class _UpdateCustomerNameAddressState extends State<UpdateCustomerNameAddress> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+    getUserById();
+  }
   String firstName;
   String lastName;
   String city;
@@ -32,9 +35,24 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
   String landmark;
   String area;
   bool _loading = false;
+  bool _loadData = true;
   bool connected = true;
+  Sign userData;
+  void checkUserData(){
+    if(userData==null){
+     setState(() {
+       _loadData = true;
+     });
+    }
+    else{
+      setState(() {
+        _loadData = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    checkUserData();
     Provider.of<CartModel>(context).checkConnectivity().then((internet) {
       setState(() {
         connected = internet;
@@ -56,7 +74,19 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Column(
+                child: _loadData
+                    ? Padding(
+                  padding: const EdgeInsets.only(top: 250.0),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 5,
+                      backgroundColor: Color(0xFF344955),
+                      valueColor:
+                      new AlwaysStoppedAnimation<Color>(Colors.amber),
+                    ),
+                  ),
+                ) :
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Padding(
@@ -79,7 +109,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
                         decoration: kTextField.copyWith(
-                          hintText: 'First Name',
+                          hintText: userData.firstName !=null ? userData.firstName : '',
                         ),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
@@ -93,7 +123,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
                         decoration: kTextField.copyWith(
-                          hintText: 'Last Name',
+                          hintText: userData.lastName !=null ? userData.lastName : '',
                         ),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
@@ -112,7 +142,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         decoration: kTextField.copyWith(
-                          hintText: 'Mobile Number',
+                          hintText: userData.mobileNumber !=null ? userData.mobileNumber : '',
                           counterText: '',
                         ),
                         style: TextStyle(color: Colors.black),
@@ -127,7 +157,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
                         decoration:
-                            kTextField.copyWith(hintText: 'Address - line 1'),
+                        kTextField.copyWith(hintText: userData.addressLine1 !=null ? userData.addressLine1 : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           address1 = value;
@@ -140,7 +170,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
                         decoration:
-                            kTextField.copyWith(hintText: 'Address - line 2'),
+                        kTextField.copyWith(hintText: userData.addressLine2 !=null ? userData.addressLine2 : '',),
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -154,7 +184,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           horizontal: 12, vertical: 6),
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
-                        decoration: kTextField.copyWith(hintText: 'Landmark'),
+                        decoration: kTextField.copyWith(hintText: userData.landmark !=null ? userData.landmark : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           landmark = value;
@@ -166,7 +196,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           horizontal: 12, vertical: 6),
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
-                        decoration: kTextField.copyWith(hintText: 'Area'),
+                        decoration: kTextField.copyWith(hintText: userData.area !=null ? userData.area : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           area = value;
@@ -178,7 +208,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           horizontal: 12, vertical: 6),
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
-                        decoration: kTextField.copyWith(hintText: 'City'),
+                        decoration: kTextField.copyWith(hintText: userData.city !=null ? userData.city : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           city = value;
@@ -190,7 +220,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           horizontal: 12, vertical: 6),
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
-                        decoration: kTextField.copyWith(hintText: 'Pin Code'),
+                        decoration: kTextField.copyWith(hintText: userData.pincode !=null ? userData.pincode : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           pincode = value;
@@ -202,7 +232,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                           horizontal: 12, vertical: 6),
                       child: TextField(
                         textCapitalization: TextCapitalization.words,
-                        decoration: kTextField.copyWith(hintText: 'State'),
+                        decoration: kTextField.copyWith(hintText: userData.state !=null ? userData.state : '',),
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           state = value;
@@ -222,71 +252,68 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
                       ),
                     ) :
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 70),
-                      child: RaisedButton(
-                        color: Colors.amber[600],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          if (firstName?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter First Name'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex:2,
+                            child: RaisedButton(
+                              color: Colors.amber[600],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                'Update',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
 
-                          } else if (lastName?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter Last Name'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
+                                  setState(() {
+                                    _loading = !_loading;
+                                  });
+                                  updateCustomerInCart( firstName:firstName ,  lastName: lastName,  addressLine1: address1,  addressLine2:address2,
+                                      city: city, mobileNumber: mobileNumber,  landmark: landmark,  pincode:pincode,area: area,state: state);
 
-                          } else if (mobileNumber?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter Mobile Number'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (mobileNumber.length < 10) {
-                            final snackBar = SnackBar(content: Text('Please Enter Valid Mobile Number'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (address1?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter Address Line1'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (address2?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter Address Line2'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (address1?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please enter address'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (landmark?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter Landmark'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else if (state?.isEmpty ?? true) {
-                            final snackBar = SnackBar(content: Text('Please Enter state'),duration: Duration(seconds: 2),);
-                            _scaffoldKey.currentState.showSnackBar(snackBar);
-
-                          } else {
-                            setState(() {
-                              _loading = !_loading;
-                            });
-                            updateCustomerInCart( firstName:firstName ,  lastName: lastName,  addressLine1: address1,  addressLine2:address2,
-                               city: city, mobileNumber: mobileNumber,  landmark: landmark,  pincode:pincode,area: area,state: state);
-                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PlaceOrder(
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PlaceOrder(
+                                            // customerName: '$firstName $lastName',
+                                            // mobileNumber: mobileNumber,
+                                            // address:
+                                            // '$address1, $address2 $landmark $area',
+                                            totalAmount: widget.totalAmount,
+                                          )));
+                                  },
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Expanded(
+                            flex:3,
+                            child: RaisedButton(
+                              color: Colors.amber[600],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                'Confirm Order',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PlaceOrder(
                                           // customerName: '$firstName $lastName',
                                           // mobileNumber: mobileNumber,
                                           // address:
-                                          //     '$address1, $address2 $landmark $area',
+                                          // '$address1, $address2 $landmark $area',
                                           totalAmount: widget.totalAmount,
                                         )));
 
-                          }
-                        },
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -300,7 +327,7 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
     );
   }
   Future<Sign> updateCustomerInCart({String firstName, String lastName, String addressLine1, String addressLine2,
-     String city, String mobileNumber, String landmark, String pincode, String area, String state}) async {
+    String city, String mobileNumber, String landmark, String pincode, String area, String state}) async {
     WidgetsFlutterBinding.ensureInitialized();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String customerId = prefs.getString('email');
@@ -334,8 +361,6 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
       });
       final snackBar = SnackBar(content: Text( 'Customer Information Updated successfully'));
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      // MyDialog().showMyDialog(this.context, 'Customer Information',
-      //     'Customer Information Updated successfully');
       return Sign.fromJson(jsonDecode(response.body));
     } else {
       setState(() async{
@@ -343,9 +368,26 @@ class _CustomerNameAddressState extends State<CustomerNameAddress> {
       });
       final snackBar = SnackBar(content: Text('Error in Updating Customer Information , please try it again'));
       _scaffoldKey.currentState.showSnackBar(snackBar);
-      // MyDialog().showMyDialog(this.context, 'Customer Information',
-      //     'Error in Updating Customer Information , please try it again');
       throw Exception('Failed to load album');
+    }
+  }
+  Future<Sign> getUserById() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String customerId = prefs.getString('email');
+    print('////////////////////$customerId');
+
+    final res = await http.get("http://$ipAddress:8081/api/user/$customerId");
+    if (res.statusCode == 200) {
+      var data = json.decode(res.body);
+      print(data);
+      setState(() {
+        userData = Sign.fromJson(data);
+      });
+
+      return userData;
+    } else {
+      throw Exception('Failed to fetch data');
     }
   }
 }

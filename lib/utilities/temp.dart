@@ -1325,3 +1325,279 @@
 // context,
 // duration: Toast.LENGTH_SHORT,
 // gravity: Toast.CENTER);
+
+//cartList
+// class CartList {
+//   int id;
+//   String productName;
+//   String productImageName;
+//   String mrp;
+//   String ourPrice;
+//   String unitQuantity;
+//   String quantity;
+//   String productId;
+//
+//
+//   CartList(
+//       {this.mrp, this.ourPrice, this.productImageName, this.productName, this.unitQuantity, this.quantity, this.productId});
+//
+//   CartList.withId(
+//       {this.id, this.mrp, this.ourPrice, this.productImageName, this.productName, this.unitQuantity, this.quantity, this.productId});
+//
+//
+//   Map<String, dynamic> toMap() {
+//     var map = Map<String, dynamic>();
+//     if (id != null) {
+//       map['id'] = id;
+//     }
+//     map['productName'] = productName;
+//     map['productImageName'] = productImageName;
+//     map['mrp'] = mrp;
+//     map['ourPrice'] = ourPrice;
+//     map['unitQuantity'] = unitQuantity;
+//     map['quantity'] = quantity;
+//     map['productId'] = productId;
+//     return map;
+//   }
+//
+//   // Extract a Note object from a Map object
+//   CartList.fromMapObject(Map<String, dynamic> map) {
+//     this.id = map['id'];
+//     this.productName = map['productName'];
+//     this.productImageName = map['productImageName'];
+//     this.mrp = map['mrp'];
+//     this.ourPrice = map['ourPrice'];
+//     this.unitQuantity = map['unitQuantity'];
+//     this.quantity = map['quantity'];
+//     this.productId = map['productId'];
+//   }
+// //required//
+//   CartList.fromJson(obj) {
+//     this.productId = obj['productId'];
+//
+//   }
+//   static List<CartList> fromJsonList(jsonList) {
+//     return jsonList
+//         .map<CartList>((obj) => CartList.fromJson(obj))
+//         .toList();
+//   }
+// //required//
+// }
+
+//cartmodel
+// Future<int> fetchLengthFromDatabase() async {
+//   var dbHelper = DatabaseHelperCart();
+//   int cart = await dbHelper.getCount();
+//   _itemLength = cart;
+//   notifyListeners();
+//   return _itemLength;
+// }
+
+//  Future<int> fetchLengthFromDatabase() async{
+//    var dbHelper = DatabaseHelperCart();
+//    int cart =await dbHelper.getCount();
+//    itemLength = cart;
+//    return itemLength;
+//  }
+//  Future<int> fetchLengthFromDatabase() {
+//    var dbHelper = DatabaseHelperCart();
+//    Future<int> cart = dbHelper.getCount();
+////     setState(() {
+////       itemsLength = cart;
+////     });
+//    return cart;
+//  }
+
+
+
+
+// Future<List<CartList>> fetchProductFromDatabase() async {
+//   var dbHelper = DatabaseHelperCart();
+//   Future<List<CartList>> cartList = dbHelper.getNoteList();
+//   return cartList;
+// }
+
+// void addInDatabase(CartList cart){
+//   var databaseHelperCart = DatabaseHelperCart();
+//   databaseHelperCart.insertNote(cart);
+//
+// }
+
+// void updateProduct(newPrice, productId) {
+//   var dbHelper = DatabaseHelperCart();
+//   dbHelper.updateProduct(newPrice, productId);
+// }
+
+//categorylist
+//
+// class CategoryList {
+//   final String categoryName;
+//   final String imageCategory;
+//   CategoryList({this.categoryName,this.imageCategory});
+//
+//   List<CategoryList> getCategoryList(){
+//     List<CategoryList> categoryList = [
+//       CategoryList(
+//         categoryName: 'cat-1',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-2',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-3',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-4',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-5',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-6',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-7',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+//       ),
+//       CategoryList(
+//         categoryName: 'cat-8',
+//         imageCategory:
+//         'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+//       ),
+//
+//     ];
+//     return categoryList;
+//   }
+// }
+
+//productdatabase
+// factory ProductDatabase.fromJson(Map<String, dynamic> json) {
+//   return ProductDatabase(
+//     categoryId: json['categoryId'],
+//     productName: json['productName'],
+//     actualPrice: json['actualPrice'],
+//     mrp: json['mrp'],
+//     salePrice: json['salePrice'],
+//     id: json['id'],
+//     file1: base64Decode(json['file1']),
+//     file2: base64Decode(json['file2']),
+//     file3: base64Decode(json['file3']),
+//     file4: base64Decode(json['file4']),
+//
+//     // imgList: json['list'].cast<Uint8List>().toList(),
+//   );
+// }
+// this.file2 = base64Decode(obj['file2']);
+// this.file3 = base64Decode(obj['file3']);
+// this.file4 = base64Decode(obj['file4']);
+// if (obj['list'].cast<Uint8List>().toList() == null) {
+//   this.imgList = null;
+// }
+//this.imgList = obj['list'].cast<Uint8List>().toList();
+
+// class ProductDatabase {
+//   String categoryId;
+//   String productName;
+//   double actualPrice;
+//   double mrp;
+//   double salePrice;
+//   String id;
+//   String productDescription;
+//   Uint8List file1;
+//   Uint8List file2;
+//   Uint8List file3;
+//   Uint8List file4;
+//
+//   // List<Uint8List> imgList;
+//
+//   ProductDatabase(
+//       {this.categoryId,
+//         this.productName,
+//         this.actualPrice,
+//         this.mrp,
+//         this.salePrice,
+//         this.id,
+//         this.file1,
+//         this.file2,
+//         this.file3,
+//         this.file4,
+//         this.productDescription
+//         // this.imgList
+//       });
+//
+//   factory ProductDatabase.fromJson(Map<String, dynamic> json) {
+//     return ProductDatabase(
+//         categoryId: json['categoryId'] as String,
+//         productName: json['productName'] as String,
+//         actualPrice: json['actualPrice'] as double,
+//         mrp: json['mrp'] as double,
+//         salePrice: json['salePrice'] as double,
+//         id: json['id'] as String,
+//         file1: base64Decode(json['file1']) == null
+//             ? null
+//             : base64Decode(json['file1']),
+//         file2: base64Decode(json['file2']) == null
+//             ? null
+//             : base64Decode(json['file2']),
+//         file3: base64Decode(json['file3']) == null
+//             ? null
+//             : base64Decode(json['file3']),
+//         file4: base64Decode(json['file4']) == null
+//             ? null
+//             : base64Decode(json['file4']),
+//         productDescription: json['productDescription'] as String
+//       // imgList: json['list'].cast<Uint8List>().toList(),
+//     );
+//   }
+//
+//   // ProductDatabase.fromJson(obj) {
+//   //   this.categoryId = obj['categoryId'];
+//   //   this.productName = obj['productName'];
+//   //   this.actualPrice = obj['actualPrice'];
+//   //   this.mrp = obj['mrp'];
+//   //   this.salePrice = obj['salePrice'];
+//   //   this.id = obj['id'];
+//   //   if (obj['file2'] == null) {
+//   //     this.file2 = null;
+//   //   } else {
+//   //     this.file2 = base64Decode(obj['file2']);
+//   //   }
+//   //   if (obj['file3'] == null) {
+//   //     this.file3 = null;
+//   //   } else {
+//   //     this.file3 = base64Decode(obj['file3']);
+//   //   }
+//   //   if (obj['file3'] == null) {
+//   //     this.file3 = null;
+//   //   } else {
+//   //     this.file4 = base64Decode(obj['file4']);
+//   //   }
+//   //   this.file1 = base64Decode(obj['file1']);
+//   //   // this.file2 = base64Decode(obj['file2']);
+//   //   // this.file3 = base64Decode(obj['file3']);
+//   //   // this.file4 = base64Decode(obj['file4']);
+//   //   // if (obj['list'].cast<Uint8List>().toList() == null) {
+//   //   //   this.imgList = null;
+//   //   // }
+//   //   //this.imgList = obj['list'].cast<Uint8List>().toList();
+//   // }
+//
+//   static List<ProductDatabase> fromJsonList(jsonList) {
+//     return jsonList
+//         .map<ProductDatabase>((obj) => ProductDatabase.fromJson(obj))
+//         .toList();
+//   }
+// }

@@ -181,7 +181,8 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.amber[800],
                     radius: 8,
                     child: Text(
-                      '${Provider.of<CartModel>(context).cartCount}',
+                      '${Provider.of<CartModel>(context).cartCountFinal}',
+                      //'${Provider.of<CartModel>(context).cartCount}',
                       style: TextStyle(
                           fontSize: 8,
                           color: Colors.white,
@@ -374,10 +375,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                           NewExpanded(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Orders()));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => Orders()));
                             },
                             iconData: Icons.business,
                             color: Colors.white,

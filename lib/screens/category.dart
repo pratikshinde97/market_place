@@ -33,6 +33,7 @@ class _CategoryState extends State<Category> {
   bool _loading = true;
   int count;
   bool isLoading = false;
+  bool _loadingCartData = false;
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _CategoryState extends State<Category> {
           _searchProducts = usersProduct;
           isLoading = false;
           _loading = false;
+
         });
       });
     }
@@ -100,6 +102,9 @@ class _CategoryState extends State<Category> {
                 elevation: 2,
                 child: Column(
                   children: <Widget>[
+                    SizedBox(
+                      height: 8,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -114,9 +119,7 @@ class _CategoryState extends State<Category> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SizedBox(
-                                height: 8,
-                              ),
+
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -199,6 +202,19 @@ class _CategoryState extends State<Category> {
                               SizedBox(
                                 height: 8,
                               ),
+                              _loadingCartData
+                                  ? Padding(
+                                padding: const EdgeInsets.only(top: 250.0),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 5,
+                                    backgroundColor: Color(0xFF344955),
+                                    valueColor:
+                                    new AlwaysStoppedAnimation<Color>(Colors.amber),
+                                  ),
+                                ),
+                              ) :
+                                  Container()
                             ],
                           ),
                         )
@@ -217,7 +233,9 @@ class _CategoryState extends State<Category> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 onPressed: () {
-
+                                 setState(() {
+                                   _loadingCartData = !_loadingCartData;
+                                 });
                                   String productId = products[i].id;
                                   checkLogin(productId);
                                   // String productName =
@@ -321,7 +339,7 @@ class _CategoryState extends State<Category> {
                 child: CircleAvatar(
                   backgroundColor: Colors.amber[800],
                   radius: 8,
-                  child: Text('${Provider.of<CartModel>(context).cartCount}',style: TextStyle(fontSize: 8, color: Colors.white,fontWeight: FontWeight.bold),),
+                  child: Text('${Provider.of<CartModel>(context).cartCountFinal}',style: TextStyle(fontSize: 8, color: Colors.white,fontWeight: FontWeight.bold),),
                 ),
               ),
             ],
@@ -563,21 +581,18 @@ class _CategoryState extends State<Category> {
       }),
     );
     if (response.statusCode == 201) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
+
       print('////////////////////////?????????');
-      // setState(() {
-      //   _loading = !_loading;
-      // });
+      setState(() {
+        _loadingCartData = !_loadingCartData;
+      });
       MyDialog().showMyDialog(this.context, 'Cart',
           'Added to Cart successfully');
       return CartList.fromJson(jsonDecode(response.body));
     } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      // setState(() {
-      //   _loading = !_loading;
-      // });
+      setState(() {
+        _loadingCartData = !_loadingCartData;
+      });
       print('////////////::::::::::::::::::::::::');
       MyDialog().showMyDialog(this.context, 'Cart',
           'There is some error in adding this Product in Cart . Please try again.');
